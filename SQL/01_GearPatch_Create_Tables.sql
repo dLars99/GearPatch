@@ -1,6 +1,6 @@
 USE [master]
 
-IF db_id('GearPatch') IS NULl
+IF db_id('GearPatch') IS NULL
   CREATE DATABASE [GearPatch]
 GO
 
@@ -8,18 +8,17 @@ USE [GearPatch]
 GO
 
 
-DROP TABLE IF EXISTS [UserProfile];
-DROP TABLE IF EXISTS [Gear];
-DROP TABLE IF EXISTS [GearType];
 DROP TABLE IF EXISTS [GearPics];
 DROP TABLE IF EXISTS [GearReview];
 DROP TABLE IF EXISTS [OwnerReview];
 DROP TABLE IF EXISTS [CustomerReview];
-DROP TABLE IF EXISTS [Accessory];
 DROP TABLE IF EXISTS [Reservation];
+DROP TABLE IF EXISTS [Accessory];
+DROP TABLE IF EXISTS [GearType];
+DROP TABLE IF EXISTS [Gear];
 DROP TABLE IF EXISTS [Message];
+DROP TABLE IF EXISTS [UserProfile];
 GO
-
 
 
 CREATE TABLE [UserProfile] (
@@ -36,6 +35,14 @@ CREATE TABLE [UserProfile] (
 )
 
 
+CREATE TABLE [GearType] (
+  [Id] integer PRIMARY KEY IDENTITY,
+  [Name] nvarchar(50) NOT NULL,
+  [FirstOptionName] nvarchar(50),
+  [SecondOptionName] nvarchar(50)
+)
+
+
 CREATE TABLE [Gear] (
   [Id] integer PRIMARY KEY IDENTITY,
   [UserProfileId] integer NOT NULL,
@@ -45,20 +52,12 @@ CREATE TABLE [Gear] (
   [Notes] nvarchar(max),
   [Price] integer NOT NULL,
   [IsActive] bit NOT NULL,
-  [TypeId] integer NOT NULL,
+  [GearTypeId] integer NOT NULL,
   [FirstOptionNotes] nvarchar(255),
   [SecondOptionNotes] nvarchar(255),
 
   CONSTRAINT [FK_Gear_UserProfile] FOREIGN KEY ([UserProfileId]) REFERENCES [UserProfile] ([Id]),
-  CONSTRAINT [FK_Gear_Type] FOREIGN KEY ([TypeId]) REFERENCES [Type] ([Id])
-)
-
-
-CREATE TABLE [GearType] (
-  [Id] integer PRIMARY KEY IDENTITY,
-  [Name] nvarchar(50) NOT NULL,
-  [FirstOptionName] nvarchar(50),
-  [SecondOptionName] nvarchar(50)
+  CONSTRAINT [FK_Gear_GearType] FOREIGN KEY ([GearTypeId]) REFERENCES [GearType] ([Id])
 )
 
 
@@ -66,6 +65,27 @@ CREATE TABLE [GearPics] (
   [Id] integer PRIMARY KEY IDENTITY,
   [GearId] integer NOT NULL,
   [ImageLocation] nvarchar NOT NULL
+)
+
+
+CREATE TABLE [Reservation] (
+  [Id] integer PRIMARY KEY IDENTITY,
+  [OwnerId] integer NOT NULL,
+  [CustomerId] integer NOT NULL,
+  [GearId] integer NOT NULL,
+  [AgreedPrice] integer NOT NULL,
+  [StartDate] datetime NOT NULL,
+  [EndDate] datetime NOT NULL,
+  [Confirmed] bit NOT NULL,
+  [ItemReturned] bit NOT NULL,
+
+  CONSTRAINT [FK_Reservation_UserProfile_Owner] FOREIGN KEY ([OwnerId])
+	REFERENCES [UserProfile] ([Id]),
+
+  CONSTRAINT [FK_Reservation_UserProfile_Customer] FOREIGN KEY ([CustomerId])
+	REFERENCES [UserProfile] ([Id]),
+
+  CONSTRAINT [FK_Reservation_Gear] FOREIGN KEY ([GearId]) REFERENCES [Gear] ([Id])
 )
 
 
@@ -108,7 +128,7 @@ CREATE TABLE [CustomerReview] (
   [Rating] integer NOT NULL,
   [Details] nvarchar(500),
     
-  CONSTRAINT [FK_CustomerReview] FOREIGN KEY ([UserProfiled])
+  CONSTRAINT [FK_CustomerReview] FOREIGN KEY ([UserProfileId])
 	REFERENCES [UserProfile] ([Id]),
 
   CONSTRAINT [FK_CustomerReview_Reservation] FOREIGN KEY ([ReservationId])
@@ -124,27 +144,6 @@ CREATE TABLE [Accessory] (
   [Notes] nvarchar(500),
 
   CONSTRAINT [FK_Accessory_Gear] FOREIGN KEY ([GearId]) REFERENCES [Gear] ([Id])
-)
-
-
-CREATE TABLE [Reservation] (
-  [Id] integer PRIMARY KEY IDENTITY,
-  [OwnerId] integer NOT NULL,
-  [CustomerId] integer NOT NULL,
-  [GearId] integer NOT NULL,
-  [AgreedPrice] integer NOT NULL,
-  [StartDate] datetime NOT NULL,
-  [EndDate] datetime NOT NULL,
-  [Confirmed] bit NOT NULL,
-  [ItemReturned] bit NOT NULL,
-
-  CONSTRAINT [FK_Reservation_UserProfile_Owner] FOREIGN KEY ([OwnerId])
-	REFERENCES [UserProfile] ([Id]),
-
-  CONSTRAINT [FK_Reservation_UserProfile_Customer] FOREIGN KEY ([CustomerId])
-	REFERENCES [UserProfile] ([Id]),
-
-  CONSTRAINT [FK_Reservation_Gear] FOREIGN KEY ([GearId]) REFERENCES [Gear] ([Id])
 )
 
 
