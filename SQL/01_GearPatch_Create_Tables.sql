@@ -8,14 +8,14 @@ USE [GearPatch]
 GO
 
 
-DROP TABLE IF EXISTS [GearPics];
+DROP TABLE IF EXISTS [GearImages];
 DROP TABLE IF EXISTS [GearReview];
 DROP TABLE IF EXISTS [OwnerReview];
 DROP TABLE IF EXISTS [CustomerReview];
 DROP TABLE IF EXISTS [Reservation];
 DROP TABLE IF EXISTS [Accessory];
-DROP TABLE IF EXISTS [GearType];
 DROP TABLE IF EXISTS [Gear];
+DROP TABLE IF EXISTS [GearType];
 DROP TABLE IF EXISTS [Message];
 DROP TABLE IF EXISTS [UserProfile];
 GO
@@ -49,7 +49,7 @@ CREATE TABLE [Gear] (
   [Headline] nvarchar(50) NOT NULL,
   [Manufacturer] nvarchar(40) NOT NULL,
   [Model] nvarchar(40) NOT NULL,
-  [Notes] nvarchar(max),
+  [Description] nvarchar(max),
   [Price] integer NOT NULL,
   [IsActive] bit NOT NULL,
   [GearTypeId] integer NOT NULL,
@@ -61,7 +61,7 @@ CREATE TABLE [Gear] (
 )
 
 
-CREATE TABLE [GearPics] (
+CREATE TABLE [GearImages] (
   [Id] integer PRIMARY KEY IDENTITY,
   [GearId] integer NOT NULL,
   [ImageLocation] nvarchar NOT NULL
@@ -141,7 +141,7 @@ CREATE TABLE [Accessory] (
   [Id] integer PRIMARY KEY IDENTITY,
   [GearId] integer NOT NULL,
   [Name] nvarchar(50) NOT NULL,
-  [Notes] nvarchar(500),
+  [Description] nvarchar(500),
 
   CONSTRAINT [FK_Accessory_Gear] FOREIGN KEY ([GearId]) REFERENCES [Gear] ([Id])
 )
@@ -152,7 +152,7 @@ CREATE TABLE [Message] (
   [SenderId] integer NOT NULL,
   [RecipientId] integer NOT NULL,
   [Unread] bit NOT NULL,
-  [Text] nvarchar(1000) NOT NULL,
+  [Content] nvarchar(1000) NOT NULL,
 
   CONSTRAINT [FK_Message_UserProfile_Sender] FOREIGN KEY ([SenderId])
 	REFERENCES [UserProfile] ([Id]),
