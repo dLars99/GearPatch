@@ -25,10 +25,10 @@ CREATE TABLE [UserProfile] (
   [Id] integer PRIMARY KEY IDENTITY,
   [FirstName] nvarchar(40) NOT NULL,
   [LastName] nvarchar(40) NOT NULL,
-  [Email] nvarchar(50) NOT NULL,
+  [Email] nvarchar(255) NOT NULL,
   [Phone] nvarchar(20) NOT NULL,
   [FirebaseId] nvarchar(28) NOT NULL,
-  [ImageLocation] nvarchar,
+  [ImageLocation] nvarchar(255),
   [IsActive] bit NOT NULL,
 
   CONSTRAINT UQ_FirebaseId UNIQUE(FirebaseId)
@@ -64,7 +64,7 @@ CREATE TABLE [Gear] (
 CREATE TABLE [GearImages] (
   [Id] integer PRIMARY KEY IDENTITY,
   [GearId] integer NOT NULL,
-  [ImageLocation] nvarchar NOT NULL
+  [ImageLocation] nvarchar(255) NOT NULL
 )
 
 
