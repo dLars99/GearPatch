@@ -13,5 +13,6 @@ namespace GearPatch.Controllers
     [ApiController]
     public class GearController : ControllerBase
     {
+
     }
 }

@@ -4,12 +4,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+
 
 namespace GearPatch.Repositories
 {
-    public class UserProfileRepository
+    public class UserProfileRepository : BaseRepository
     {
-        public UserProfile GetByFirebaseUserId(string firebaseUserId)
+        public UserProfileRepository(IConfiguration configuration) : base(configuration) { }
+        public UserProfile GetByFirebaseId(string firebaseId)
         {
             using (var conn = Connection)
             {
@@ -17,13 +21,11 @@ namespace GearPatch.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT up.Id, Up.FirebaseUserId, up.Name AS UserProfileName, up.Email, up.UserTypeId,
-                               ut.Name AS UserTypeName
-                          FROM UserProfile up
-                               LEFT JOIN UserType ut on up.UserTypeId = ut.Id
-                         WHERE FirebaseUserId = @FirebaseuserId";
+                        SELECT Id, FirstName, LastName, Email, Phone, FirebaseId, ImageLocation, IsActive
+                          FROM UserProfile
+                         WHERE FirebaseId = @FirebaseId";
 
-                    DbUtils.AddParameter(cmd, "@FirebaseUserId", firebaseUserId);
+                    DbUtils.AddParameter(cmd, "@FirebaseId", firebaseId);
 
                     UserProfile userProfile = null;
 
@@ -33,15 +35,13 @@ namespace GearPatch.Repositories
                         userProfile = new UserProfile()
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
-                            FirebaseUserId = DbUtils.GetString(reader, "FirebaseUserId"),
-                            Name = DbUtils.GetString(reader, "UserProfileName"),
+                            FirstName = DbUtils.GetString(reader, "FirstName"),
+                            LastName = DbUtils.GetString(reader, "LastName"),
                             Email = DbUtils.GetString(reader, "Email"),
-                            UserTypeId = DbUtils.GetInt(reader, "UserTypeId"),
-                            UserType = new UserType()
-                            {
-                                Id = DbUtils.GetInt(reader, "UserTypeId"),
-                                Name = DbUtils.GetString(reader, "UserTypeName"),
-                            }
+                            Phone = DbUtils.GetString(reader, "Phone"),
+                            FirebaseId = DbUtils.GetString(reader, "FirebaseId"),
+                            ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive")
                         };
                     }
                     reader.Close();
@@ -61,10 +61,9 @@ namespace GearPatch.Repositories
                     cmd.CommandText = @"INSERT INTO UserProfile (FirebaseUserId, Name, Email, UserTypeId)
                                         OUTPUT INSERTED.ID
                                         VALUES (@FirebaseUserId, @Name, @Email, @UserTypeId)";
-                    DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseUserId);
-                    DbUtils.AddParameter(cmd, "@Name", userProfile.Name);
+                    DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseId);
+                    DbUtils.AddParameter(cmd, "@Name", userProfile.FirstName);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
-                    DbUtils.AddParameter(cmd, "@UserTypeId", userProfile.UserTypeId);
 
                     userProfile.Id = (int)cmd.ExecuteScalar();
                 }
