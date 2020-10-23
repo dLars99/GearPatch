@@ -10,7 +10,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace GearPatch.Repositories
 {
-    public class UserProfileRepository : BaseRepository
+    public class UserProfileRepository : BaseRepository, IUserProfileRepository
     {
         public UserProfileRepository(IConfiguration configuration) : base(configuration) { }
         public UserProfile GetByFirebaseId(string firebaseId)

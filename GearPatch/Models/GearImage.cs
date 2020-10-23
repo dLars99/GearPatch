@@ -2,7 +2,7 @@
 
 namespace GearPatch.Models
 {
-    public class GearImages
+    public class GearImage
     {
         public int Id { get; set; }
         [Required]
