@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace GearPatch.Models
 {
-    public class UserRepository
+    public class UserProfile
     {
     }
 }
