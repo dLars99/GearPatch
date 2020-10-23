@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace GearPatch.Repositories
 {
@@ -28,10 +29,12 @@ namespace GearPatch.Repositories
                                    up.IsActive AS UserIsActive,
 
                                    gt.Name
-                            FROM Gear g
-                            LEFT JOIN UserProfile up ON up.Id = g.UserProfileId
-                            LEFT JOIN GearType gt ON gt.Id = g.GearTypeId
-                            WHERE up.IsActive = 1 AND g.IsActive = 1";
+                              FROM Gear g
+                         LEFT JOIN UserProfile up ON up.Id = g.UserProfileId
+                         LEFT JOIN GearType gt ON gt.Id = g.GearTypeId
+                             WHERE (g.Headline LIKE @query OR g.Manufacturer LIKE @query OR g.Model LIKE @query)
+                                   AND up.IsActive = 1 AND g.IsActive = 1";
+                    DbUtils.AddParameter(cmd, "@query", $"%{query}%");
 
                     var reader = cmd.ExecuteReader();
 
