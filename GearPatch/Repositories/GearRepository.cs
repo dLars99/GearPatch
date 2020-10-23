@@ -21,17 +21,17 @@ namespace GearPatch.Repositories
                 {
                     cmd.CommandText = @"
                             SELECT g.Id AS GearId, g.Headline, g.Manufacturer, g.Model, g.Description, g.Price,
-                                   g.IsActive, AS GearIsActive, g.FirstOptionNotes, g.SecondOptionNotes, 
-                                   g.UserProfileId, g.ImageLocation as GearImageLocation, g.GearTypeId
+                                   g.IsActive AS GearIsActive, g.FirstOptionNotes, g.SecondOptionNotes, 
+                                   g.UserProfileId, g.ImageLocation as GearImageLocation, g.GearTypeId,
 
                                    up.FirstName, up.LastName, up.ImageLocation AS UserImageLocation, 
-                                   up.IsActive AS UserIsActive
+                                   up.IsActive AS UserIsActive,
 
-                                   gt.Name,
+                                   gt.Name
                             FROM Gear g
                             LEFT JOIN UserProfile up ON up.Id = g.UserProfileId
                             LEFT JOIN GearType gt ON gt.Id = g.GearTypeId
-                            WHERE UserIsActive = 1 AND GearIsActive = 1";
+                            WHERE up.IsActive = 1 AND g.IsActive = 1";
 
                     var reader = cmd.ExecuteReader();
 

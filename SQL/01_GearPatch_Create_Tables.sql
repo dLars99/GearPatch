@@ -53,6 +53,7 @@ CREATE TABLE [Gear] (
   [Price] integer NOT NULL,
   [IsActive] bit NOT NULL,
   [GearTypeId] integer NOT NULL,
+  [ImageLocation] nvarchar(255),
   [FirstOptionNotes] nvarchar(255),
   [SecondOptionNotes] nvarchar(255),
 
