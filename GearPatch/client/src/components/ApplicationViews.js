@@ -8,7 +8,7 @@ import GearSearchResults from "./Gear/GearSearchResults";
 export default function ApplicationViews() {
 
     return (
-        <main className="container pt-5">
+        <main className="container-fluid pt-5">
             <Switch>
                 <Route path="/" exact>
                     <Homepage />

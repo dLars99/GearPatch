@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Container, Card, CardImg, CardImgOverlay, Form, Row, FormGroup, Col, Input, Label, Button } from "reactstrap";
+import { Card, CardImg, CardImgOverlay, Form, Row, FormGroup, Col, Input, Label, Button } from "reactstrap";
 
 export default function Homepage() {
 
@@ -26,7 +26,6 @@ export default function Homepage() {
     }
 
     return (
-        <Container fluid className="pt-5">
             <Card>
                 {/* Featured Background Image */}
                 <CardImg width="100%" src={require(`../media/${background}`)} alt="Welcome to Gearpatch" />
@@ -57,7 +56,5 @@ export default function Homepage() {
                     </Card>
                 </CardImgOverlay>
             </Card>
-
-        </Container>
     );
 }
