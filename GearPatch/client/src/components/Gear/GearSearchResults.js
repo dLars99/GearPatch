@@ -1,6 +1,8 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { GearContext } from "../../providers/GearProvider";
+import GearSummary from "./GearSummary";
+import { CardDeck } from "reactstrap";
 
 export default function GearSearchResults() {
 
@@ -8,14 +10,14 @@ export default function GearSearchResults() {
     const { query } = useParams();
 
     useEffect(() => {
-        console.log(query)
         searchGear(query);
         // eslint-disable-next-line
     }, [])
 
     return (
-        <section>
-            {console.log(gear)}
-        </section>
+        <CardDeck>
+            {gear.map(g => 
+            <GearSummary key={g.id} gearItem={g} />)}
+        </CardDeck>
     )
 }

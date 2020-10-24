@@ -21,7 +21,6 @@ export default function Homepage() {
 
     const submitForm = (evt) => {
         evt.preventDefault();
-        console.log(search.query, search.location);
         history.push(`/gear/search/${search.query}`);
 
     }
