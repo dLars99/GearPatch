@@ -1,10 +1,13 @@
 import React, { useState, useEffect, createContext } from "react";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import { Spinner } from "reactstrap";
 
 export const UserProfileContext = createContext();
 
 export function UserProfileProvider(props) {
     
-    const url = "/api/userprofile";
+    const apiUrl = "/api/userprofile";
 
     const userProfile = sessionStorage.getItem("userProfile");
     const [isLoggedIn, setIsLoggedIn] = useState(userProfile != null);
@@ -43,6 +46,29 @@ export function UserProfileProvider(props) {
     };
     
     const getToken = () => firebase.auth().currentUser.getIdToken();
+
+    const getUserProfile = (firebaseUserId) => {
+        return getToken().then((token) =>
+            fetch(`${apiUrl}/${firebaseUserId}`, {
+                method: "GET",
+                headers: {
+                Authorization: `Bearer ${token}`
+                }
+            }).then(resp => resp.json()));
+    };
+
+    const saveUser = (userProfile) => {
+        return getToken().then((token) =>
+            fetch(apiUrl, {
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(userProfile)
+            }).then(resp => resp.json()));
+    };
+        
 
     return (
         <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken }}>
