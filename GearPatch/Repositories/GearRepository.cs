@@ -29,7 +29,7 @@ namespace GearPatch.Repositories
                                    up.FirstName, up.LastName, up.ImageLocation AS UserImageLocation, 
                                    up.IsActive AS UserIsActive,
 
-                                   gt.Name
+                                   gt.Name AS GearTypeName, gt.FirstOptionName, gt.SecondOptionName
                               FROM Gear g
                          LEFT JOIN UserProfile up ON up.Id = g.UserProfileId
                          LEFT JOIN GearType gt ON gt.Id = g.GearTypeId
@@ -114,10 +114,13 @@ namespace GearPatch.Repositories
                                    up.FirstName, up.LastName, up.ImageLocation AS UserImageLocation, 
                                    up.IsActive AS UserIsActive,
 
-                                   gt.Name, gt.FirstOptionName, gt.SecondOptionName
+                                   gt.Name AS GearTypeName, gt.FirstOptionName, gt.SecondOptionName,
+
+                                   a.Id AS AccessoryId, a.Name AS AccessoryName, a.Description AS AccessoryDescription
                               FROM Gear g
                          LEFT JOIN UserProfile up ON up.Id = g.UserProfileId
                          LEFT JOIN GearType gt ON gt.Id = g.GearTypeId
+                         LEFT JOIN Accessory a ON a.GearId = g.Id
                              WHERE g.Id = @id AND g.IsActive = 1";
                     DbUtils.AddParameter(cmd, "@id", id);
 
@@ -125,22 +128,31 @@ namespace GearPatch.Repositories
 
                     Gear gear = null;
 
-                    if (reader.Read())
+                    while (reader.Read())
                     {
                         var gearId = DbUtils.GetInt(reader, "GearId");
 
-                        /* Check for existing gear to be implemented with multiple images in the future
-                        var existingGear = gearList.FirstOrDefault(g => g.Id == gearId);
-                        if (existingGear == null)
+                        if (gear == null)
                         {
-                        */
 
-                        gear = GearFromDb(reader);
-                        gear.Accessories = new List<Accessory>();
+                            gear = GearFromDb(reader);
+                            gear.Accessories = new List<Accessory>();
+                        }
+
+                        if (DbUtils.IsNotDbNull(reader, "AccessoryId"))
+                        {
+                            gear.Accessories.Add(new Accessory()
+                            {
+                                Id = DbUtils.GetInt(reader, "AccessoryId"),
+                                Name = DbUtils.GetString(reader, "AccessoryName"),
+                                Description = DbUtils.GetString(reader, "Description"),
+                                GearId = gear.Id
+                            });
+                        }
                     }
 
                     /* Multiple images to be implemented in the future
-                    if (DbUtils.IsNotDbNull(reader, "GearTypeId"))
+                    if (DbUtils.IsNotDbNull(reader, "GearImageId"))
                     {
                         existingGear.GearImages.Add(new GearImage()
                         {
@@ -171,7 +183,7 @@ namespace GearPatch.Repositories
                             up.FirstName, up.LastName, up.ImageLocation AS UserImageLocation, 
                             up.IsActive AS UserIsActive,
 
-                            gt.Name, gt.FirstOptionName, gt.SecondOptionName
+                            gt.Name AS GearTypeName, gt.FirstOptionName, gt.SecondOptionName
                         FROM Gear g
                     LEFT JOIN UserProfile up ON up.Id = g.UserProfileId
                     LEFT JOIN GearType gt ON gt.Id = g.GearTypeId
@@ -241,7 +253,7 @@ namespace GearPatch.Repositories
                 GearType = new GearType()
                 {
                     Id = DbUtils.GetInt(reader, "GearTypeId"),
-                    Name = DbUtils.GetString(reader, "Name"),
+                    Name = DbUtils.GetString(reader, "GearTypeName"),
                     FirstOptionName = DbUtils.GetString(reader, "FirstOptionName"),
                     SecondOptionName = DbUtils.GetString(reader, "SecondOptionName")
                 },
