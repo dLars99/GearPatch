@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
@@ -25,6 +25,17 @@ namespace GearPatch.Controllers
         public IActionResult GetByFirebaseUserId(string firebaseUserId)
         {
             var userProfile = _userProfileRepository.GetByFirebaseId(firebaseUserId);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
+        }
+
+        [HttpGet("{userProfileid:int}")]
+        public IActionResult Get(int userProfileId)
+        {
+            var userProfile = _userProfileRepository.GetById(userProfileId);
             if (userProfile == null)
             {
                 return NotFound();

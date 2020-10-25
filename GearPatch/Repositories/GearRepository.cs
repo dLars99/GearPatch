@@ -135,36 +135,8 @@ namespace GearPatch.Repositories
                         {
                         */
 
-                        gear = new Gear()
-                        {
-                            Id = gearId,
-                            Headline = DbUtils.GetString(reader, "Headline"),
-                            Manufacturer = DbUtils.GetString(reader, "Manufacturer"),
-                            Model = DbUtils.GetString(reader, "Model"),
-                            Description = DbUtils.GetString(reader, "Description"),
-                            Price = DbUtils.GetInt(reader, "Price"),
-                            IsActive = DbUtils.GetBool(reader, "GearIsActive"),
-                            FirstOptionNotes = DbUtils.GetString(reader, "FirstOptionNotes"),
-                            SecondOptionNotes = DbUtils.GetString(reader, "SecondOptionNotes"),
-                            ImageLocation = DbUtils.GetString(reader, "GearImageLocation"),
-                            UserProfileId = DbUtils.GetInt(reader, "UserProfileId"),
-                            UserProfile = new UserProfile()
-                            {
-                                Id = DbUtils.GetInt(reader, "UserProfileId"),
-                                FirstName = DbUtils.GetString(reader, "FirstName"),
-                                LastName = DbUtils.GetString(reader, "LastName"),
-                                ImageLocation = DbUtils.GetString(reader, "UserImageLocation"),
-                                IsActive = DbUtils.GetBool(reader, "UserIsActive")
-                            },
-                            GearTypeId = DbUtils.GetInt(reader, "GearTypeId"),
-                            GearType = new GearType()
-                            {
-                                Id = DbUtils.GetInt(reader, "GearTypeId"),
-                                Name = DbUtils.GetString(reader, "Name"),
-                                FirstOptionName = DbUtils.GetString(reader, "FirstOptionName"),
-                                SecondOptionName = DbUtils.GetString(reader, "SecondOptionName")
-                            },
-                        };
+                        gear = GearFromDb(reader);
+                        gear.Accessories = new List<Accessory>();
                     }
 
                     /* Multiple images to be implemented in the future
