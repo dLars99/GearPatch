@@ -25,5 +25,23 @@ namespace GearPatch.Controllers
         {
             return Ok(_gearRepository.GetSearchResults(q));
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Get(int id)
+        {
+            var gear = _gearRepository.GetActiveGearById(id);
+            if (gear == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(gear);
+        }
+
+        [HttpGet("more/{id}")]
+        public IActionResult GetMore(int id)
+        {
+            return Ok(_gearRepository.GetThreeRandomByUser(id));
+        }
     }
 }

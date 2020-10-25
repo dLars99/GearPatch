@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { Card, CardImg, CardBody, CardTitle, CardImgOverlay, CardText } from "reactstrap";
 
 export default function GearSummary({ gearItem }) {
 
     const [showOwner, setShowOwner] = useState(false);
 
+    const history = useHistory();
+
     const cardHover = (e) => {
-        console.log(e);
         e.currentTarget.src = gearItem.userProfile.imageLocation;
         setShowOwner(true);
     }
@@ -17,7 +19,7 @@ export default function GearSummary({ gearItem }) {
     }
 
     return (
-        <Card onMouseEnter={cardHover} onMouseLeave={notCardHover}>
+        <Card onMouseEnter={cardHover} onMouseLeave={notCardHover} onClick={() => history.push(`/gear/${gearItem.id}`)}>
             {/* Show owner's image when mouse is positioned over the item */}
             {showOwner
             ? <>

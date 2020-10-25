@@ -51,6 +51,45 @@ namespace GearPatch.Repositories
             }
         }
 
+        public UserProfile GetById(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT Id, FirstName, LastName, Email, Phone, FirebaseId, ImageLocation, IsActive
+                          FROM UserProfile
+                         WHERE Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    UserProfile userProfile = null;
+
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        userProfile = new UserProfile()
+                        {
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            FirstName = DbUtils.GetString(reader, "FirstName"),
+                            LastName = DbUtils.GetString(reader, "LastName"),
+                            Email = DbUtils.GetString(reader, "Email"),
+                            Phone = DbUtils.GetString(reader, "Phone"),
+                            FirebaseId = DbUtils.GetString(reader, "FirebaseId"),
+                            ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            IsActive = DbUtils.GetBool(reader, "IsActive")
+                        };
+                    }
+                    reader.Close();
+
+                    return userProfile;
+                }
+            }
+
+        }
+
         public void Add(UserProfile userProfile)
         {
             using (var conn = Connection)

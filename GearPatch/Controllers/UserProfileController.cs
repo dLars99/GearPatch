@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserProfileController : ControllerBase
@@ -32,10 +32,20 @@ namespace GearPatch.Controllers
             return Ok(userProfile);
         }
 
+        [HttpGet("{userProfileid:int}")]
+        public IActionResult Get(int userProfileId)
+        {
+            var userProfile = _userProfileRepository.GetById(userProfileId);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
+        }
+
         [HttpPost]
         public IActionResult Register(UserProfile userProfile)
         {
-            // All newly registered users start out as a "user" user type (i.e. they are not admins)
             _userProfileRepository.Add(userProfile);
             return CreatedAtAction(
                 nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.FirebaseId }, userProfile);
