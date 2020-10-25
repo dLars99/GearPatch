@@ -7,10 +7,10 @@ import ApplicationViews from "./components/ApplicationViews";
 export default function App() {
   return (
     <Router>
-      {/* <UserProfileProvider> */}
+      <UserProfileProvider>
         <Header />
         <ApplicationViews />
-      {/* </UserProfileProvider> */}
+      </UserProfileProvider>
     </Router>
   );
 }

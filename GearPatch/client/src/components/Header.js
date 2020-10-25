@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { NavLink as RRNavLink } from "react-router-dom";
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink } from "reactstrap";
+import Login from "./Login/Login";
+import { Modal, Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink } from "reactstrap";
 
 export default function Header() {
 
     const [isOpen, setIsOpen] = useState(false);
     const [modal, setModal] = useState(false);
-
+    
     const toggle = () => setIsOpen(!isOpen);
     const modalToggle = () => setModal(!modal);
 
@@ -20,17 +21,16 @@ export default function Header() {
                         <NavItem>
                             <NavLink tag={RRNavLink} to="/register">Sign Up</NavLink>
                         </NavItem>
-                        <NavItem>
-                            <NavLink tag={RRNavLink} to="/login">Sign In</NavLink>
+                        <NavItem className="mx-0 mx-lg-1">
+                            <a aria-current="page" className="nav-link"
+                                style={{ cursor: "pointer" }} onClick={modalToggle}>Sign In</a>
                         </NavItem>
                         <NavItem>
                             <NavLink tag={RRNavLink} to="/gear/new">List Your Gear</NavLink>
                         </NavItem>
                     </Nav>
                 </Collapse>
-                <Modal isOpen={modalOpen} toggle={modalToggle} backdrop={"static"} keyboard={true}>
-                    <Login modalToggle={modalToggle}
-                </Modal>
+                    <Login modal={modal} modalToggle={modalToggle} />
             </Navbar>
         </header>  
     );
