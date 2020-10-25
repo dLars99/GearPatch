@@ -7,5 +7,6 @@ namespace GearPatch.Repositories
     {
         List<Gear> GetSearchResults(string query);
         Gear GetActiveGearById(int id);
+        List<Gear> GetThreeRandomByUser(int userId);
     }
 }

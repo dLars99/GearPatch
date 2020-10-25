@@ -37,5 +37,11 @@ namespace GearPatch.Controllers
 
             return Ok(gear);
         }
+
+        [HttpGet("more/{id}")]
+        public IActionResult GetMore(int id)
+        {
+            return Ok(_gearRepository.GetThreeRandomByUser(id));
+        }
     }
 }
