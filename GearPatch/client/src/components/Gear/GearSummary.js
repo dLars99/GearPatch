@@ -9,7 +9,6 @@ export default function GearSummary({ gearItem }) {
     const history = useHistory();
 
     const cardHover = (e) => {
-        console.log(e);
         e.currentTarget.src = gearItem.userProfile.imageLocation;
         setShowOwner(true);
     }
@@ -20,7 +19,7 @@ export default function GearSummary({ gearItem }) {
     }
 
     return (
-        <Card onMouseEnter={cardHover} onMouseLeave={notCardHover} onClick={history.push(`/gear/${gearItem.id}`)}>
+        <Card onMouseEnter={cardHover} onMouseLeave={notCardHover} onClick={() => history.push(`/gear/${gearItem.id}`)}>
             {/* Show owner's image when mouse is positioned over the item */}
             {showOwner
             ? <>

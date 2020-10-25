@@ -31,7 +31,7 @@ export default function Homepage() {
                 <CardImg width="100%" src={require(`../media/${background}`)} alt="Welcome to Gearpatch" />
                 <CardImgOverlay>
                     {/* Form frame */}
-                    <Card width="100%" className="mt-5">
+                    <Card body width="100%" className="mt-5">
                     <Form onSubmit={submitForm}>
                         <Row form>
                             <Col xs={12} sm={5}>

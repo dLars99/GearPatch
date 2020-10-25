@@ -24,7 +24,7 @@ export function GearProvider(props) {
 
     const getGearItem = async (id) => {
         // const token = await getToken();
-        const res = await fetch(`${url}/gear/${id}`, {
+        const res = await fetch(`${url}/${id}`, {
             method: "GET",
             headers: {
                 // Authorization: `Bearer ${token}`

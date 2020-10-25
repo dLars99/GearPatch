@@ -16,8 +16,8 @@ export default function GearSearchResults() {
 
     return (
         <CardDeck>
-            {gear.map(g => 
-            <GearSummary key={g.id} gearItem={g} />)}
+            {gear.map(g =>
+                <GearSummary key={g.id} gearItem={g} />)}
         </CardDeck>
     )
 }
