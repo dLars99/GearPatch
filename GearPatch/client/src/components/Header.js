@@ -5,8 +5,10 @@ import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink } f
 export default function Header() {
 
     const [isOpen, setIsOpen] = useState(false);
+    const [modal, setModal] = useState(false);
 
     const toggle = () => setIsOpen(!isOpen);
+    const modalToggle = () => setModal(!modal);
 
     return (
         <header>
@@ -26,6 +28,9 @@ export default function Header() {
                         </NavItem>
                     </Nav>
                 </Collapse>
+                <Modal isOpen={modalOpen} toggle={modalToggle} backdrop={"static"} keyboard={true}>
+                    <Login modalToggle={modalToggle}
+                </Modal>
             </Navbar>
         </header>  
     );
