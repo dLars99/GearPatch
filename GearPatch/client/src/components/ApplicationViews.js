@@ -4,6 +4,7 @@ import { UserProfileProvider } from "../providers/UserProfileProvider";
 import { GearProvider } from "../providers/GearProvider";
 import Homepage from "./Homepage";
 import GearSearchResults from "./Gear/GearSearchResults";
+import GearListing from "./Gear/GearListing";
 
 export default function ApplicationViews() {
 
@@ -17,6 +18,12 @@ export default function ApplicationViews() {
                 <Route path="/gear/search/:query">
                     <GearProvider>
                         <GearSearchResults />
+                    </GearProvider>
+                </Route>
+
+                <Route path="/gear/:id">
+                    <GearProvider>
+                        <GearListing />
                     </GearProvider>
                 </Route>
             </Switch>
