@@ -16,12 +16,12 @@ export default function GearDetails({ gear }) {
                 ? <p>{gear.gearType.secondOptionName}: {gear.secondOptionNotes}</p>
                 : null
             }
-            {gear.accessories
+            {gear.accessories.length !== 0
                 ? <>
-                <p><strong>Included With This Rental</strong></p>}
-                {gear.accessories.map(accessory => 
-                    <p key={accessory.id}>{accessory.name}</p>
-                )}
+                    <p><strong>Included With This Rental</strong></p>
+                    {gear.accessories.map(accessory => 
+                        <p key={accessory.id}>{accessory.name}</p>
+                    )}
                 </>
                 : null
             }

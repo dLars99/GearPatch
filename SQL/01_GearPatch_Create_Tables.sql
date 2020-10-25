@@ -27,6 +27,7 @@ CREATE TABLE [UserProfile] (
   [LastName] nvarchar(40) NOT NULL,
   [Email] nvarchar(255) NOT NULL,
   [Phone] nvarchar(20) NOT NULL,
+  [Bio] nvarchar(max),
   [FirebaseId] nvarchar(28) NOT NULL,
   [ImageLocation] nvarchar(255),
   [IsActive] bit NOT NULL,

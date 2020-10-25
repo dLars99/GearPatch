@@ -26,7 +26,7 @@ namespace GearPatch.Repositories
                                    g.IsActive AS GearIsActive, g.FirstOptionNotes, g.SecondOptionNotes, 
                                    g.UserProfileId, g.ImageLocation as GearImageLocation, g.GearTypeId,
 
-                                   up.FirstName, up.LastName, up.ImageLocation AS UserImageLocation, 
+                                   up.FirstName, up.LastName, up.Bio, up.ImageLocation AS UserImageLocation, 
                                    up.IsActive AS UserIsActive,
 
                                    gt.Name AS GearTypeName, gt.FirstOptionName, gt.SecondOptionName
@@ -75,7 +75,7 @@ namespace GearPatch.Repositories
                             GearType = new GearType()
                             {
                                 Id = DbUtils.GetInt(reader, "GearTypeId"),
-                                Name = DbUtils.GetString(reader, "Name")
+                                Name = DbUtils.GetString(reader, "GearTypeName")
                             },
                         };
 
@@ -111,7 +111,7 @@ namespace GearPatch.Repositories
                                    g.IsActive AS GearIsActive, g.FirstOptionNotes, g.SecondOptionNotes, 
                                    g.UserProfileId, g.ImageLocation as GearImageLocation, g.GearTypeId,
 
-                                   up.FirstName, up.LastName, up.ImageLocation AS UserImageLocation, 
+                                   up.FirstName, up.LastName, up.Bio, up.ImageLocation AS UserImageLocation, 
                                    up.IsActive AS UserIsActive,
 
                                    gt.Name AS GearTypeName, gt.FirstOptionName, gt.SecondOptionName,
@@ -180,7 +180,7 @@ namespace GearPatch.Repositories
                             g.IsActive AS GearIsActive, g.FirstOptionNotes, g.SecondOptionNotes, 
                             g.UserProfileId, g.ImageLocation as GearImageLocation, g.GearTypeId,
 
-                            up.FirstName, up.LastName, up.ImageLocation AS UserImageLocation, 
+                            up.FirstName, up.LastName, up.Bio, up.ImageLocation AS UserImageLocation, 
                             up.IsActive AS UserIsActive,
 
                             gt.Name AS GearTypeName, gt.FirstOptionName, gt.SecondOptionName
@@ -246,6 +246,7 @@ namespace GearPatch.Repositories
                 {
                     FirstName = DbUtils.GetString(reader, "FirstName"),
                     LastName = DbUtils.GetString(reader, "LastName"),
+                    Bio = DbUtils.GetString(reader, "Bio"),
                     ImageLocation = DbUtils.GetString(reader, "UserImageLocation"),
                     IsActive = DbUtils.GetBool(reader, "UserIsActive")
                 },
