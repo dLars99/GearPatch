@@ -6,6 +6,7 @@ import GearDetails from "./GearDetails";
 import MakeReservation from "./MakeReservation";
 import OwnerMore from "./OwnerMore";
 import OwnerDetails from "./OwnerDetails";
+import Filters from "./Filters";
 
 export default function GearList() {
 
@@ -34,12 +35,19 @@ export default function GearList() {
             </Col>
         </Row>
         <Row>
-            <GearDetails gear={gear} />
-            <MakeReservation gear={gear} />
-        </Row>
-        <Row>
-            <OwnerMore ownerId={gear.userProfileId} />
-            <OwnerDetails owner={gear.userProfile} />
+            <Col sm={3}>
+                <Filters />
+            </Col>
+            <Col sm={9}>
+                <Row>
+                    <GearDetails gear={gear} />
+                    <MakeReservation gear={gear} />
+                </Row>
+                <Row>
+                    <OwnerMore ownerId={gear.userProfileId} />
+                    <OwnerDetails owner={gear.userProfile} />
+                </Row>
+            </Col>
         </Row>
         </>        
     );
