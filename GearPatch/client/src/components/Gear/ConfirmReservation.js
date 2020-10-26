@@ -5,10 +5,12 @@ import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Lab
 export default function({ modal, toggle, startDate, endDate, gearName }) {
 
     const reservationSubmit = (evt) => {
-    evt.preventDefault();
-    // login(email, password)
-    //     .then(() => modalToggle())
-    //     .catch(() => alert("Invalid email or password"));
+        evt.preventDefault();
+        alert("Reservation confirmed!");
+        toggle();
+        // login(email, password)
+        //     .then(() => modalToggle())
+        //     .catch(() => alert("Invalid email or password"));
     };
 
     return (
