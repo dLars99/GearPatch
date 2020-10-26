@@ -1,4 +1,5 @@
-﻿using GearPatch.Models;
+﻿using System;
+using GearPatch.Models;
 
 namespace GearPatch.Repositories
 {
@@ -6,5 +7,6 @@ namespace GearPatch.Repositories
     {
         Reservation GetById(int id);
         void Add(Reservation reservation);
+        bool CheckAvailability(int gearId, DateTime startDate, DateTime endDate);
     }
 }

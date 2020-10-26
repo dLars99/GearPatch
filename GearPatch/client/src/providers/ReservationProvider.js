@@ -28,8 +28,20 @@ export function ReservationProvider(props) {
         }
     }
 
+    const checkAvailability = async (gearId, startDate, endDate) => {
+        const token = await getToken();
+        const res = await fetch(`${url}/check/?id=${gearId}&start=${startDate}&end=${endDate}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const value = await res.json();
+        return value;
+    }
+
     return (
-        <ReservationContext.Provider value={{ newReservation }}>
+        <ReservationContext.Provider value={{ newReservation, checkAvailability }}>
             {props.children}
         </ReservationContext.Provider>
     )

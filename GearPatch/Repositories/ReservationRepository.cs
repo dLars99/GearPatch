@@ -78,5 +78,34 @@ namespace GearPatch.Repositories
                 }
             }
         }
+
+        public bool CheckAvailability(int gearId, DateTime startDate, DateTime endDate)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"SELECT Id FROM Reservation
+                                         WHERE GearId = @GearId
+                                               AND ((StartDate >= @StartDate AND StartDate <= @EndDate)
+                                               OR (EndDate >= @StartDate AND EndDate <= @EndDate))";
+                    DbUtils.AddParameter(cmd, "@GearId", gearId);
+                    DbUtils.AddParameter(cmd, "@StartDate", startDate);
+                    DbUtils.AddParameter(cmd, "@EndDate", endDate);
+                    var reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        // Unavailable
+                        reader.Close();
+                        return false;
+                    }
+
+                    // Available
+                    reader.Close();
+                    return true;
+                }
+            }
+        }
     }
 }

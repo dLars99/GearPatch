@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReservationController : ControllerBase
@@ -62,7 +62,23 @@ namespace GearPatch.Controllers
                 return StatusCode(500);
             }
 
-    }
+        }
+
+        [HttpGet("check")]
+        public IActionResult CheckAvailability(string id, string start, string end)
+        {
+            try
+            {
+                int gearId = Int32.Parse(id);
+                DateTime startDate = DateTime.Parse(start);
+                DateTime endDate = DateTime.Parse(end);
+                return Ok(_reservationRepository.CheckAvailability(gearId, startDate, endDate));
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
 
         private UserProfile GetCurrentUserProfile()
         {

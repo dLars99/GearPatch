@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
+import { ReservationContext } from "../../providers/ReservationProvider";
 import ConfirmReservation from "./ConfirmReservation";
 import { NumberOfDays, TodayDate } from "../Helpers/DateHelper";
 import { Col, Card, CardTitle, CardBody, Form, FormGroup,
@@ -8,6 +9,7 @@ import { Col, Card, CardTitle, CardBody, Form, FormGroup,
 export default function MakeReservation({ gear, history }) {
 
     const { isLoggedIn } = useContext(UserProfileContext);
+    const { checkAvailability } = useContext(ReservationContext);
 
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
@@ -26,7 +28,6 @@ export default function MakeReservation({ gear, history }) {
         let totalDays = NumberOfDays(startDate, selectedEndDate);
 
         if (totalDays < 1) totalDays = 1;
-        console.log(totalDays)
         setTotal(totalDays * gear.price);
     }
 
@@ -38,16 +39,22 @@ export default function MakeReservation({ gear, history }) {
             if (!startDate) {
                 setInvalid({...invalid, startDate: true});
                 throw new Error("Enter a date to start the rental");
-            } else if (!endDate) {
+            }
+            if (!endDate) {
                 setInvalid({...invalid, endDate: true});
                 throw new Error("Enter a date to return the rented item");
-            } else if (!isLoggedIn) {
-                throw new Error("Please Sign Up or Sign In before making a reservation.");
             }
-
-            // Reservation is completed from within modal component
-            confirmToggle();
-            
+            if (!isLoggedIn) {
+                throw new Error("Please Sign Up or Sign In before making a reservation");
+            }
+            checkAvailability(gear.id, startDate, endDate).then((available) => {
+                if (available) {                    
+                    // Reservation is completed from within modal component
+                    confirmToggle();
+                } else {
+                    alert("This item is unavailable for your selected dates.");
+                }
+            });
         } catch(err) {
             alert(err);
         }
