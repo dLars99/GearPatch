@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReservationController : ControllerBase
@@ -54,20 +54,20 @@ namespace GearPatch.Controllers
 
             try
             {
-                _reservationRepository.Add(reservation);
-                return CreatedAtAction("Get", new { id = reservation.Id }, reservation);
+            _reservationRepository.Add(reservation);
+            return CreatedAtAction("Get", new { id = reservation.Id }, reservation);
             }
             catch
             {
                 return StatusCode(500);
             }
 
-        }
+    }
 
         private UserProfile GetCurrentUserProfile()
         {
-            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userProfileRepository.GetByFirebaseId(firebaseUserId);
+            var firebaseId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseId(firebaseId);
         }
 
     }

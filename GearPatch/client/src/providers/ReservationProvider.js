@@ -9,11 +9,9 @@ export function ReservationProvider(props) {
 
     const { getToken } = useContext(UserProfileContext);
 
-    const history = useHistory();
-
     const newReservation = async (reservation) => {
         const token = await getToken();
-        const res = fetch(url, {
+        const res = await fetch(url, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -21,7 +19,7 @@ export function ReservationProvider(props) {
             },
             body: JSON.stringify(reservation)
         });
-        const data = res.json();
+        const data = await res.json();
 
         if (res.ok) {
             return data;

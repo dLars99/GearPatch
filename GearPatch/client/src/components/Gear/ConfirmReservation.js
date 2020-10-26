@@ -1,16 +1,29 @@
-import React, { useState, useContext } from "react";
-import { UserProfileContext } from "../../providers/UserProfileProvider";
-import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label, Button } from "reactstrap";
+import React, { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { ReservationContext } from "../../providers/ReservationProvider";
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 
-export default function({ modal, toggle, startDate, endDate, gearName }) {
+export default function({ modal, toggle, startDate, endDate, total, gear, setIsSending }) {
+
+    const { newReservation } = useContext(ReservationContext);
+
+    const history = useHistory();
 
     const reservationSubmit = (evt) => {
         evt.preventDefault();
-        alert("Reservation confirmed!");
-        toggle();
-        // login(email, password)
-        //     .then(() => modalToggle())
-        //     .catch(() => alert("Invalid email or password"));
+        const reservation = {
+            ownerId: gear.userProfileId,
+            gearId: gear.id,
+            agreedPrice: gear.price,
+            startDate: startDate,
+            endDate: endDate
+        }
+
+        setIsSending(true);
+        newReservation(reservation).then(() => {
+            toggle();
+            history.push("/");
+        });
     };
 
     return (
@@ -18,9 +31,10 @@ export default function({ modal, toggle, startDate, endDate, gearName }) {
         <ModalHeader toggle={toggle}>Confirm Reservation</ModalHeader>
             <ModalBody>
                 <h4 className="text=center">Request this reservation?</h4>
-                <p>{gearName}</p>
+                <p>{gear.manufacturer} {gear.model}</p>
                 <p>Rental start: {startDate}</p>
                 <p>Due back by: {endDate}</p>
+                <p>Estimated total: ${total}</p>
             </ModalBody>
             <ModalFooter>
                 <Button color="primary" onClick={reservationSubmit}>Confirm</Button>{' '}

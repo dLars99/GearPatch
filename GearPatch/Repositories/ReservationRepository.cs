@@ -59,7 +59,7 @@ namespace GearPatch.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        INSERT INTO Post (OwnerId, CustomerId, GearId, AgreedPrice, StartDate,
+                        INSERT INTO Reservation (OwnerId, CustomerId, GearId, AgreedPrice, StartDate,
                                           EndDate, Confirmed, ItemReturned)
                         OUTPUT INSERTED.ID
                                   VALUES (@OwnerId, @CustomerId, @GearId, @AgreedPrice, @StartDate,
@@ -75,7 +75,6 @@ namespace GearPatch.Repositories
                     DbUtils.AddParameter(cmd, "@ItemReturned", reservation.ItemReturned);
 
                     reservation.Id = (int)cmd.ExecuteScalar();
-
                 }
             }
         }

@@ -1,14 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
-import { ReservationContext } from "../../providers/ReservationProvider";
 import ConfirmReservation from "./ConfirmReservation";
+import { NumberOfDays, TodayDate } from "../Helpers/DateHelper";
 import { Col, Card, CardTitle, CardBody, Form, FormGroup,
     Input, Label, FormFeedback, Row, Button } from "reactstrap";
 
 export default function MakeReservation({ gear, history }) {
 
     const { isLoggedIn } = useContext(UserProfileContext);
-    const { newReservation } = useContext(ReservationContext);
 
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
@@ -16,38 +15,38 @@ export default function MakeReservation({ gear, history }) {
     const [isSending, setIsSending] = useState(false);
     const [confirmModal, setConfirmModal] = useState(false);
     const [today, setToday] = useState();
+    const [total, setTotal] = useState();
 
     const confirmToggle = () => setConfirmModal(!confirmModal);
 
+    const handleEndDate = (evt) => {
+        const selectedEndDate = evt.target.value;
+        setEndDate(selectedEndDate);
+
+        let totalDays = NumberOfDays(startDate, selectedEndDate);
+
+        if (totalDays < 1) totalDays = 1;
+        console.log(totalDays)
+        setTotal(totalDays * gear.price);
+    }
+
     const completeReservation = (evt) => {
         evt.preventDefault();
-        console.log(startDate, endDate)
         try {
             
             // Validation
             if (!startDate) {
                 setInvalid({...invalid, startDate: true});
-                throw("Enter a date to start the rental");
+                throw new Error("Enter a date to start the rental");
             } else if (!endDate) {
                 setInvalid({...invalid, endDate: true});
-                throw("Enter a date to return the rented item");
+                throw new Error("Enter a date to return the rented item");
             } else if (!isLoggedIn) {
-                throw("Please Sign Up or Sign In before making a reservation.");
+                throw new Error("Please Sign Up or Sign In before making a reservation.");
             }
 
-            const reservation = {
-                ownerId = gear.ownerId,
-                gearId = gear.id,
-                agreedPrice = gear.price,
-                startDate = startDate,
-                endDate = endDate
-            }
-
-            setIsSending(true);
-            newReservation(reservation).then(() => {
-                confirmToggle();
-                history.push("/");
-            });
+            // Reservation is completed from within modal component
+            confirmToggle();
             
         } catch(err) {
             alert(err);
@@ -55,8 +54,9 @@ export default function MakeReservation({ gear, history }) {
     }
 
     useEffect(() => {
-        const todayDate = new Date();
-        setToday(`${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`)
+        setToday(TodayDate());
+        setStartDate(TodayDate());
+        // eslint-disable-next-line
     }, [])
 
     const sendMessage = (evt) => {
@@ -72,17 +72,23 @@ export default function MakeReservation({ gear, history }) {
                 <CardBody>
                     <Form>
                         <FormGroup>
-                            <Input invalid={invalid.startDate} min={today} type="date" name="startDate" id="startDate" onChange={(e) => setStartDate(e.target.value)} />
+                            <Input invalid={invalid.startDate} min={today} defaultValue={today} type="date" name="startDate" id="startDate" onChange={(e) => setStartDate(e.target.value)} />
                             <Label for="startDate">Check Out</Label>
                             <FormFeedback>Enter a date to start the rental.</FormFeedback>
                         </FormGroup>
                         <FormGroup>
-                            <Input invalid={invalid.endDate} min={startDate} type="date" name="endDate" id="endDate" onChange={(e) => setEndDate(e.target.value)}/>
+                            <Input invalid={invalid.endDate} min={startDate} type="date" name="endDate" id="endDate" onChange={handleEndDate}/>
                             <Label for="endDate">Return</Label>
                             <FormFeedback>Enter a date to return the rented item.</FormFeedback>
                         </FormGroup>
+                        {total
+                        ? <Row className="justify-content-center">
+                            <h4>Total Price: ${total}</h4>
+                        </Row>
+                        : null
+                        }
                         <Row className="justify-content-center mb-3">
-                            <Button onClick={completeReservation}>Request Reservation</Button>
+                            <Button disabled={isSending} onClick={completeReservation}>Request Reservation</Button>
                         </Row>
                         <Row className="justify-content-center">
                             <Button onClick={sendMessage}>Ask a Question</Button>
@@ -90,7 +96,7 @@ export default function MakeReservation({ gear, history }) {
                     </Form>
                 </CardBody>
             </Card>
-            <ConfirmReservation modal={confirmModal} toggle={confirmToggle} startDate={startDate} endDate={endDate} gearName={gear.manufacturer + gear.model} />
+            <ConfirmReservation modal={confirmModal} toggle={confirmToggle} startDate={startDate} endDate={endDate} total={total} gear={gear} setIsSending={setIsSending} />
         </Col>
     )
 }
