@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
 {
-    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class GearController : ControllerBase
