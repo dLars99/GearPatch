@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import { CardDeck, Col } from "reactstrap";
 import { GearContext } from "../../providers/GearProvider";
 import GearSummary from "./GearSummary";
@@ -6,8 +6,6 @@ import GearSummary from "./GearSummary";
 export default function OwnerMore({ ownerId }) {
 
     const { gear, getMore } = useContext(GearContext);
-
-    const [moreGear, setMoreGear] = useState();
 
     useEffect(() => {
         getMore(ownerId);

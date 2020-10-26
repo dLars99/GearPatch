@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink as RRNavLink } from "react-router-dom";
 import Login from "./Login/Login";
-import { Modal, Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink } from "reactstrap";
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink } from "reactstrap";
+import { UserProfileContext } from "../providers/UserProfileProvider";
 
 export default function Header() {
+
+    const {isLoggedIn} = useContext(UserProfileContext);
 
     const [isOpen, setIsOpen] = useState(false);
     const [modal, setModal] = useState(false);
@@ -18,13 +21,25 @@ export default function Header() {
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav navbar>
-                        <NavItem>
-                            <NavLink tag={RRNavLink} to="/register">Sign Up</NavLink>
-                        </NavItem>
-                        <NavItem className="mx-0 mx-lg-1">
-                            <a aria-current="page" className="nav-link"
-                                style={{ cursor: "pointer" }} onClick={modalToggle}>Sign In</a>
-                        </NavItem>
+                        {isLoggedIn
+                        ? <>
+                            <NavItem>
+                                <NavLink tag={RRNavLink} to="/">Messages</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink tag={RRNavLink} to="/">Reservations</NavLink>
+                            </NavItem>
+                        </>
+                        : <>
+                            <NavItem>
+                                <NavLink tag={RRNavLink} to="/register">Sign Up</NavLink>
+                            </NavItem>
+                            <NavItem className="mx-0 mx-lg-1">
+                                <a aria-current="page" className="nav-link"
+                                    style={{ cursor: "pointer" }} onClick={modalToggle}>Sign In</a>
+                            </NavItem>
+                        </>
+                        }
                         <NavItem>
                             <NavLink tag={RRNavLink} to="/gear/new">List Your Gear</NavLink>
                         </NavItem>
