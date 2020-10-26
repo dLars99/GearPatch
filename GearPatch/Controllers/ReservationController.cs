@@ -38,6 +38,12 @@ namespace GearPatch.Controllers
             return Ok(reservation);
         }
 
+        [HttpGet("user/{id}")]
+        public IActionResult GetByUser(int id)
+        {
+            return Ok(_reservationRepository.GetByUserId(id));
+        }
+
         [HttpPost]
         public IActionResult Post(Reservation reservation)
         {

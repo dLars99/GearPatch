@@ -11,10 +11,13 @@ namespace GearPatch.Models
         public int Id { get; set; }
         [Required]
         public int OwnerId { get; set; }
+        public UserProfile Owner { get; set; }
         [Required]
         public int CustomerId { get; set; }
+        public UserProfile Customer { get; set; }
         [Required]
         public int GearId { get; set; }
+        public Gear Gear { get; set; }
         [Required]
         public int AgreedPrice { get; set; }
         [Required]

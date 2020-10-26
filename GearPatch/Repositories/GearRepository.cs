@@ -252,7 +252,7 @@ namespace GearPatch.Repositories
                     Name = DbUtils.GetString(reader, "GearTypeName"),
                     FirstOptionName = DbUtils.GetString(reader, "FirstOptionName"),
                     SecondOptionName = DbUtils.GetString(reader, "SecondOptionName")
-                },
+                }
             };
         }
     }
