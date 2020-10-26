@@ -23,7 +23,7 @@ namespace GearPatch.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT r.Id AS ReservationId, r.OwnerId, r.CustomerId, r.GearId, r.AgreedPrice, 
-                               r.StartDate, r.EndDate, r.Confirmed, r.ItemReturned
+                               r.StartDate, r.EndDate, r.Confirmed, r.ItemReturned,
 
                                g.Id AS GearId, g.Headline, g.Manufacturer, g.Model, g.Description, g.Price,
                                g.IsActive AS GearIsActive, g.ImageLocation as GearImageLocation, g.GearTypeId,
@@ -34,7 +34,7 @@ namespace GearPatch.Repositories
                                op.ImageLocation AS OwnerImageLocation, op.IsActive AS OwnerIsActive,
 
                                cp.FirstName AS CustomerFirstName, cp.LastName AS CustomerLastName, cp.Bio AS CustomerBio, 
-                               cp.ImageLocation AS CustomerImageLocation, cp.IsActive AS CustomerIsActive,
+                               cp.ImageLocation AS CustomerImageLocation, cp.IsActive AS CustomerIsActive
                                
                           FROM Reservation r
                      LEFT JOIN UserProfile op ON op.Id = r.OwnerId
@@ -42,6 +42,7 @@ namespace GearPatch.Repositories
                      LEFT JOIN Gear g on g.Id = r.GearId
                      LEFT JOIN GearType gt on gt.Id = g.GearTypeId
                          WHERE r.OwnerId = @Id OR r.CustomerId = @Id";
+                    DbUtils.AddParameter(cmd, "@Id", id);
                     var reader = cmd.ExecuteReader();
 
                     var reservations = new List<Reservation>();
@@ -106,7 +107,7 @@ namespace GearPatch.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned
+                        SELECT Id AS ReservationId, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned
                           FROM Reservation
                          WHERE Id = @Id";
                     DbUtils.AddParameter(cmd, "@Id", id);
@@ -187,7 +188,7 @@ namespace GearPatch.Repositories
         {
             return new Reservation()
             {
-                Id = DbUtils.GetInt(reader, "Id"),
+                Id = DbUtils.GetInt(reader, "ReservationId"),
                 OwnerId = DbUtils.GetInt(reader, "OwnerId"),
                 CustomerId = DbUtils.GetInt(reader, "CustomerId"),
                 GearId = DbUtils.GetInt(reader, "GearId"),
