@@ -15,7 +15,7 @@ export function UserProfileProvider(props) {
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((u) => {
-        setIsFirebaseReady(true);
+            setIsFirebaseReady(true);
         });
     }, []);
 
@@ -47,26 +47,30 @@ export function UserProfileProvider(props) {
     
     const getToken = () => firebase.auth().currentUser.getIdToken();
 
-    const getUserProfile = (firebaseUserId) => {
-        return getToken().then((token) =>
-            fetch(`${apiUrl}/${firebaseUserId}`, {
-                method: "GET",
-                headers: {
+    const getUserProfile = async (firebaseUserId) => {
+        const token = await getToken();
+        const res = await fetch(`${apiUrl}/${firebaseUserId}`, {
+            method: "GET",
+            headers: {
                 Authorization: `Bearer ${token}`
-                }
-            }).then(resp => resp.json()));
+            }
+        });
+        const data = await res.json();
+        return data;
     };
 
     const saveUser = (userProfile) => {
-        return getToken().then((token) =>
-            fetch(apiUrl, {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(userProfile)
-            }).then(resp => resp.json()));
+        const token = await getToken();
+        const res = await fetch(apiUrl, {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userProfile)
+        });
+        const data = await res.json();
+        return data;
     };
         
 
