@@ -22,7 +22,7 @@ export default function({ modal, toggle, startDate, endDate, total, gear, setIsS
         setIsSending(true);
         newReservation(reservation).then(() => {
             toggle();
-            history.push("/");
+            history.push("/reservations");
         });
     };
 
