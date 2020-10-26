@@ -59,7 +59,7 @@ export function UserProfileProvider(props) {
         return data;
     };
 
-    const saveUser = (userProfile) => {
+    const saveUser = async (userProfile) => {
         const token = await getToken();
         const res = await fetch(apiUrl, {
             method: "POST",

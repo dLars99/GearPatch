@@ -8,13 +8,13 @@ export default function GearSummary({ gearItem }) {
 
     const history = useHistory();
 
-    const cardHover = (e) => {
-        e.currentTarget.src = gearItem.userProfile.imageLocation;
+    const cardHover = (evt) => {
+        evt.currentTarget.src = gearItem.userProfile.imageLocation;
         setShowOwner(true);
     }
 
-    const notCardHover = (e) => {
-        e.currentTarget.src = gearItem.imageLocation;
+    const notCardHover = (evt) => {
+        evt.currentTarget.src = gearItem.imageLocation;
         setShowOwner(false)
     }
 
