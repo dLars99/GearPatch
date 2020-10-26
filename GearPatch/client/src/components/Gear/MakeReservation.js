@@ -1,12 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
+import { ReservationContext } from "../../providers/ReservationProvider";
 import ConfirmReservation from "./ConfirmReservation";
 import { Col, Card, CardTitle, CardBody, Form, FormGroup,
     Input, Label, FormFeedback, Row, Button } from "reactstrap";
 
-export default function MakeReservation({ gear }) {
+export default function MakeReservation({ gear, history }) {
 
     const { isLoggedIn } = useContext(UserProfileContext);
+    const { newReservation } = useContext(ReservationContext);
 
     const [startDate, setStartDate] = useState();
     const [endDate, setEndDate] = useState();
@@ -19,17 +21,36 @@ export default function MakeReservation({ gear }) {
 
     const completeReservation = (evt) => {
         evt.preventDefault();
-        // Validation
         console.log(startDate, endDate)
-        if (!startDate) {
-            setInvalid({...invalid, startDate: true});
-        } else if (!endDate) {
-            setInvalid({...invalid, endDate: true});
-        } else if (!isLoggedIn) {
-            alert("Please Sign Up or Sign In before making a reservation.");
-        } else {
+        try {
+            
+            // Validation
+            if (!startDate) {
+                setInvalid({...invalid, startDate: true});
+                throw("Enter a date to start the rental");
+            } else if (!endDate) {
+                setInvalid({...invalid, endDate: true});
+                throw("Enter a date to return the rented item");
+            } else if (!isLoggedIn) {
+                throw("Please Sign Up or Sign In before making a reservation.");
+            }
+
+            const reservation = {
+                ownerId = gear.ownerId,
+                gearId = gear.id,
+                agreedPrice = gear.price,
+                startDate = startDate,
+                endDate = endDate
+            }
+
             setIsSending(true);
-            confirmToggle();
+            newReservation(reservation).then(() => {
+                confirmToggle();
+                history.push("/");
+            });
+            
+        } catch(err) {
+            alert(err);
         }
     }
 

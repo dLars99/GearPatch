@@ -130,7 +130,6 @@ namespace GearPatch.Repositories
 
                         if (gear == null)
                         {
-
                             gear = GearFromDb(reader);
                             gear.Accessories = new List<Accessory>();
                         }
