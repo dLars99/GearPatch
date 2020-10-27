@@ -39,15 +39,15 @@ namespace GearPatch.Controllers
             var currentUser = GetCurrentUserProfile();
             message.SenderId = currentUser.Id;
 
-            try
-            {
+            //try
+            //{
                 _userMessageRepository.Add(message);
                 return CreatedAtAction("Get", new { id = message.Id }, message);
-            }
-            catch
-            {
-                return StatusCode(500);
-            }
+            //}
+            //catch
+            //{
+            //    return StatusCode(500);
+            //}
         }
 
         private UserProfile GetCurrentUserProfile()

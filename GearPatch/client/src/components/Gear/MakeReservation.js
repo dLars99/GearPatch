@@ -2,11 +2,12 @@ import React, { useContext, useState, useEffect } from "react";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
 import { ReservationContext } from "../../providers/ReservationProvider";
 import ConfirmReservation from "./ConfirmReservation";
+import NewMessage from "../Messages/NewMessage";
 import { NumberOfDays, TodayDate } from "../Helpers/DateHelper";
 import { Col, Card, CardTitle, CardBody, Form, FormGroup,
     Input, Label, FormFeedback, Row, Button } from "reactstrap";
 
-export default function MakeReservation({ gear, history }) {
+export default function MakeReservation({ gear }) {
 
     const { isLoggedIn } = useContext(UserProfileContext);
     const { checkAvailability } = useContext(ReservationContext);
@@ -16,10 +17,12 @@ export default function MakeReservation({ gear, history }) {
     const [invalid, setInvalid] = useState({startDate: false, endDate: false})
     const [isSending, setIsSending] = useState(false);
     const [confirmModal, setConfirmModal] = useState(false);
+    const [messageModal, setMessageModal] = useState(false);
     const [today, setToday] = useState();
     const [total, setTotal] = useState();
 
     const confirmToggle = () => setConfirmModal(!confirmModal);
+    const messageToggle = () => setMessageModal(!messageModal);
 
     const handleEndDate = (evt) => {
         const selectedEndDate = evt.target.value;
@@ -66,7 +69,15 @@ export default function MakeReservation({ gear, history }) {
     }, [])
 
     const sendMessage = (evt) => {
-        console.log("Message");
+        try {
+            if (!isLoggedIn) {
+                throw new Error("Please Sign Up or Sign In to send a message.");
+            }
+            messageToggle();
+        }
+        catch(err) {
+            alert(err)
+        }
     }
 
     return (
@@ -103,6 +114,7 @@ export default function MakeReservation({ gear, history }) {
                 </CardBody>
             </Card>
             <ConfirmReservation modal={confirmModal} toggle={confirmToggle} startDate={startDate} endDate={endDate} total={total} gear={gear} setIsSending={setIsSending} />
+            <NewMessage modal={messageModal} toggle={messageToggle} gear={gear} />
         </Col>
     )
 }
