@@ -12,7 +12,7 @@ export function MessageProvider(props) {
 
     const [messages, setMessages] = useState([]);
 
-    const currentUserId = JSON.parse(sessionStorage.userProfile).id;
+    const currentUserId = sessionStorage.userProfile ? JSON.parse(sessionStorage.userProfile).id : 0;
 
     const sendMessage = async (message) => {
         const token = await getToken();

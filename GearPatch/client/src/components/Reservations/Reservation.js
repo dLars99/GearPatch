@@ -39,7 +39,6 @@ export default function ({ reservation, currentUserId, prompt }) {
                     </Row>
                     {reservation.ownerId === currentUserId
                     ? <Row>
-                        {console.log(reservation)}
                         <Col md={2} />
                         <Col md={8}>
                             { !reservation.confirmed

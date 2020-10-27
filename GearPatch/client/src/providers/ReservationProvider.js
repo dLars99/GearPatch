@@ -10,7 +10,7 @@ export function ReservationProvider(props) {
 
     const [reservations, setReservations] = useState([]);
 
-    const currentUserId = JSON.parse(sessionStorage.userProfile).id;
+    const currentUserId = (sessionStorage.userProfile) ? JSON.parse(sessionStorage.userProfile).id : 0;
 
     const getByUser = async () => {
         const token = await getToken();
