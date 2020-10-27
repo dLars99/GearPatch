@@ -1,12 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { NavLink as RRNavLink } from "react-router-dom";
 import Login from "./Login/Login";
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink } from "reactstrap";
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, Badge } from "reactstrap";
 import { UserProfileContext } from "../providers/UserProfileProvider";
+import { MessageContext } from "../providers/MessageProvider";
 
 export default function Header() {
 
     const {isLoggedIn} = useContext(UserProfileContext);
+    const { unread, getUnread } = useContext(MessageContext);
 
     const [isOpen, setIsOpen] = useState(false);
     const [modal, setModal] = useState(false);
@@ -14,17 +16,25 @@ export default function Header() {
     const toggle = () => setIsOpen(!isOpen);
     const modalToggle = () => setModal(!modal);
 
+    useEffect(() => {
+        getUnread()
+        // eslint-disable-next-line
+    }, [isLoggedIn])
+
     return (
         <header>
             <Navbar color="secondary" dark fixed="top" expand="lg">
                 <NavbarBrand tag={RRNavLink} to="/">GearPatch</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
+                    {console.log(unread)}
                     <Nav navbar>
                         {isLoggedIn
                         ? <>
                             <NavItem>
-                                <NavLink tag={RRNavLink} to="/">Messages</NavLink>
+                                <NavLink tag={RRNavLink} to="/">
+                                    Messages<Badge color="primary" pill>{unread}</Badge>
+                                    </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink tag={RRNavLink} to="/reservations">Reservations</NavLink>

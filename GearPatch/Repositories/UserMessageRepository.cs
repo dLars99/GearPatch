@@ -104,5 +104,32 @@ namespace GearPatch.Repositories
                 }
             }
         }
+
+        public int NewMessageCount(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT Count(Id) AS MessageCount
+                          FROM UserMessage
+                         WHERE RecipientId = @Id AND Unread = 1;";
+                    DbUtils.AddParameter(cmd, "@Id", userId);
+
+                    var reader = cmd.ExecuteReader();
+                    int messageCount = 0;
+
+                    if (reader.Read())
+                    {
+                        messageCount = DbUtils.GetInt(reader, "MessageCount");
+                    }
+
+                    reader.Close();
+                    return messageCount;
+                }
+            }
+        }
     }
 }

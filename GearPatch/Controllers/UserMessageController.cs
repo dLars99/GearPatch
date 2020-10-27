@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserMessageController : ControllerBase
@@ -31,6 +31,13 @@ namespace GearPatch.Controllers
             }
 
             return Ok(message);
+        }
+
+        [HttpGet("new/{id}")]
+        public IActionResult GetNewMessageCount(int id)
+        {
+            int messageCount = _userMessageRepository.NewMessageCount(id);
+            return Ok(messageCount);
         }
 
         [HttpPost]

@@ -8,5 +8,6 @@ namespace GearPatch.Repositories
         void Add(UserMessage message);
         List<UserMessage> GetByUser(int id);
         UserMessage GetById(int id);
+        int NewMessageCount(int userId);
     }
 }
