@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 
-export default function({ modal, toggle, confirm, id }) {
+export default function({ modal, toggle, confirm, reservation }) {
 
     return (
         <Modal isOpen={modal} toggle={toggle} backdrop={true} keyboard={true}>
@@ -10,7 +10,7 @@ export default function({ modal, toggle, confirm, id }) {
                 <h4 className="text-center">Confirm this reservation?</h4>
             </ModalBody>
             <ModalFooter>
-                <Button color="primary" onClick={(evt) => confirm(evt, id)}>Confirm</Button>{' '}
+                <Button color="primary" onClick={(evt) => confirm(evt, reservation)}>Confirm</Button>{' '}
                 <Button color="secondary" onClick={toggle}>Cancel</Button>
             </ModalFooter>
         </Modal>

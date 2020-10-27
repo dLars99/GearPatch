@@ -23,7 +23,8 @@ export function ConfirmReservationMessage(reservation) {
 
     const currentUser = JSON.parse(sessionStorage.userProfile);
 
-    const messageText = ``
+    const messageText = `${reservation.owner.firstName} ${reservation.owner.lastName[0]} has confirmed your reservation for ${reservation.gear.manufacturer} ${reservation.gear.model} from ${reservation.startDate} to ${reservation.endDate}.
+    Please contact ${reservation.owner.firstName} with any questions and to make arrangements for pick up and drop off.`
 
     return {
         recipientId: currentUser.id,

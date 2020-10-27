@@ -1,8 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { ReservationContext } from "../../providers/ReservationProvider";
+import { MessageContext } from "../../providers/MessageProvider";
 import Reservation from "./Reservation";
 import OwnerConfirm from "./OwnerConfirm";
 import MarkReturn from "./MarkReturn";
+import { ConfirmReservationMessage } from "../Messages/ReservationAutoMessages";
 import { Row, Col } from "reactstrap";
 
 export default function() {
@@ -15,18 +17,22 @@ export default function() {
     const returnToggle = () => setReturnModal(!returnModal);
 
     const { reservations, getByUser, saveConfirmation } = useContext(ReservationContext);
+    const { sendMessage } = useContext(MessageContext);
 
     const currentUserId = JSON.parse(sessionStorage.userProfile).id;
 
-    const prompt = (evt, id) => {
+    const prompt = (evt, reservation) => {
         evt.preventDefault();
-        setThisReservation(id);
+        setThisReservation(reservation);
         confirmToggle();
     }
 
-    const confirm = (evt, id) => {
+    const confirm = (evt, reservation) => {
         evt.preventDefault();
-        saveConfirmation(id).then(() => getByUser());
+        saveConfirmation(reservation.id).then(() => {
+            const confirmMessage = ConfirmReservationMessage(reservation);
+            sendMessage(confirmMessage)
+        }).then(() => getByUser());
         confirmToggle();
     }
 
@@ -45,7 +51,7 @@ export default function() {
             {reservations.map(r => 
                 <Reservation key={r.id} reservation={r} currentUserId={currentUserId} prompt={prompt} />
             )}
-            <OwnerConfirm modal={confirmModal} toggle={confirmToggle} confirm={confirm} id={thisReservation} />
+            <OwnerConfirm modal={confirmModal} toggle={confirmToggle} confirm={confirm} reservation={thisReservation} />
             <MarkReturn modal={returnModal} toggle={returnToggle} id={thisReservation} />
         </>
     )

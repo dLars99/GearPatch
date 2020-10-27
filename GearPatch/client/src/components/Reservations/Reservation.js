@@ -42,7 +42,7 @@ export default function ({ reservation, currentUserId, prompt }) {
                         <Col md={2} />
                         <Col md={8}>
                             { !reservation.confirmed
-                            && <Button block onClick={(evt) => prompt(evt, reservation.id)}>Confirm</Button>}
+                            && <Button block onClick={(evt) => prompt(evt, reservation)}>Confirm</Button>}
                             { (reservation.confirmed && !reservation.itemReturned)
                             && <Button block>Mark Returned</Button>}
                         </Col>
