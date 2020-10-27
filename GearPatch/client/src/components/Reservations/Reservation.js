@@ -2,7 +2,7 @@ import React from "react";
 import { NumberOfDays } from "../Helpers/DateHelper";
 import { Row, Col, Button } from "reactstrap";
 
-export default function ({ reservation, currentUserId }) {
+export default function ({ reservation, currentUserId, prompt }) {
 
     const totalPrice = NumberOfDays(reservation.startDate, reservation.endDate) * reservation.agreedPrice;
 
@@ -39,11 +39,12 @@ export default function ({ reservation, currentUserId }) {
                     </Row>
                     {reservation.ownerId === currentUserId
                     ? <Row>
+                        {console.log(reservation)}
                         <Col md={2} />
                         <Col md={8}>
-                            { !reservation.isConfirmed
-                            && <Button block>Confirm</Button>}
-                            { (reservation.isConfirmed && !reservation.isReturned)
+                            { !reservation.confirmed
+                            && <Button block onClick={(evt) => prompt(evt, reservation.id)}>Confirm</Button>}
+                            { (reservation.confirmed && !reservation.itemReturned)
                             && <Button block>Mark Returned</Button>}
                         </Col>
                         <Col md={2} />
@@ -65,3 +66,5 @@ export default function ({ reservation, currentUserId }) {
         </>
     )
 }
+
+// 

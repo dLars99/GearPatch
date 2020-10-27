@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ReservationController : ControllerBase
@@ -84,6 +84,24 @@ namespace GearPatch.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpPut("confirm/{id}")]
+        public IActionResult Confirm(int id)
+        {
+            var reservation = _reservationRepository.GetById(id);
+            reservation.Confirmed = true;
+            _reservationRepository.Update(reservation);
+            return NoContent();
+        }
+
+        [HttpPut("return/{id}")]
+        public IActionResult Return(int id)
+        {
+            var reservation = _reservationRepository.GetById(id);
+            reservation.ItemReturned = true;
+            _reservationRepository.Update(reservation);
+            return NoContent();
         }
 
         private UserProfile GetCurrentUserProfile()
