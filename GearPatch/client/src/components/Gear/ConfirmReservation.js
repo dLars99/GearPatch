@@ -1,16 +1,21 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { ReservationContext } from "../../providers/ReservationProvider";
+import { MessageContext } from "../../providers/MessageProvider";
+import { NewReservationMessage } from "../Messages/ReservationAutoMessages";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 
 export default function({ modal, toggle, startDate, endDate, total, gear, setIsSending }) {
 
     const { newReservation } = useContext(ReservationContext);
+    const { sendMessage } = useContext(MessageContext);
 
     const history = useHistory();
 
     const reservationSubmit = (evt) => {
         evt.preventDefault();
+        setIsSending(true);
+
         const reservation = {
             ownerId: gear.userProfileId,
             gearId: gear.id,
@@ -19,8 +24,11 @@ export default function({ modal, toggle, startDate, endDate, total, gear, setIsS
             endDate: endDate
         }
 
-        setIsSending(true);
-        newReservation(reservation).then(() => {
+        newReservation(reservation)
+        .then(() => {
+            const newMessage = NewReservationMessage(reservation, gear);
+            sendMessage(newMessage)})
+        .then(() => {
             toggle();
             history.push("/reservations");
         });

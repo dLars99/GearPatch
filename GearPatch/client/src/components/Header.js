@@ -1,18 +1,28 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { NavLink as RRNavLink } from "react-router-dom";
 import Login from "./Login/Login";
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink } from "reactstrap";
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, Badge } from "reactstrap";
 import { UserProfileContext } from "../providers/UserProfileProvider";
+import { MessageContext } from "../providers/MessageProvider";
+import { ReservationContext } from "../providers/ReservationProvider";
 
 export default function Header() {
 
     const {isLoggedIn} = useContext(UserProfileContext);
+    const { unread, getUnread } = useContext(MessageContext);
+    const { unconfirmed, getUnconfirmed } = useContext(ReservationContext);
 
     const [isOpen, setIsOpen] = useState(false);
     const [modal, setModal] = useState(false);
     
     const toggle = () => setIsOpen(!isOpen);
     const modalToggle = () => setModal(!modal);
+
+    useEffect(() => {
+        getUnread();
+        getUnconfirmed();
+        // eslint-disable-next-line
+    }, [isLoggedIn])
 
     return (
         <header>
@@ -24,10 +34,14 @@ export default function Header() {
                         {isLoggedIn
                         ? <>
                             <NavItem>
-                                <NavLink tag={RRNavLink} to="/">Messages</NavLink>
+                                <NavLink tag={RRNavLink} to="/">
+                                    Messages<Badge color="primary" pill>{unread}</Badge>
+                                    </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={RRNavLink} to="/reservations">Reservations</NavLink>
+                                <NavLink tag={RRNavLink} to="/reservations">
+                                    Reservations<Badge color="primary" pill>{unconfirmed}</Badge>
+                                </NavLink>
                             </NavItem>
                         </>
                         : <>

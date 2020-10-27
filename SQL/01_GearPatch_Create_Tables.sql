@@ -17,6 +17,7 @@ DROP TABLE IF EXISTS [Accessory];
 DROP TABLE IF EXISTS [Gear];
 DROP TABLE IF EXISTS [GearType];
 DROP TABLE IF EXISTS [Message];
+DROP TABLE IF EXISTS [UserMessage];
 DROP TABLE IF EXISTS [UserProfile];
 GO
 
@@ -149,7 +150,7 @@ CREATE TABLE [Accessory] (
 )
 
 
-CREATE TABLE [Message] (
+CREATE TABLE [UserMessage] (
   [Id] integer PRIMARY KEY IDENTITY,
   [SenderId] integer NOT NULL,
   [RecipientId] integer NOT NULL,

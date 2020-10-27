@@ -6,7 +6,6 @@ import Homepage from "./Homepage";
 import GearSearchResults from "./Gear/GearSearchResults";
 import GearListing from "./Gear/GearListing";
 import ReservationPanel from "./Reservations/ReservationPanel";
-import { ReservationProvider } from "../providers/ReservationProvider";
 
 export default function ApplicationViews() {
 
@@ -27,16 +26,12 @@ export default function ApplicationViews() {
 
                 <Route path="/gear/:id">
                     <GearProvider>
-                        <ReservationProvider>
-                            <GearListing />
-                        </ReservationProvider>
+                        <GearListing />
                     </GearProvider>
                 </Route>
 
                 <Route path="/reservations">
-                    <ReservationProvider>
-                        {isLoggedIn ? <ReservationPanel /> : <Redirect to="/" />}                       
-                    </ReservationProvider>
+                    {isLoggedIn ? <ReservationPanel /> : <Redirect to="/" />}                       
                 </Route>
             </Switch>
         </main>
