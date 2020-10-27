@@ -7,6 +7,7 @@ import GearSearchResults from "./Gear/GearSearchResults";
 import GearListing from "./Gear/GearListing";
 import ReservationPanel from "./Reservations/ReservationPanel";
 import { ReservationProvider } from "../providers/ReservationProvider";
+import { MessageProvider } from "../providers/MessageProvider";
 
 export default function ApplicationViews() {
 
@@ -28,14 +29,18 @@ export default function ApplicationViews() {
                 <Route path="/gear/:id">
                     <GearProvider>
                         <ReservationProvider>
-                            <GearListing />
+                            <MessageProvider>
+                                <GearListing />
+                            </MessageProvider>
                         </ReservationProvider>
                     </GearProvider>
                 </Route>
 
                 <Route path="/reservations">
                     <ReservationProvider>
-                        {isLoggedIn ? <ReservationPanel /> : <Redirect to="/" />}                       
+                        <MessageProvider>
+                            {isLoggedIn ? <ReservationPanel /> : <Redirect to="/" />}                       
+                        </MessageProvider>
                     </ReservationProvider>
                 </Route>
             </Switch>

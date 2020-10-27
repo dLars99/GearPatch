@@ -1,9 +1,9 @@
 import React, { useState, createContext, useContext } from "react";
 import { UserProfileContext } from "./UserProfileProvider";
 
-export const ReservationContext = createContext();
+export const MessageContext = createContext();
 
-export function ReservationProvider(props) {
+export function MessageProvider(props) {
     // The API uses "UserMessage" due to "Message" being an existing class in C#.
     // Here, we use "message" for simplicity.
     const url = "/api/usermessage";
@@ -34,8 +34,8 @@ export function ReservationProvider(props) {
     }
 
     return (
-        <ReservationContext.Provider value={{ messages, sendMessage }}>
+        <MessageContext.Provider value={{ messages, sendMessage }}>
             {props.children}
-        </ReservationContext.Provider>
+        </MessageContext.Provider>
     )
 }
