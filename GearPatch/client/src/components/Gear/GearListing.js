@@ -16,10 +16,7 @@ export default function GearList() {
     const { getGearItem } = useContext(GearContext);
 
     useEffect(() => {
-        getGearItem(id).then((data) => {
-            console.log(data)
-            setGear(data)
-        });
+        getGearItem(id).then(setGear);
         // eslint-disable-next-line
     }, [])
 

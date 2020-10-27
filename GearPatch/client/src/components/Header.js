@@ -27,7 +27,7 @@ export default function Header() {
                                 <NavLink tag={RRNavLink} to="/">Messages</NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={RRNavLink} to="/">Reservations</NavLink>
+                                <NavLink tag={RRNavLink} to="/reservations">Reservations</NavLink>
                             </NavItem>
                         </>
                         : <>

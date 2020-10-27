@@ -2,11 +2,7 @@
 using GearPatch.Utils;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace GearPatch.Repositories
 {
@@ -134,7 +130,6 @@ namespace GearPatch.Repositories
 
                         if (gear == null)
                         {
-
                             gear = GearFromDb(reader);
                             gear.Accessories = new List<Accessory>();
                         }
@@ -257,7 +252,7 @@ namespace GearPatch.Repositories
                     Name = DbUtils.GetString(reader, "GearTypeName"),
                     FirstOptionName = DbUtils.GetString(reader, "FirstOptionName"),
                     SecondOptionName = DbUtils.GetString(reader, "SecondOptionName")
-                },
+                }
             };
         }
     }

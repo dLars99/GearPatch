@@ -1,10 +1,9 @@
 import React, { useState, useContext } from "react";
-import { useHistory } from "react-router-dom";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label, Button } from "reactstrap";
 
 export default function({ modal, modalToggle }) {
-    const history = useHistory();
+
     const { login } = useContext(UserProfileContext);
 
     const [email, setEmail] = useState();
