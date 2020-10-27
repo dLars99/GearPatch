@@ -4,11 +4,13 @@ import Login from "./Login/Login";
 import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, Badge } from "reactstrap";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { MessageContext } from "../providers/MessageProvider";
+import { ReservationContext } from "../providers/ReservationProvider";
 
 export default function Header() {
 
     const {isLoggedIn} = useContext(UserProfileContext);
     const { unread, getUnread } = useContext(MessageContext);
+    const { unconfirmed, getUnconfirmed } = useContext(ReservationContext);
 
     const [isOpen, setIsOpen] = useState(false);
     const [modal, setModal] = useState(false);
@@ -17,7 +19,8 @@ export default function Header() {
     const modalToggle = () => setModal(!modal);
 
     useEffect(() => {
-        getUnread()
+        getUnread();
+        getUnconfirmed();
         // eslint-disable-next-line
     }, [isLoggedIn])
 
@@ -27,7 +30,6 @@ export default function Header() {
                 <NavbarBrand tag={RRNavLink} to="/">GearPatch</NavbarBrand>
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
-                    {console.log(unread)}
                     <Nav navbar>
                         {isLoggedIn
                         ? <>
@@ -37,7 +39,9 @@ export default function Header() {
                                     </NavLink>
                             </NavItem>
                             <NavItem>
-                                <NavLink tag={RRNavLink} to="/reservations">Reservations</NavLink>
+                                <NavLink tag={RRNavLink} to="/reservations">
+                                    Reservations<Badge color="primary" pill>{unconfirmed}</Badge>
+                                </NavLink>
                             </NavItem>
                         </>
                         : <>

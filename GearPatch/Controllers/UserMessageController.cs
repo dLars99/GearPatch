@@ -33,10 +33,11 @@ namespace GearPatch.Controllers
             return Ok(message);
         }
 
-        [HttpGet("new/{id}")]
-        public IActionResult GetNewMessageCount(int id)
+        [HttpGet("new")]
+        public IActionResult GetNewMessageCount()
         {
-            int messageCount = _userMessageRepository.NewMessageCount(id);
+            var currentUser = GetCurrentUserProfile();
+            int messageCount = _userMessageRepository.NewMessageCount(currentUser.Id);
             return Ok(messageCount);
         }
 

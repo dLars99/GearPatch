@@ -36,7 +36,7 @@ export function MessageProvider(props) {
 
     const getUnread = async () => {
         const token = await getToken();
-        const res = await fetch(`${url}/new/${currentUserId}`, {
+        const res = await fetch(`${url}/new`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -45,7 +45,6 @@ export function MessageProvider(props) {
         const data = await res.json();
 
         setUnread(data);
-        return data;
     }
 
     return (

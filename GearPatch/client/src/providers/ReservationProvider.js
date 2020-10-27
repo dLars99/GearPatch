@@ -9,6 +9,7 @@ export function ReservationProvider(props) {
     const { getToken } = useContext(UserProfileContext);
 
     const [reservations, setReservations] = useState([]);
+    const [unconfirmed, setUnconfirmed] = useState();
 
     const currentUserId = (sessionStorage.userProfile) ? JSON.parse(sessionStorage.userProfile).id : 0;
 
@@ -23,6 +24,20 @@ export function ReservationProvider(props) {
         const data = await res.json();
         setReservations(data);
     }
+
+    const getUnconfirmed = async () => {
+        const token = await getToken();
+        const res = await fetch(`${url}/new`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const data = await res.json();
+
+        setUnconfirmed(data);
+    }
+
 
     const newReservation = async (reservation) => {
         const token = await getToken();
@@ -67,7 +82,7 @@ export function ReservationProvider(props) {
     }
 
     return (
-        <ReservationContext.Provider value={{ reservations, getByUser, newReservation, checkAvailability, saveConfirmation }}>
+        <ReservationContext.Provider value={{ reservations, unconfirmed, getByUser, newReservation, getUnconfirmed, checkAvailability, saveConfirmation }}>
             {props.children}
         </ReservationContext.Provider>
     )

@@ -127,7 +127,34 @@ namespace GearPatch.Repositories
             }
         }
 
-        public void Add(Reservation reservation)
+        public int NewRequestCount(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT Count(Id) AS RequestCount
+                          FROM Reservation
+                         WHERE OwnerId = @Id AND Confirmed = 0;";
+                    DbUtils.AddParameter(cmd, "@Id", userId);
+
+                    var reader = cmd.ExecuteReader();
+                    int messageCount = 0;
+
+                    if (reader.Read())
+                    {
+                        messageCount = DbUtils.GetInt(reader, "RequestCount");
+                    }
+
+                    reader.Close();
+                    return messageCount;
+                }
+            }
+        }
+
+            public void Add(Reservation reservation)
         {
             using (var conn = Connection)
             {

@@ -28,16 +28,12 @@ export default function ApplicationViews() {
 
                 <Route path="/gear/:id">
                     <GearProvider>
-                        <ReservationProvider>
-                            <GearListing />
-                        </ReservationProvider>
+                        <GearListing />
                     </GearProvider>
                 </Route>
 
                 <Route path="/reservations">
-                    <ReservationProvider>
-                        {isLoggedIn ? <ReservationPanel /> : <Redirect to="/" />}                       
-                    </ReservationProvider>
+                    {isLoggedIn ? <ReservationPanel /> : <Redirect to="/" />}                       
                 </Route>
             </Switch>
         </main>

@@ -44,6 +44,14 @@ namespace GearPatch.Controllers
             return Ok(_reservationRepository.GetByUserId(id));
         }
 
+        [HttpGet("new")]
+        public IActionResult GetNewMessageCount()
+        {
+            var currentUser = GetCurrentUserProfile();
+            int messageCount = _reservationRepository.NewRequestCount(currentUser.Id);
+            return Ok(messageCount);
+        }
+
         [HttpPost]
         public IActionResult Post(Reservation reservation)
         {
