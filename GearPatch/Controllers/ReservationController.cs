@@ -67,7 +67,6 @@ namespace GearPatch.Controllers
             {
                 return StatusCode(500);
             }
-
         }
 
         [HttpGet("check")]
