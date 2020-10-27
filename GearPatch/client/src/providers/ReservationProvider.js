@@ -52,12 +52,23 @@ export function ReservationProvider(props) {
                 Authorization: `Bearer ${token}`
             }
         });
-        const value = await res.json();
-        return value;
+        const data = await res.json();
+        return data;
+    }
+
+    const saveConfirmation = async (id) => {
+        const token = await getToken();
+        const res = await fetch(`${url}/confirm/${id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (!res.ok) alert("An error has occurred. Please try again.");
     }
 
     return (
-        <ReservationContext.Provider value={{ reservations, getByUser, newReservation, checkAvailability }}>
+        <ReservationContext.Provider value={{ reservations, getByUser, newReservation, checkAvailability, saveConfirmation }}>
             {props.children}
         </ReservationContext.Provider>
     )

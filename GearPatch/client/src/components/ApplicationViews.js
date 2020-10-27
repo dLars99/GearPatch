@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { UserProfileProvider } from "../providers/UserProfileProvider";
+import { UserProfileContext } from "../providers/UserProfileProvider";
 import { GearProvider } from "../providers/GearProvider";
 import Homepage from "./Homepage";
 import GearSearchResults from "./Gear/GearSearchResults";
@@ -9,6 +9,8 @@ import ReservationPanel from "./Reservations/ReservationPanel";
 import { ReservationProvider } from "../providers/ReservationProvider";
 
 export default function ApplicationViews() {
+
+    const { isLoggedIn } = useContext(UserProfileContext);
 
     return (
         <main className="container-fluid pt-5">
@@ -33,7 +35,7 @@ export default function ApplicationViews() {
 
                 <Route path="/reservations">
                     <ReservationProvider>
-                        <ReservationPanel />
+                        {isLoggedIn ? <ReservationPanel /> : <Redirect to="/" />}                       
                     </ReservationProvider>
                 </Route>
             </Switch>

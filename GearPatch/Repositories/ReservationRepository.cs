@@ -184,6 +184,40 @@ namespace GearPatch.Repositories
             }
         }
 
+        public void Update(Reservation reservation)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Reservation 
+                                           SET OwnerId = @OwnerId,
+                                               CustomerId = @CustomerId,
+                                               GearId = @GearId,
+                                               AgreedPrice = @AgreedPrice,
+                                               StartDate = @StartDate,
+                                               EndDate = @EndDate,
+                                               Confirmed = @Confirmed,
+                                               ItemReturned = @ItemReturned
+                                         WHERE Id = @Id;";
+
+                    DbUtils.AddParameter(cmd, "@OwnerId", reservation.OwnerId);
+                    DbUtils.AddParameter(cmd, "@CustomerId", reservation.CustomerId);
+                    DbUtils.AddParameter(cmd, "@GearId", reservation.GearId);
+                    DbUtils.AddParameter(cmd, "@AgreedPrice", reservation.AgreedPrice);
+                    DbUtils.AddParameter(cmd, "@StartDate", reservation.StartDate);
+                    DbUtils.AddParameter(cmd, "@EndDate", reservation.EndDate);
+                    DbUtils.AddParameter(cmd, "@Confirmed", reservation.Confirmed);
+                    DbUtils.AddParameter(cmd, "@ItemReturned", reservation.ItemReturned);
+                    DbUtils.AddParameter(cmd, "@Id", reservation.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private Reservation ReservationFromDb(SqlDataReader reader)
         {
             return new Reservation()
