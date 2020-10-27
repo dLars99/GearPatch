@@ -6,8 +6,6 @@ import Homepage from "./Homepage";
 import GearSearchResults from "./Gear/GearSearchResults";
 import GearListing from "./Gear/GearListing";
 import ReservationPanel from "./Reservations/ReservationPanel";
-import { ReservationProvider } from "../providers/ReservationProvider";
-import { MessageProvider } from "../providers/MessageProvider";
 
 export default function ApplicationViews() {
 

@@ -114,7 +114,10 @@ export default function MakeReservation({ gear }) {
                 </CardBody>
             </Card>
             <ConfirmReservation modal={confirmModal} toggle={confirmToggle} startDate={startDate} endDate={endDate} total={total} gear={gear} setIsSending={setIsSending} />
-            <NewMessage modal={messageModal} toggle={messageToggle} gear={gear} />
+            <NewMessage modal={messageModal} toggle={messageToggle} 
+                name={`${gear.userProfile.firstName} ${gear.userProfile.lastName[0]}.`}
+                item={`${gear.manufacturer} ${gear.model}`} recipientId={gear.userProfileId}
+            />
         </Col>
     )
 }

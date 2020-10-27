@@ -2,7 +2,7 @@ import React from "react";
 import { NumberOfDays } from "../Helpers/DateHelper";
 import { Row, Col, Button } from "reactstrap";
 
-export default function ({ reservation, currentUserId, prompt }) {
+export default function ({ reservation, currentUserId, prompt, composeMessage }) {
 
     const totalPrice = NumberOfDays(reservation.startDate, reservation.endDate) * reservation.agreedPrice;
 
@@ -37,19 +37,22 @@ export default function ({ reservation, currentUserId, prompt }) {
                             <h3>${totalPrice}</h3>
                         </Col>
                     </Row>
-                    {reservation.ownerId === currentUserId
-                    ? <Row>
+                    <Row>
                         <Col md={2} />
                         <Col md={8}>
-                            { !reservation.confirmed
-                            && <Button block onClick={(evt) => prompt(evt, reservation)}>Confirm</Button>}
-                            { (reservation.confirmed && !reservation.itemReturned)
-                            && <Button block>Mark Returned</Button>}
+                            {reservation.ownerId === currentUserId
+                            ? <>
+                                    { !reservation.confirmed
+                                    && <Button block onClick={(evt) => prompt(evt, reservation)}>Confirm</Button>}
+                                    { (reservation.confirmed && !reservation.itemReturned)
+                                    && <Button block>Mark Returned</Button>}
+                                </>
+                            : null
+                            }
+                            <Button block onClick={(evt) => composeMessage(evt, reservation)}>Send Message</Button>
                         </Col>
                         <Col md={2} />
                     </Row>
-                    : null
-                    }
                 </Col>
                 <Col md={2} className="overflow-hidden">
                     <img height="160px" className="rounded img-thumbnail" src={reservation.owner.imageLocation} alt={reservation.owner.lastName} />

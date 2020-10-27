@@ -2,17 +2,17 @@ import React, { useContext, useState } from "react";
 import { MessageContext } from "../../providers/MessageProvider";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Input, Label, Button } from "reactstrap";
 
-export default function({ modal, toggle, gear }){
+export default function({ modal, toggle, name, item, recipientId }){
 
     const { sendMessage } = useContext(MessageContext);
 
     // Set message state with default message
-    const [messageContent, setMessageContent] = useState(`I would like to ask a question about your ${gear.manufacturer} ${gear.model}`);
+    const [messageContent, setMessageContent] = useState(`I would like to ask a question about your ${item}`);
 
     const submitMessage = (evt) => {
         evt.preventDefault();
         const newMessage = {
-            recipientId: gear.userProfileId,
+            recipientId: recipientId,
             content: messageContent
         };
         sendMessage(newMessage)
@@ -28,7 +28,7 @@ export default function({ modal, toggle, gear }){
             <ModalBody>
                 <Form>
                     <FormGroup>
-                        <Label for="content">Message to {gear.userProfile.firstName} {gear.userProfile.lastName[0]}</Label>
+                        <Label for="content">Message to {name}</Label>
                         <Input type="textarea" name="content" id="content" 
                             defaultValue={messageContent}
                             onChange={(evt) => setMessageContent(evt.target.value)} />
