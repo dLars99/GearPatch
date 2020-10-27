@@ -27,7 +27,6 @@ export default function MakeReservation({ gear, history }) {
 
         let totalDays = NumberOfDays(startDate, selectedEndDate);
 
-        if (totalDays < 1) totalDays = 1;
         setTotal(totalDays * gear.price);
     }
 

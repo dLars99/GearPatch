@@ -6,7 +6,9 @@ export function NumberOfDays(startDate, endDate) {
     const firstDate = new Date(startDate);
     const secondDate = new Date(endDate);
 
-    return Math.ceil(Math.abs((secondDate - firstDate) / dayLength));
+    const diff = Math.ceil((secondDate - firstDate) / dayLength);
+    // The minimum length of any rental is one day
+    return (diff > 0) ? diff : 1;
 }
 
 export function TodayDate() {
