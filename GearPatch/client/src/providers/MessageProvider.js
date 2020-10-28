@@ -14,8 +14,6 @@ export function MessageProvider(props) {
     const [messages, setMessages] = useState([]);
     const [unread, setUnread] = useState();
 
-    const currentUserId = sessionStorage.userProfile ? JSON.parse(sessionStorage.userProfile).id : 0;
-
     const getConversations = async () => {
         const token = await getToken();
         const res = await fetch(`${url}/conversation`, {

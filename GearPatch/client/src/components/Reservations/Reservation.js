@@ -2,9 +2,12 @@ import React from "react";
 import { NumberOfDays } from "../Helpers/DateHelper";
 import { Row, Col, Button } from "reactstrap";
 
-export default function ({ reservation, currentUserId, prompt, composeMessage }) {
+export default function ({ reservation, currentUserId, prompt, composeMessage, cancelPrompt }) {
 
     const totalPrice = NumberOfDays(reservation.startDate, reservation.endDate) * reservation.agreedPrice;
+
+    const today = new Date();
+    const startDate = new Date(reservation.startDate);
 
     return (
         <>
@@ -33,13 +36,17 @@ export default function ({ reservation, currentUserId, prompt, composeMessage })
                             <p>Due Back By: {reservation.endDate.substr(0, 10)}</p>
                         </Col>
                         <Col md={4}>
-                            <p>Estimated Total</p>
+                            {reservation.itemReturned
+                            ? <p>Total</p>
+                            : <p>Estimated Total</p>
+                            }
                             <h3>${totalPrice}</h3>
                         </Col>
                     </Row>
                     <Row>
                         <Col md={2} />
                         <Col md={8}>
+
                             {reservation.ownerId === currentUserId
                             ? <>
                                     { !reservation.confirmed
@@ -47,9 +54,14 @@ export default function ({ reservation, currentUserId, prompt, composeMessage })
                                     { (reservation.confirmed && !reservation.itemReturned)
                                     && <Button block>Mark Returned</Button>}
                                 </>
-                            : null
-                            }
+                            : null}
+
                             <Button block onClick={(evt) => composeMessage(evt, reservation)}>Send Message</Button>
+
+                            {(startDate > today)
+                            ? <Button block color="danger" onClick={(evt) => cancelPrompt(evt, reservation)}>Cancel Reservation</Button>
+                            : null}
+
                         </Col>
                         <Col md={2} />
                     </Row>

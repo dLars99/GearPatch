@@ -111,6 +111,13 @@ namespace GearPatch.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _reservationRepository.Delete(id);
+            return NoContent();
+        }
+
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
