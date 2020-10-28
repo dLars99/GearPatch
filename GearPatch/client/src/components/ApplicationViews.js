@@ -6,6 +6,7 @@ import Homepage from "./Homepage";
 import GearSearchResults from "./Gear/GearSearchResults";
 import GearListing from "./Gear/GearListing";
 import ReservationPanel from "./Reservations/ReservationPanel";
+import MessageList from "./Messages/MessageList";
 
 export default function ApplicationViews() {
 
@@ -32,6 +33,10 @@ export default function ApplicationViews() {
 
                 <Route path="/reservations">
                     {isLoggedIn ? <ReservationPanel /> : <Redirect to="/" />}                       
+                </Route>
+
+                <Route path="/messages">
+                    {isLoggedIn ? <MessageList /> : <Redirect to="/" />}
                 </Route>
             </Switch>
         </main>

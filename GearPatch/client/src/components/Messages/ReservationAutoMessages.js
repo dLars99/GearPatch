@@ -9,7 +9,7 @@ export function NewReservationMessage(reservation, gear) {
     const messageText = `${currentUser.firstName} ${currentUser.lastName[0]}. has requested a reservation for ${gear.manufacturer} ${gear.model}.
     Requested checkout date: ${reservation.startDate}
     Requested return date: ${reservation.endDate}
-    Estimated total price: \$${totalPrice}
+    Estimated total price: $${totalPrice}
     Please look at your Reservations to confirm this reservation.`
 
     return {

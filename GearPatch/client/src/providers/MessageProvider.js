@@ -15,6 +15,19 @@ export function MessageProvider(props) {
 
     const currentUserId = sessionStorage.userProfile ? JSON.parse(sessionStorage.userProfile).id : 0;
 
+    const getConversations = async () => {
+        const token = await getToken();
+        const res = await fetch(`${url}/conversation`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const data = await res.json();
+
+        setMessages(data);
+    }
+
     const sendMessage = async (message) => {
         const token = await getToken();
         const res = await fetch(url, {
@@ -48,7 +61,7 @@ export function MessageProvider(props) {
     }
 
     return (
-        <MessageContext.Provider value={{ messages, unread, sendMessage, getUnread }}>
+        <MessageContext.Provider value={{ messages, unread, getConversations, sendMessage, getUnread }}>
             {props.children}
         </MessageContext.Provider>
     )

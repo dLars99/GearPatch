@@ -34,7 +34,7 @@ export default function Header() {
                         {isLoggedIn
                         ? <>
                             <NavItem>
-                                <NavLink tag={RRNavLink} to="/">
+                                <NavLink tag={RRNavLink} to="/messages">
                                     Messages<Badge color="primary" pill>{unread}</Badge>
                                     </NavLink>
                             </NavItem>
