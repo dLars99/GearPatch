@@ -16,7 +16,7 @@ export default function({ message, currentUserId }) {
                 ? <strong>{message.content}</strong>
                 : message.content
             }
-            <p className="align-self-start"><em>Sent {message.createDateTime.replace("T", " ")}</em></p>
+            <p><em>Sent {message.createDateTime.replace("T", " ")}</em></p>
         </Col>
                 <Col md={2} className="text-center">
                     <img src={message.sender.imageLocation} alt="You" className="rounded-circle" />
@@ -33,7 +33,7 @@ export default function({ message, currentUserId }) {
                         ? <strong>{message.content}</strong>
                         : message.content
                     }
-                    <p className="align-self-end"><em>Sent {message.createDateTime.replace("T", " ")}</em></p>
+                    <p><em>Sent {message.createDateTime.replace("T", " ")}</em></p>
                 </Col>
             </Row>
         }

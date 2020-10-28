@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { MessageContext } from "../../providers/MessageProvider";
 import Message from "./Message";
 import Reply from "./Reply";
@@ -13,7 +13,6 @@ export default function() {
     const [reply, setReply] = useState(false);
     
     const { userId } = useParams();
-    const history = useHistory();
 
     const currentUserId = JSON.parse(sessionStorage.userProfile).id;
 
@@ -40,6 +39,10 @@ export default function() {
 
     return (
         <>
+        <Row className="mt-3 ml-3">
+            <Link to="/messages">Back to all conversations</Link>
+        </Row>
+
         <Row className="justify-content-center">
             <Col className="text-center mb-4">
                 <h1>Your Conversation with {otherUser.fullName}.</h1>
