@@ -10,6 +10,7 @@ export function MessageProvider(props) {
 
     const { getToken } = useContext(UserProfileContext);
 
+    const [conversations, setConversations] = useState([]);
     const [messages, setMessages] = useState([]);
     const [unread, setUnread] = useState();
 
@@ -25,7 +26,7 @@ export function MessageProvider(props) {
         });
         const data = await res.json();
 
-        setMessages(data);
+        setConversations(data);
     }
 
     const getMessages = async (otherUserId) => {
@@ -74,7 +75,7 @@ export function MessageProvider(props) {
     }
 
     return (
-        <MessageContext.Provider value={{ messages, unread, getConversations, getMessages, sendMessage, getUnread }}>
+        <MessageContext.Provider value={{ conversations, messages, unread, getConversations, getMessages, sendMessage, getUnread }}>
             {props.children}
         </MessageContext.Provider>
     )

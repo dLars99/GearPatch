@@ -2,18 +2,22 @@ import React, { useContext, useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { MessageContext } from "../../providers/MessageProvider";
 import Message from "./Message";
-import { Row, Col } from "reactstrap";
+import Reply from "./Reply";
+import { Row, Col, Button } from "reactstrap";
 
 export default function() {
 
     const { messages, getMessages } = useContext(MessageContext);
 
     const [otherUser, setOtherUser] = useState();
+    const [reply, setReply] = useState(false);
     
     const { userId } = useParams();
     const history = useHistory();
 
     const currentUserId = JSON.parse(sessionStorage.userProfile).id;
+
+    const toggleReply = () => setReply(!reply);
 
     useEffect(() => {
         getMessages(userId)
@@ -27,6 +31,7 @@ export default function() {
             const otherObject = messages.find(message => message.senderId !== currentUserId || message.recipientId !== currentUserId);
             setOtherUser((otherObject.senderId === currentUserId) ? otherObject.recipient : otherObject.sender);
         }
+        // eslint-disable-next-line
     }, [messages])
 
     if (!otherUser) {
@@ -37,12 +42,21 @@ export default function() {
         <>
         <Row className="justify-content-center">
             <Col className="text-center mb-4">
-                <h1>Your Conversation with {otherUser.firstName} {otherUser.lastName[0]}.</h1>
+                <h1>Your Conversation with {otherUser.fullName}.</h1>
             </Col>
         </Row>
         {messages.map(message =>
             <Message key={message.id} message={message} currentUserId={currentUserId} />
         )}
+        <Row className="mt-5">
+            <Col md={{size: 8, offset: 2}}>
+                { reply
+                    ? <Reply toggle={toggleReply} recipient={otherUser} />
+                    : <Button block onClick={toggleReply}>Add Reply</Button>
+                }
+            </Col>
+        </Row>
+
         </>
     )
 }

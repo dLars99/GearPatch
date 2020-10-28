@@ -5,7 +5,7 @@ import { Row, Col, CardDeck } from "reactstrap";
 
 export default function() {
 
-    const { messages, getConversations } = useContext(MessageContext);
+    const { conversations, getConversations } = useContext(MessageContext);
 
     useEffect(() => {
         getConversations();
@@ -20,11 +20,10 @@ export default function() {
                 </Col>
             </Row>
             <CardDeck>
-                {messages.map(conversation => 
+                {conversations.map(conversation => 
                     <ConversationSummary key={conversation.lastMessage.id} conversation={conversation} />
                 )}
             </CardDeck>
-            {/* Reply box goes here */}
         </>
     )
 }

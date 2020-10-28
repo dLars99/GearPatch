@@ -36,7 +36,7 @@ export default function({ modal, toggle, name, item, recipientId }){
                 </Form>
             </ModalBody>
             <ModalFooter>
-                <Button color="primary" onClick={submitMessage}>Confirm</Button>{' '}
+                <Button color="primary" onClick={submitMessage}>Send</Button>{' '}
                 <Button color="secondary" onClick={toggle}>Cancel</Button>
             </ModalFooter>
         </Modal>
