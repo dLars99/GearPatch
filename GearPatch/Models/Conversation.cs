@@ -12,5 +12,6 @@ namespace GearPatch.Models
         public UserProfile OtherUser { get; set; }
         public int MessageCount { get; set; }
         public int UnreadMessages { get; set; }
+        public UserMessage LastMessage { get; set; }
     }
 }

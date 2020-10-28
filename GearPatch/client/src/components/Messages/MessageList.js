@@ -24,7 +24,7 @@ export default function() {
             </Row>
             <CardDeck>
                 {messages.map(m => 
-                    <Message key={m.OtherUserId} conversation={m} side={side} />
+                    <Message key={m.OtherUserId} conversation={m} />
                 )}
             </CardDeck>
         </>
