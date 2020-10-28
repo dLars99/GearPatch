@@ -74,8 +74,19 @@ export function MessageProvider(props) {
         setUnread(data);
     }
 
+    const sendRead = async (id) => {
+        const token = await getToken();
+        const res = await fetch(`${url}/${id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (!res.ok) alert("An error has occurred. Please try again.");
+    }
+
     return (
-        <MessageContext.Provider value={{ conversations, messages, unread, getConversations, getMessages, sendMessage, getUnread }}>
+        <MessageContext.Provider value={{ conversations, messages, unread, getConversations, getMessages, sendMessage, getUnread, sendRead }}>
             {props.children}
         </MessageContext.Provider>
     )

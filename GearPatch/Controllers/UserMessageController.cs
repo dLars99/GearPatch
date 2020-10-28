@@ -76,6 +76,16 @@ namespace GearPatch.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public IActionResult MarkRead(int id)
+        {
+            var userMessage = _userMessageRepository.GetById(id);
+            userMessage.Unread = false;
+            _userMessageRepository.Update(userMessage);
+
+            return NoContent();
+        }
+
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

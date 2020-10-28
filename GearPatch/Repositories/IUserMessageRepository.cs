@@ -10,5 +10,6 @@ namespace GearPatch.Repositories
         List<Conversation> GetConversationsByUser(int id);
         UserMessage GetById(int id);
         int NewMessageCount(int userId);
+        void Update(UserMessage userMessage);
     }
 }

@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
+import { MessageContext } from "../../providers/MessageProvider";
 import { Row, Col } from "reactstrap";
 
 export default function({ message, currentUserId }) {
 
-    const markRead = (evt) => {
-        alert("Hi!");
+    const { getMessages, getUnread, sendRead } = useContext(MessageContext);
+
+    const markRead = () => {
+        sendRead(message.id)
+        .then(() => getMessages(message.senderId))
+        .then(() => getUnread());
     }
 
     return (
@@ -30,7 +35,10 @@ export default function({ message, currentUserId }) {
                 </Col>
                 <Col md={6} onClick={markRead} className="border border-dark mx-4">
                     {(message.unread && message.recipientId === currentUserId)
-                        ? <strong>{message.content}</strong>
+                        ? <>
+                            <p><strong>{message.content}</strong></p>
+                            <p><strong><em>Click to mark "read"</em></strong></p>
+                            </>
                         : message.content
                     }
                     <p><em>Sent {message.createDateTime.replace("T", " ")}</em></p>

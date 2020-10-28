@@ -256,5 +256,34 @@ namespace GearPatch.Repositories
                 }
             }
         }
+
+        public void Update(UserMessage userMessage)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE UserMessage 
+                                           SET SenderId = @SenderId,
+                                               RecipientId = @RecipientId,
+                                               Unread = @Unread,
+                                               Content = @Content,
+                                               CreateDateTime = @CreateDateTime
+                                         WHERE Id = @Id;";
+
+                    DbUtils.AddParameter(cmd, "@SenderId", userMessage.SenderId);
+                    DbUtils.AddParameter(cmd, "@RecipientId", userMessage.RecipientId);
+                    DbUtils.AddParameter(cmd, "@Unread", userMessage.Unread);
+                    DbUtils.AddParameter(cmd, "@Content", userMessage.Content);
+                    DbUtils.AddParameter(cmd, "@CreateDateTime", userMessage.CreateDateTime);
+                    DbUtils.AddParameter(cmd, "@Id", userMessage.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+        }
     }
 }
