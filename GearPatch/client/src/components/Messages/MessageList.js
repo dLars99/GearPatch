@@ -21,9 +21,10 @@ export default function() {
             </Row>
             <CardDeck>
                 {messages.map(conversation => 
-                    <ConversationSummary key={conversation.OtherUserId} conversation={conversation} />
+                    <ConversationSummary key={conversation.lastMessage.id} conversation={conversation} />
                 )}
             </CardDeck>
+            {/* Reply box goes here */}
         </>
     )
 }
