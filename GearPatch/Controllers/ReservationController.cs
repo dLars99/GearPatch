@@ -63,8 +63,6 @@ namespace GearPatch.Controllers
 
             var currentUser = GetCurrentUserProfile();
             reservation.CustomerId = currentUser.Id;
-            reservation.Confirmed = false;
-            reservation.ItemReturned = false;
 
             try
             {

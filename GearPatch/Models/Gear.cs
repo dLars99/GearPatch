@@ -32,6 +32,10 @@ namespace GearPatch.Models
         public string SecondOptionNotes { get; set; }
         [Url]
         public string ImageLocation { get; set; }
+        public Gear()
+        {
+            IsActive = true;
+        }
         // List of images to be implemented in the future
         //public List<GearImage> GearImages { get; set; }
         public List<Accessory> Accessories { get; set; }

@@ -26,5 +26,10 @@ namespace GearPatch.Models
         public DateTime EndDate { get; set; }
         public bool Confirmed { get; set; }
         public bool ItemReturned { get; set; }
+        public Reservation()
+        {
+            Confirmed = false;
+            ItemReturned = false;
+        }
     }
 }

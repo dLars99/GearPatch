@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using GearPatch.Models;
 using GearPatch.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
@@ -14,9 +17,12 @@ namespace GearPatch.Controllers
     public class GearController : ControllerBase
     {
         private readonly IGearRepository _gearRepository;
-        public GearController(IGearRepository gearRepository)
+        private readonly IUserProfileRepository _userProfileRepository;
+        public GearController(IGearRepository gearRepository,
+                              IUserProfileRepository userProfileRepository)
         {
             _gearRepository = gearRepository;
+            _userProfileRepository = userProfileRepository;
         }
 
         [HttpGet("search")]
@@ -42,5 +48,29 @@ namespace GearPatch.Controllers
         {
             return Ok(_gearRepository.GetThreeRandomByUser(id));
         }
+
+        [HttpPost]
+        public IActionResult Post(Gear gear)
+        {
+            var currentUser = GetCurrentUserProfile();
+            gear.UserProfileId = currentUser.Id;
+
+            try
+            {
+                _gearRepository.Add(gear);
+                return CreatedAtAction("Get", new { id = gear.Id }, gear);
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
+        }
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseId(firebaseId);
+        }
     }
 }
+

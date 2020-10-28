@@ -155,7 +155,7 @@ namespace GearPatch.Repositories
             }
         }
 
-            public void Add(Reservation reservation)
+        public void Add(Reservation reservation)
         {
             using (var conn = Connection)
             {

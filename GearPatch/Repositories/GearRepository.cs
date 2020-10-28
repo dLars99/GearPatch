@@ -222,6 +222,38 @@ namespace GearPatch.Repositories
             }
         }
 
+        public void Add(Gear gear)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO Gear (UserProfileId, Headline, Manufacturer, Model, Description,
+                                          Price, IsActive, GearTypeId, ImageLocation, FirstOptionNotes,
+                                          SecondOptionNotes)
+                        OUTPUT INSERTED.ID
+                                  VALUES (@UserProfileId, @Headline, @Manufacturer, @Model, @Description,
+                                          @Price, @IsActive, @GearTypeId, @ImageLocation, @FirstOptionNotes,
+                                          @SecondOptionNotes);";
+                    DbUtils.AddParameter(cmd, "@UserProfileId", gear.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@Headline", gear.Headline);
+                    DbUtils.AddParameter(cmd, "@Manufacturer", gear.Manufacturer);
+                    DbUtils.AddParameter(cmd, "@Model", gear.Model);
+                    DbUtils.AddParameter(cmd, "@Description", gear.Description);
+                    DbUtils.AddParameter(cmd, "@Price", gear.Price);
+                    DbUtils.AddParameter(cmd, "@IsActive", gear.IsActive);
+                    DbUtils.AddParameter(cmd, "@GearTypeId", gear.GearTypeId);
+                    DbUtils.AddParameter(cmd, "@ImageLocation", gear.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@FirstOptionNotes", gear.FirstOptionNotes);
+                    DbUtils.AddParameter(cmd, "@SecondOptionNotes", gear.SecondOptionNotes);
+
+                    gear.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
         private Gear GearFromDb(SqlDataReader reader)
         {
             return new Gear()
