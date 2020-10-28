@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { MessageContext } from "../../providers/MessageProvider";
 import Message from "./Message";
@@ -7,6 +7,10 @@ import { Row, Col, CardDeck } from "reactstrap";
 export default function() {
 
     const { messages, getConversations } = useContext(MessageContext);
+
+    const [side, setSide] = useState(true);
+
+    const switchSide = () => setSide(!side);
 
     const history = useHistory();
 
@@ -23,8 +27,9 @@ export default function() {
                 </Col>
             </Row>
             <CardDeck>
-                {messages.map(m =>
-                    <Message key={m.OtherUserId} conversation={m} />)
+                {messages.map((m) => 
+                    <Message key={m.OtherUserId} conversation={m} side={side} />,
+                    switchSide)
                 }
             </CardDeck>
         </>

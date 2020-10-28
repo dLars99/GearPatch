@@ -79,7 +79,8 @@ namespace GearPatch.Repositories
                                GROUP BY OtherParty) unr
                                ON msg.OtherParty = unr.OtherParty
                     
-                     LEFT JOIN UserProfile up on up.Id = msg.OtherParty";
+                     LEFT JOIN UserProfile up on up.Id = msg.OtherParty
+                        ORDER BY UnreadCount DESC";
                     DbUtils.AddParameter(cmd, "@Id", id);
 
                     var reader = cmd.ExecuteReader();
