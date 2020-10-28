@@ -92,9 +92,20 @@ export function ReservationProvider(props) {
         if (!res.ok) alert("An error has occurred. Please try again.");
     }
 
+    const saveReturn = async (id) => {
+        const token = await getToken();
+        const res = await fetch(`${url}/return/${id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (!res.ok) alert("An error has occurred. Please try again.");
+    }
+
     return (
         <ReservationContext.Provider value={{ reservations, unconfirmed, getByUser, newReservation, getUnconfirmed, checkAvailability, 
-            saveConfirmation, deleteReservation }}>
+            saveConfirmation, deleteReservation, saveReturn }}>
             {props.children}
         </ReservationContext.Provider>
     )

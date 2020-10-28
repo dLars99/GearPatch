@@ -107,6 +107,12 @@ namespace GearPatch.Controllers
         {
             var reservation = _reservationRepository.GetById(id);
             reservation.ItemReturned = true;
+            // Change EndDate if returned after the due date.
+            // This will update the total price in the client
+            if (DateTime.Now > reservation.EndDate)
+            {
+                reservation.EndDate = DateTime.Now;
+            }
             _reservationRepository.Update(reservation);
             return NoContent();
         }
