@@ -8,10 +8,6 @@ export default function() {
 
     const { messages, getConversations } = useContext(MessageContext);
 
-    const [side, setSide] = useState(true);
-
-    const switchSide = () => setSide(!side);
-
     const history = useHistory();
 
     useEffect(() => {
@@ -27,10 +23,9 @@ export default function() {
                 </Col>
             </Row>
             <CardDeck>
-                {messages.map((m) => 
-                    <Message key={m.OtherUserId} conversation={m} side={side} />,
-                    switchSide)
-                }
+                {messages.map(m => 
+                    <Message key={m.OtherUserId} conversation={m} side={side} />
+                )}
             </CardDeck>
         </>
     )

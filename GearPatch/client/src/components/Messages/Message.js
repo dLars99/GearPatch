@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, CardImg, CardTitle, CardText } from "reactstrap";
 
-export default function({ conversation, side }) {
+export default function({ conversation }) {
 
     return (
         <Card>
