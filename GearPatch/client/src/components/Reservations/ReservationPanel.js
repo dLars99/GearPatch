@@ -11,7 +11,7 @@ import CancelReservation from "./CancelReservation";
 
 export default function() {
 
-    const { reservations, getByUser, saveConfirmation, deleteReservation, getUnconfirmed } = useContext(ReservationContext);
+    const { reservations, getByUser, saveConfirmation, deleteReservation, getUnconfirmed, saveReturn } = useContext(ReservationContext);
     const { sendMessage } = useContext(MessageContext);
 
     const [confirmModal, setConfirmModal] = useState(false);
@@ -44,6 +44,12 @@ export default function() {
         confirmToggle();
     }
 
+    const returnPrompt = (evt, reservation) => {
+        evt.preventDefault();
+        setThisReservation(reservation);
+        returnToggle();
+    }
+
     const composeMessage = (evt, reservation) => {
         evt.preventDefault();
         setThisReservation(reservation);
@@ -67,6 +73,14 @@ export default function() {
             sendMessage(cancelMessage)
         }).then(() => getByUser());
         cancelToggle();
+    }
+
+    const returnItem = (evt, reservation) => {
+        evt.preventDefault();
+
+        saveReturn(reservation.id)
+        .then(() => getByUser());
+        returnToggle();
     }
 
     useEffect(() => {
@@ -96,10 +110,10 @@ export default function() {
             </Row>
             {reservations.map(r => 
                 <Reservation key={r.id} reservation={r} currentUserId={currentUserId} prompt={prompt} composeMessage={composeMessage} 
-                    cancelPrompt={cancelPrompt} />
+                    cancelPrompt={cancelPrompt} returnPrompt={returnPrompt} />
             )}
             <OwnerConfirm modal={confirmModal} toggle={confirmToggle} confirm={confirm} reservation={thisReservation} />
-            <MarkReturn modal={returnModal} toggle={returnToggle} reservation={thisReservation} />
+            <MarkReturn modal={returnModal} toggle={returnToggle} reservation={thisReservation} returnItem={returnItem} />
             <CancelReservation modal={cancelModal} toggle={cancelToggle} cancelReservation={cancelReservation} reservation={thisReservation} />
             {thisReservation && messageRecipient
             ? <NewMessage modal={messageModal} toggle={messageToggle}
