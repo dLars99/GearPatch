@@ -21,10 +21,10 @@ namespace GearPatch.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT um.Id, um.SenderId, um.RecipientId, um.Unread, um.Content, um.CreateDateTime
+                        SELECT um.Id, um.SenderId, um.RecipientId, um.Unread, um.Content, um.CreateDateTime,
 
                                sup.LastName AS SenderLastName, sup.FirstName AS SenderFirstName, 
-                               sup.ImageLocation AS SenderImageLocation, sup.IsActive AS SenderIsActive
+                               sup.ImageLocation AS SenderImageLocation, sup.IsActive AS SenderIsActive,
                                
                                rup.LastName AS RecipientLastName, rup.FirstName AS RecipientFirstName, 
                                rup.ImageLocation AS RecipientImageLocation, rup.IsActive AS RecipientIsActive

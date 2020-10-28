@@ -28,6 +28,19 @@ export function MessageProvider(props) {
         setMessages(data);
     }
 
+    const getMessages = async (otherUserId) => {
+        const token = await getToken();
+        const res = await fetch(`${url}/user/${otherUserId}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const data = await res.json();
+
+        setMessages(data);
+    }
+
     const sendMessage = async (message) => {
         const token = await getToken();
         const res = await fetch(url, {
@@ -61,7 +74,7 @@ export function MessageProvider(props) {
     }
 
     return (
-        <MessageContext.Provider value={{ messages, unread, getConversations, sendMessage, getUnread }}>
+        <MessageContext.Provider value={{ messages, unread, getConversations, getMessages, sendMessage, getUnread }}>
             {props.children}
         </MessageContext.Provider>
     )

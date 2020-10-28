@@ -7,6 +7,7 @@ import GearSearchResults from "./Gear/GearSearchResults";
 import GearListing from "./Gear/GearListing";
 import ReservationPanel from "./Reservations/ReservationPanel";
 import MessageList from "./Messages/MessageList";
+import Conversation from "./Messages/Conversation";
 
 export default function ApplicationViews() {
 
@@ -35,8 +36,12 @@ export default function ApplicationViews() {
                     {isLoggedIn ? <ReservationPanel /> : <Redirect to="/" />}                       
                 </Route>
 
-                <Route path="/messages">
+                <Route path="/messages" exact>
                     {isLoggedIn ? <MessageList /> : <Redirect to="/" />}
+                </Route>
+
+                <Route path="/messages/:userId">
+                    {isLoggedIn ? <Conversation /> : <Redirect to="/" />}
                 </Route>
             </Switch>
         </main>
