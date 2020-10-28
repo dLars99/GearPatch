@@ -81,8 +81,20 @@ export function ReservationProvider(props) {
         if (!res.ok) alert("An error has occurred. Please try again.");
     }
 
+    const deleteReservation = async (id) => {
+        const token = await getToken();
+        const res = await fetch(`${url}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (!res.ok) alert("An error has occurred. Please try again.");
+    }
+
     return (
-        <ReservationContext.Provider value={{ reservations, unconfirmed, getByUser, newReservation, getUnconfirmed, checkAvailability, saveConfirmation }}>
+        <ReservationContext.Provider value={{ reservations, unconfirmed, getByUser, newReservation, getUnconfirmed, checkAvailability, 
+            saveConfirmation, deleteReservation }}>
             {props.children}
         </ReservationContext.Provider>
     )

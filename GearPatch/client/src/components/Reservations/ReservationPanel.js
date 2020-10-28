@@ -5,23 +5,26 @@ import Reservation from "./Reservation";
 import OwnerConfirm from "./OwnerConfirm";
 import MarkReturn from "./MarkReturn";
 import NewMessage from "../Messages/NewMessage";
-import { ConfirmReservationMessage } from "../Messages/ReservationAutoMessages";
+import { ConfirmReservationMessage, CancelReservationMessage } from "../Messages/ReservationAutoMessages";
 import { Row, Col } from "reactstrap";
+import CancelReservation from "./CancelReservation";
 
 export default function() {
 
-    const { reservations, getByUser, saveConfirmation } = useContext(ReservationContext);
+    const { reservations, getByUser, saveConfirmation, deleteReservation, getUnconfirmed } = useContext(ReservationContext);
     const { sendMessage } = useContext(MessageContext);
 
     const [confirmModal, setConfirmModal] = useState(false);
     const [returnModal, setReturnModal] = useState(false);
     const [messageModal, setMessageModal] = useState(false);
+    const [cancelModal, setCancelModal] = useState(false);
     const [thisReservation, setThisReservation] = useState();
     const [messageRecipient, setMessageRecipient] = useState();
 
     const confirmToggle = () => setConfirmModal(!confirmModal);
     const returnToggle = () => setReturnModal(!returnModal);
     const messageToggle = () => setMessageModal(!messageModal);
+    const cancelToggle = () => setCancelModal(!cancelModal);
 
     const currentUserId = JSON.parse(sessionStorage.userProfile).id;
 
@@ -36,7 +39,8 @@ export default function() {
         saveConfirmation(reservation.id).then(() => {
             const confirmMessage = ConfirmReservationMessage(reservation);
             sendMessage(confirmMessage)
-        }).then(() => getByUser());
+        }).then(() => getByUser())
+        .then(() => getUnconfirmed());
         confirmToggle();
     }
 
@@ -44,6 +48,25 @@ export default function() {
         evt.preventDefault();
         setThisReservation(reservation);
         messageToggle();
+    }
+
+    const cancelPrompt = (evt, reservation) => {
+        evt.preventDefault();
+        setThisReservation(reservation);
+        cancelToggle();
+    }
+
+    const cancelReservation = (evt, reservation) => {
+        evt.preventDefault();
+
+        deleteReservation(reservation.id)
+        .then(() => {
+            const cancelMessage = (currentUserId === reservation.ownerId)
+                ? CancelReservationMessage(reservation.owner, reservation.customer, reservation)
+                : CancelReservationMessage(reservation.customer, reservation.owner, reservation)
+            sendMessage(cancelMessage)
+        }).then(() => getByUser());
+        cancelToggle();
     }
 
     useEffect(() => {
@@ -72,11 +95,12 @@ export default function() {
                 </Col>
             </Row>
             {reservations.map(r => 
-                <Reservation key={r.id} reservation={r} currentUserId={currentUserId} prompt={prompt} composeMessage={composeMessage} />
+                <Reservation key={r.id} reservation={r} currentUserId={currentUserId} prompt={prompt} composeMessage={composeMessage} 
+                    cancelPrompt={cancelPrompt} />
             )}
             <OwnerConfirm modal={confirmModal} toggle={confirmToggle} confirm={confirm} reservation={thisReservation} />
             <MarkReturn modal={returnModal} toggle={returnToggle} reservation={thisReservation} />
-            {console.log(thisReservation)}
+            <CancelReservation modal={cancelModal} toggle={cancelToggle} cancelReservation={cancelReservation} reservation={thisReservation} />
             {thisReservation && messageRecipient
             ? <NewMessage modal={messageModal} toggle={messageToggle}
                 name={`${messageRecipient.firstName} ${messageRecipient.lastName}`}

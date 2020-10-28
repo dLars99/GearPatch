@@ -50,6 +50,5 @@ namespace GearPatch.Controllers
             return CreatedAtAction(
                 nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.FirebaseId }, userProfile);
         }
-
     }
 }

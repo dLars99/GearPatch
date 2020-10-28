@@ -41,7 +41,8 @@ namespace GearPatch.Repositories
                      LEFT JOIN UserProfile cp ON cp.Id = r.CustomerId
                      LEFT JOIN Gear g on g.Id = r.GearId
                      LEFT JOIN GearType gt on gt.Id = g.GearTypeId
-                         WHERE r.OwnerId = @Id OR r.CustomerId = @Id";
+                         WHERE r.OwnerId = @Id OR r.CustomerId = @Id
+                      ORDER BY r.Confirmed, r.ItemReturned, r.StartDate DESC";
                     DbUtils.AddParameter(cmd, "@Id", id);
                     var reader = cmd.ExecuteReader();
 
@@ -239,6 +240,23 @@ namespace GearPatch.Repositories
                     DbUtils.AddParameter(cmd, "@Confirmed", reservation.Confirmed);
                     DbUtils.AddParameter(cmd, "@ItemReturned", reservation.ItemReturned);
                     DbUtils.AddParameter(cmd, "@Id", reservation.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"DELETE FROM Reservation
+                                              WHERE Id=@Id;";
+                    DbUtils.AddParameter(cmd, "@Id", id);
 
                     cmd.ExecuteNonQuery();
                 }
