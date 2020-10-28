@@ -25,9 +25,9 @@ namespace GearPatch.Controllers
         [HttpGet("conversation")]
         public IActionResult GetConversations()
         {
-            //var currentUser = GetCurrentUserProfile();
+            var currentUser = GetCurrentUserProfile();
 
-            return Ok(_userMessageRepository.GetConversationsByUser(1));
+            return Ok(_userMessageRepository.GetConversationsByUser(currentUser.Id));
         }
 
         [HttpGet("{id}")]
