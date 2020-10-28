@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using GearPatch.Models;
 using GearPatch.Repositories;
 using Microsoft.AspNetCore.Authorization;
@@ -46,16 +47,17 @@ namespace GearPatch.Controllers
         {
             var currentUser = GetCurrentUserProfile();
             message.SenderId = currentUser.Id;
+            message.CreateDateTime = DateTime.Now;
 
-            //try
-            //{
+            try
+            {
                 _userMessageRepository.Add(message);
                 return CreatedAtAction("Get", new { id = message.Id }, message);
-            //}
-            //catch
-            //{
-            //    return StatusCode(500);
-            //}
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
 
         private UserProfile GetCurrentUserProfile()

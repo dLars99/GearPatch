@@ -16,7 +16,6 @@ DROP TABLE IF EXISTS [Reservation];
 DROP TABLE IF EXISTS [Accessory];
 DROP TABLE IF EXISTS [Gear];
 DROP TABLE IF EXISTS [GearType];
-DROP TABLE IF EXISTS [Message];
 DROP TABLE IF EXISTS [UserMessage];
 DROP TABLE IF EXISTS [UserProfile];
 GO
@@ -156,6 +155,7 @@ CREATE TABLE [UserMessage] (
   [RecipientId] integer NOT NULL,
   [Unread] bit NOT NULL,
   [Content] nvarchar(1000) NOT NULL,
+  [CreateDateTime] datetime NOT NULL,
 
   CONSTRAINT [FK_Message_UserProfile_Sender] FOREIGN KEY ([SenderId])
 	REFERENCES [UserProfile] ([Id]),
