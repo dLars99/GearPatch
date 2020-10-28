@@ -1,14 +1,11 @@
-import React, { useContext, useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useEffect } from "react";
 import { MessageContext } from "../../providers/MessageProvider";
-import Message from "./Message";
+import ConversationSummary from "./ConversationSummary";
 import { Row, Col, CardDeck } from "reactstrap";
 
 export default function() {
 
-    const { messages, getConversations } = useContext(MessageContext);
-
-    const history = useHistory();
+    const { conversations, getConversations } = useContext(MessageContext);
 
     useEffect(() => {
         getConversations();
@@ -23,8 +20,8 @@ export default function() {
                 </Col>
             </Row>
             <CardDeck>
-                {messages.map(m => 
-                    <Message key={m.OtherUserId} conversation={m} />
+                {conversations.map(conversation => 
+                    <ConversationSummary key={conversation.lastMessage.id} conversation={conversation} />
                 )}
             </CardDeck>
         </>

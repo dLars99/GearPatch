@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserMessageController : ControllerBase
@@ -20,6 +20,14 @@ namespace GearPatch.Controllers
         {
             _userMessageRepository = userMessageRepository;
             _userProfileRepository = userProfileRepository;
+        }
+
+        [HttpGet("user/{id}")]
+        public IActionResult GetByUser(int id)
+        {
+            var currentUser = GetCurrentUserProfile();
+
+            return Ok(_userMessageRepository.GetByUser(currentUser.Id, id));
         }
 
         [HttpGet("conversation")]
@@ -66,6 +74,16 @@ namespace GearPatch.Controllers
             {
                 return StatusCode(500);
             }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult MarkRead(int id)
+        {
+            var userMessage = _userMessageRepository.GetById(id);
+            userMessage.Unread = false;
+            _userMessageRepository.Update(userMessage);
+
+            return NoContent();
         }
 
         private UserProfile GetCurrentUserProfile()

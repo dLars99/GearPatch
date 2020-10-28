@@ -10,6 +10,7 @@ export function MessageProvider(props) {
 
     const { getToken } = useContext(UserProfileContext);
 
+    const [conversations, setConversations] = useState([]);
     const [messages, setMessages] = useState([]);
     const [unread, setUnread] = useState();
 
@@ -18,6 +19,19 @@ export function MessageProvider(props) {
     const getConversations = async () => {
         const token = await getToken();
         const res = await fetch(`${url}/conversation`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const data = await res.json();
+
+        setConversations(data);
+    }
+
+    const getMessages = async (otherUserId) => {
+        const token = await getToken();
+        const res = await fetch(`${url}/user/${otherUserId}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -60,8 +74,19 @@ export function MessageProvider(props) {
         setUnread(data);
     }
 
+    const sendRead = async (id) => {
+        const token = await getToken();
+        const res = await fetch(`${url}/${id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        if (!res.ok) alert("An error has occurred. Please try again.");
+    }
+
     return (
-        <MessageContext.Provider value={{ messages, unread, getConversations, sendMessage, getUnread }}>
+        <MessageContext.Provider value={{ conversations, messages, unread, getConversations, getMessages, sendMessage, getUnread, sendRead }}>
             {props.children}
         </MessageContext.Provider>
     )

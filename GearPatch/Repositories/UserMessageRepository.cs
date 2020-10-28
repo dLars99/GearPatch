@@ -13,7 +13,7 @@ namespace GearPatch.Repositories
     {
         public UserMessageRepository(IConfiguration configuration) : base(configuration) { }
 
-        public List<UserMessage> GetByUser(int id)
+        public List<UserMessage> GetByUser(int currentUserId, int otherUserId)
         {
             using (var conn = Connection)
             {
@@ -21,10 +21,22 @@ namespace GearPatch.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, SenderId, RecipientId, Unread, Content
-                          FROM UserMessage
-                         WHERE SenderId = @Id OR RecipientId = @Id;";
-                    DbUtils.AddParameter(cmd, "@Id", id);
+                        SELECT um.Id, um.SenderId, um.RecipientId, um.Unread, um.Content, um.CreateDateTime,
+
+                               sup.LastName AS SenderLastName, sup.FirstName AS SenderFirstName, 
+                               sup.ImageLocation AS SenderImageLocation, sup.IsActive AS SenderIsActive,
+                               
+                               rup.LastName AS RecipientLastName, rup.FirstName AS RecipientFirstName, 
+                               rup.ImageLocation AS RecipientImageLocation, rup.IsActive AS RecipientIsActive
+                               
+                          FROM UserMessage um
+                     LEFT JOIN UserProfile sup ON sup.Id = um.SenderId
+                     LEFT JOIN UserProfile rup ON rup.Id = um.RecipientId
+                         WHERE (SenderId = @CurrentUserId AND RecipientId = @OtherUserId) 
+                               OR (SenderId = @OtherUserId AND RecipientId = @CurrentUserId)
+                      ORDER BY um.CreateDateTime;";
+                    DbUtils.AddParameter(cmd, "@CurrentUserId", currentUserId);
+                    DbUtils.AddParameter(cmd, "@OtherUserId", otherUserId);
 
                     var reader = cmd.ExecuteReader();
 
@@ -36,9 +48,27 @@ namespace GearPatch.Repositories
                         {
                             Id = DbUtils.GetInt(reader, "Id"),
                             SenderId = DbUtils.GetInt(reader, "SenderId"),
+                            Sender = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "SenderId"),
+                                FirstName = DbUtils.GetString(reader, "SenderFirstName"),
+                                LastName = DbUtils.GetString(reader, "SenderLastName"),
+                                ImageLocation = DbUtils.GetString(reader, "SenderImageLocation"),
+                                IsActive = DbUtils.GetBool(reader, "SenderIsActive")
+                            },
                             RecipientId = DbUtils.GetInt(reader, "RecipientId"),
+                            Recipient = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "RecipientId"),
+                                FirstName = DbUtils.GetString(reader, "RecipientFirstName"),
+                                LastName = DbUtils.GetString(reader, "RecipientLastName"),
+                                ImageLocation = DbUtils.GetString(reader, "RecipientImageLocation"),
+                                IsActive = DbUtils.GetBool(reader, "RecipientIsActive")
+                            },
+
                             Unread = DbUtils.GetBool(reader, "Unread"),
-                            Content = DbUtils.GetString(reader, "Content")
+                            Content = DbUtils.GetString(reader, "Content"),
+                            CreateDateTime = DbUtils.GetDateTime(reader, "CreateDateTime")
                         });
                     }
 
@@ -66,21 +96,21 @@ namespace GearPatch.Repositories
                           FROM (SELECT Count(Id) AS MessageCount, OtherParty
                                   FROM (SELECT Id, SenderId AS OtherParty
                                           FROM UserMessage
-                                          WHERE RecipientId = 1
+                                          WHERE RecipientId = @Id
                                       UNION ALL
                                       SELECT Id, RecipientId AS OtherParty
                                           FROM UserMessage
-                                          WHERE SenderId = 1) AllMessages
+                                          WHERE SenderId = @Id) AllMessages
                               GROUP BY OtherParty) msg
 
                      FULL JOIN (SELECT Count(Id) AS UnreadCount, OtherParty
                                   FROM (SELECT Id, SenderId AS OtherParty
                                           FROM UserMessage
-                                          WHERE RecipientId = 1 AND Unread = 1
+                                          WHERE RecipientId = @Id AND Unread = 1
                                       UNION ALL
                                          SELECT Id, RecipientId AS OtherParty
                                            FROM UserMessage
-                                          WHERE SenderId = 1 AND Unread = 1) UnreadMessages
+                                          WHERE SenderId = @Id AND Unread = 1) UnreadMessages
                               GROUP BY OtherParty) unr
                                ON msg.OtherParty = unr.OtherParty
 
@@ -89,12 +119,12 @@ namespace GearPatch.Repositories
 		                          JOIN (SELECT OtherPartyMax.OtherPartyId, MAX(CreateDateTime) AS LastMessage
 				                          FROM (SELECT RecipientId AS OtherPartyId, MAX(CreateDateTime) AS CreateDateTime
 				                          FROM UserMessage
-				                          WHERE SenderId = 1
+				                          WHERE SenderId = @Id
 				                          GROUP BY RecipientId
 				                      UNION ALL
 				                         SELECT SenderId AS OtherPartyId, MAX(CreateDateTime) AS CreateDateTime
 				                           FROM UserMessage
-				                          WHERE RecipientId = 1
+				                          WHERE RecipientId = @Id
 				                          GROUP BY SenderId) OtherPartyMax
 			                    GROUP BY OtherPartyMax.OtherPartyId) opm
 		                               ON (um.SenderId = opm.OtherPartyId OR um.RecipientId = opm.OtherPartyId) AND um.CreateDateTime = opm.LastMessage) lm
@@ -225,6 +255,35 @@ namespace GearPatch.Repositories
                     return messageCount;
                 }
             }
+        }
+
+        public void Update(UserMessage userMessage)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE UserMessage 
+                                           SET SenderId = @SenderId,
+                                               RecipientId = @RecipientId,
+                                               Unread = @Unread,
+                                               Content = @Content,
+                                               CreateDateTime = @CreateDateTime
+                                         WHERE Id = @Id;";
+
+                    DbUtils.AddParameter(cmd, "@SenderId", userMessage.SenderId);
+                    DbUtils.AddParameter(cmd, "@RecipientId", userMessage.RecipientId);
+                    DbUtils.AddParameter(cmd, "@Unread", userMessage.Unread);
+                    DbUtils.AddParameter(cmd, "@Content", userMessage.Content);
+                    DbUtils.AddParameter(cmd, "@CreateDateTime", userMessage.CreateDateTime);
+                    DbUtils.AddParameter(cmd, "@Id", userMessage.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
         }
     }
 }

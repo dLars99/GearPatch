@@ -8,8 +8,10 @@ namespace GearPatch.Models
         public int Id { get; set; }
         [Required]
         public int SenderId { get; set; }
+        public UserProfile Sender { get; set; }
         [Required]
         public int RecipientId { get; set; }
+        public UserProfile Recipient { get; set; }
         [Required]
         public bool Unread { get; set; }
         [Required]

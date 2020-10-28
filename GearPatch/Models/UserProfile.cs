@@ -33,7 +33,7 @@ namespace GearPatch.Models
         {
             get
             {
-                return $"{FirstName} {LastName}";
+                return $"{FirstName} {LastName[0]}.";
             }
         }
     }
