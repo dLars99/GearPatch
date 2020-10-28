@@ -82,6 +82,17 @@ namespace GearPatch.Utils
             return reader.GetInt32(ordinal);
         }
 
+        public static int GetZeroIfNullInt(SqlDataReader reader, string column)
+        {
+            var ordinal = reader.GetOrdinal(column);
+            if (reader.IsDBNull(ordinal))
+            {
+                return 0;
+            }
+
+            return reader.GetInt32(ordinal);
+        }
+
         /// <summary>
         ///  Get a DateTime? (nullable DateTime) from a data reader object and gracefully handle NULL values
         /// </summary>

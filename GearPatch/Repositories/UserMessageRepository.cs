@@ -56,11 +56,30 @@ namespace GearPatch.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Count(Id) AS MessageCount, SenderId, RecipientId, 
-                               Count(Unread) AS UnreadMessages
-                          FROM UserMessage
-                         WHERE SenderId = @Id OR RecipientId = @Id
-                      GROUP BY RecipientId, Unread;";
+                        SELECT MessageCount, UnreadCount, msg.OtherParty,
+
+                               up.LastName, up.FirstName, up.ImageLocation, up.IsActive
+                          FROM (SELECT Count(Id) AS MessageCount, OtherParty
+                                  FROM (SELECT Id, SenderId AS OtherParty
+                                          FROM UserMessage
+                                         WHERE RecipientId = @Id
+                                     UNION ALL
+                                        SELECT Id, RecipientId AS OtherParty
+                                          FROM UserMessage
+                                         WHERE SenderId = @Id) AllMessages
+                              GROUP BY OtherParty) msg
+                     FULL JOIN (SELECT Count(Id) AS UnreadCount, OtherParty
+                                  FROM (SELECT Id, SenderId AS OtherParty
+                                          FROM UserMessage
+                                         WHERE RecipientId = @Id AND Unread = 1
+                                     UNION ALL
+                                        SELECT Id, RecipientId AS OtherParty
+                                          FROM UserMessage
+                                         WHERE SenderId = @Id AND Unread = 1) UnreadMessages
+                               GROUP BY OtherParty) unr
+                               ON msg.OtherParty = unr.OtherParty
+                    
+                     LEFT JOIN UserProfile up on up.Id = msg.OtherParty";
                     DbUtils.AddParameter(cmd, "@Id", id);
 
                     var reader = cmd.ExecuteReader();
@@ -71,10 +90,17 @@ namespace GearPatch.Repositories
                     {
                         conversations.Add(new Conversation()
                         {
-                            CurrentUserId = DbUtils.GetInt(reader, "Id"),
-                            OtherUserId = DbUtils.GetInt(reader, "SenderId"),
-                            MessageCount = DbUtils.GetInt(reader, "MessageCount"),
-                            UnreadMessages = DbUtils.GetInt(reader, "UnreadMessages"),
+                            OtherUserId = DbUtils.GetInt(reader, "OtherParty"),
+                            OtherUser = new UserProfile()
+                            {
+                                Id = DbUtils.GetInt(reader, "OtherParty"),
+                                FirstName = DbUtils.GetString(reader, "FirstName"),
+                                LastName = DbUtils.GetString(reader, "LastName"),
+                                ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                                IsActive = DbUtils.GetBool(reader, "IsActive")
+                            },
+                            MessageCount = DbUtils.GetZeroIfNullInt(reader, "MessageCount"),
+                            UnreadMessages = DbUtils.GetZeroIfNullInt(reader, "UnreadCount"),
                         });
                     }
 
