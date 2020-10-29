@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { NavLink as RRNavLink } from "react-router-dom";
 import Login from "./Login/Login";
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, Badge } from "reactstrap";
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, 
+    Badge, Button } from "reactstrap";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { MessageContext } from "../providers/MessageProvider";
 import { ReservationContext } from "../providers/ReservationProvider";
@@ -55,7 +56,9 @@ export default function Header() {
                         </>
                         }
                         <NavItem>
-                            <NavLink tag={RRNavLink} to="/gear/new">List Your Gear</NavLink>
+                            <NavLink tag={RRNavLink} to="/gear/new">
+                                <Button type="button" color="primary">List Your Gear</Button>
+                            </NavLink>
                         </NavItem>
                     </Nav>
                 </Collapse>

@@ -35,8 +35,27 @@ export function GearProvider(props) {
         setGear(data);
     }
 
+    const saveNewGear = async (gear) => {
+        const token = await getToken();
+        const res = await fetch(url, {
+            methods: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(gear)
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+            return data;
+        } else {
+            alert("An error has occurred. Please try again.");
+        }
+    }
+
     return (
-        <GearContext.Provider value={{ gear, searchGear, getGearItem, getMore }}>
+        <GearContext.Provider value={{ gear, searchGear, getGearItem, getMore, saveNewGear }}>
             {props.children}
         </GearContext.Provider>
     )

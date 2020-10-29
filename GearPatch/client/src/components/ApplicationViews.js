@@ -5,6 +5,7 @@ import { GearProvider } from "../providers/GearProvider";
 import Homepage from "./Homepage";
 import GearSearchResults from "./Gear/GearSearchResults";
 import GearListing from "./Gear/GearListing";
+import NewGear from "./Gear/NewGear";
 import ReservationPanel from "./Reservations/ReservationPanel";
 import MessageList from "./Messages/MessageList";
 import Conversation from "./Messages/Conversation";
@@ -23,6 +24,12 @@ export default function ApplicationViews() {
                 <Route path="/gear/search/:query">
                     <GearProvider>
                         <GearSearchResults />
+                    </GearProvider>
+                </Route>
+                
+                <Route path="/gear/new" exact>
+                    <GearProvider>
+                        {isLoggedIn ? <NewGear /> : alert("Please log in or sign up to list gear")}
                     </GearProvider>
                 </Route>
 

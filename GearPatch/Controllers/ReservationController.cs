@@ -52,6 +52,7 @@ namespace GearPatch.Controllers
             return Ok(messageCount);
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult Post(Reservation reservation)
         {
