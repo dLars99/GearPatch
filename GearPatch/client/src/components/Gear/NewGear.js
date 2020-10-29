@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 export default function() {
 
-    const { saveNewGear } = useContext(GearContext);
+    const { saveNewGear, getGearTypes } = useContext(GearContext);
 
     const [newGear, setNewGear] = useState({});
     const [gearType, setGearType] = useState();
@@ -34,13 +34,16 @@ export default function() {
     }
 
     useEffect(() => {
-        // Get gearTypeList
+        getGearTypes().then(setGearTypeList);
+        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
-        if (gearType) {
-            // Populate gearType upon selection
+        if (newGear.gearTypeId) {
+            const gearTypeSelection = gearTypeList.find(gearType => gearType.id = newGear.gearTypeId);
+            setGearType(gearTypeSelection);
         }
+        // eslint-disable-next-line
     }, [newGear.gearTypeId])
 
     return (
@@ -71,9 +74,10 @@ export default function() {
                 <Input type="number" name="price" id="price" placeholder="50" />
             </FormGroup>
             <FormGroup>
+                {console.log(newGear)}
                 <Label for="gearTypeId">Type</Label>
                 <Input type="select" name="gearTypeId" id="gearTypeId"
-                    onClick={(evt) => setGearType(evt.target.value)}>
+                    onChange={handleFieldChange}>
                     <option value="">Select Type</option>
                     {gearTypeList.map(gt => 
                         <option key={gt.id} value={gt.id}>{gt.name}</option>)}

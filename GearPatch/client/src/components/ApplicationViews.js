@@ -29,7 +29,7 @@ export default function ApplicationViews() {
                 
                 <Route path="/gear/new" exact>
                     <GearProvider>
-                        {isLoggedIn ? <NewGear /> : alert("Please log in or sign up to list gear")}
+                        {isLoggedIn ? <NewGear /> : "/" }
                     </GearProvider>
                 </Route>
 

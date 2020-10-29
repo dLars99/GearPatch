@@ -54,8 +54,22 @@ export function GearProvider(props) {
         }
     }
 
+    const getGearTypes = async () => {
+        const token = await getToken();
+        const res = await fetch("/api/geartype", {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const data = await res.json();
+
+        return data;
+    }
+
     return (
-        <GearContext.Provider value={{ gear, searchGear, getGearItem, getMore, saveNewGear }}>
+        <GearContext.Provider value={{ gear, searchGear, getGearItem, getMore,
+            saveNewGear, getGearTypes }}>
             {props.children}
         </GearContext.Provider>
     )

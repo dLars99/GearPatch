@@ -60,6 +60,7 @@ export default function Header() {
                                 <Button type="button" color="primary">List Your Gear</Button>
                             </NavLink>
                         </NavItem>
+
                     </Nav>
                 </Collapse>
                     <Login modal={modal} modalToggle={modalToggle} />

@@ -33,12 +33,15 @@ namespace GearPatch.Controllers
         }
         
         [HttpPost]
-        public IActionResult Post(Accessory accessory)
+        public IActionResult Post(List<Accessory> accessories)
         {
             try
             {
-                _accessoryRepository.Add(accessory);
-                return CreatedAtAction("Get", new { id = accessory.Id }, accessory);
+                foreach(Accessory accessory in accessories)
+                {
+                    _accessoryRepository.Add(accessory);
+                }
+                return CreatedAtAction("Get", new { id = accessories[0].Id }, accessories[0]);
             }
             catch
             {
