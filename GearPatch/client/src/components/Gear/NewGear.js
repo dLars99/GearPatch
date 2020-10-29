@@ -51,6 +51,7 @@ export default function() {
             model: newGear.model,
             price: parseInt(newGear.price),
             description: newGear.description,
+            imageLocation: newGear.imageLocation,
             gearTypeId: parseInt(newGear.gearTypeId),
             firstOptionNotes: newGear.firstOptionNotes || null,
             secondOptionNotes: newGear.secondOptionNotes || null,
@@ -134,6 +135,12 @@ export default function() {
                 <Label for="description">Description</Label>
                 <Input type="textarea" name="description" id="description" onChange={handleFieldChange} />
                 <FormText>Good details help other people rent your gear!</FormText>
+            </FormGroup>
+
+            <FormGroup>
+                <Label for="imageLocation">Image Location</Label>
+                <Input type="url" name="imageLocation" id="imageLocation" onChange={handleFieldChange} />
+                <FormText>Enter the URL of a picture of the item</FormText>
             </FormGroup>
 
             {accessories.length > 0
