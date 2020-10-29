@@ -39,7 +39,7 @@ export default function() {
     }, [])
 
     useEffect(() => {
-        // Update gearType state so FirstOption and SecondOption fields populate
+        // Update gearType state after a selection so FirstOption and SecondOption fields populate
         if (newGear.gearTypeId) {
             const gearTypeSelection = gearTypeList.find(gearType => gearType.id === parseInt(newGear.gearTypeId));
             setGearType(gearTypeSelection);

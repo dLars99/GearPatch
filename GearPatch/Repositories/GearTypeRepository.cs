@@ -22,7 +22,8 @@ namespace GearPatch.Repositories
                 {
                     cmd.CommandText = @"
                         SELECT Id, Name, FirstOptionName, SecondOptionName
-                          FROM GearType";
+                          FROM GearType
+                      ORDER BY Name";
 
                     var reader = cmd.ExecuteReader();
                     var gearTypes = new List<GearType>();
