@@ -15,26 +15,26 @@ insert into UserProfile (Id, FirstName, LastName, Email, Phone, Bio, FirebaseId,
 set identity_insert [UserProfile] off
 
 set identity_insert [GearType] on
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (1, 'Falsa Chiggergrape', 'dapibus duis', 'id');
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (2, 'Santa Lucia Dwarf Rush', 'nulla suscipit', 'parturient montes');
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (3, 'Plains Ironweed', 'in', null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (4, 'Yellow Marsh Marigold', 'ut erat', 'faucibus');
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (5, 'Giant Rhubarb', null, null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (6, 'Carolina Thelomma Lichen', null, 'duis aliquam');
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (7, 'Skinner''s Falsa Foxglove', 'suspendisse', null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (8, 'Beck''s Leafcup', null, null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (9, 'Pore Lichen', 'donec', null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (10, 'Santa Cruz Sedge', 'nec', null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (11, 'Henderson''s Biscuitroot', 'sed', null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (12, 'Roundleaf Ragwort', 'laoreet', 'ut volutpat');
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (13, 'Swamp-redwood', 'quis', 'imperdiet nullam');
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (14, 'Quill Beak Sedge', null, null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (15, 'Tracy''s Pea', null, 'eu');
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (16, 'Fewflower Beggarticks', 'viverra', null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (17, 'White-and-yellow-flower Cornlily', 'non', null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (18, 'Saxifrage', null, null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (19, 'Spike Lichen', 'vestibulum sit', null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (20, 'Trans-pecos Sea Lavender', 'pellentesque', null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (1, 'Electric Guitar', 'String gauge', 'String condition');
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (2, 'Acoustic Guitar', 'String gauge', 'String condition');
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (3, 'Electric Bass', 'Number of strings', 'String condition');
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (4, 'Upright bass', 'String condition', null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (5, 'Drum Set', 'Number of Pieces', 'Head condition');
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (6, 'Cymbal', 'Size', null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (7, 'Keyboard', 'Number of keys', null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (8, 'Trumpet', null, null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (9, 'Trombone', null, null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (10, 'Saxophone', null, null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (11, 'Microphone', null, null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (12, 'Audio interface', 'Number of inputs', 'Type of connection (Firewire, USB3, etc.)');
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (13, 'PA Head', 'Number of channels', 'Powered (yes/no)');
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (14, 'Mixing board', 'Number of channels', null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (15, 'Speaker', 'Cone size in inches', 'Output power in watts');
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (16, 'Studio monitor speaker', 'Cone size in inches', 'Output power in watts');
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (17, 'Drum, individual', 'Type (snare, tom, etc.)', 'Size');
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (18, 'Violin/fiddle', 'Bow included (yes/no)', null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (19, 'Cello', 'Bow included (yes/no)', null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (20, 'Stage monitor speaker', 'Cone size in inches', 'Output power in watts');
 set identity_insert [GearType] off
 
 set identity_insert [Gear] on

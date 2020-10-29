@@ -1,7 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
-import { NavLink as RRNavLink } from "react-router-dom";
+import { useHistory, NavLink as RRNavLink } from "react-router-dom";
 import Login from "./Login/Login";
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, Badge } from "reactstrap";
+import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, 
+    Badge, Button } from "reactstrap";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { MessageContext } from "../providers/MessageProvider";
 import { ReservationContext } from "../providers/ReservationProvider";
@@ -17,6 +18,16 @@ export default function Header() {
     
     const toggle = () => setIsOpen(!isOpen);
     const modalToggle = () => setModal(!modal);
+    const history = useHistory();
+
+    const newItemButton = (evt) => {
+        evt.preventDefault();
+        if (isLoggedIn) {
+            history.push("/gear/new");
+        } else {
+            alert("Sign Up or Sign In to list gear.")
+        }
+    }
 
     useEffect(() => {
         getUnread();
@@ -55,8 +66,9 @@ export default function Header() {
                         </>
                         }
                         <NavItem>
-                            <NavLink tag={RRNavLink} to="/gear/new">List Your Gear</NavLink>
+                            <Button type="button" color="primary" onClick={newItemButton}>List Your Gear</Button>
                         </NavItem>
+
                     </Nav>
                 </Collapse>
                     <Login modal={modal} modalToggle={modalToggle} />
