@@ -95,6 +95,25 @@ namespace GearPatch.Controllers
             }
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Gear gear)
+        {
+            if (id != gear.Id)
+            {
+                return BadRequest();
+            }
+
+            var currentUser = GetCurrentUserProfile();
+            if (currentUser.Id != gear.UserProfileId)
+            {
+                return Unauthorized();
+            }
+
+            _gearRepository.Update(gear);
+
+            return NoContent();
+        }
+
         private UserProfile GetCurrentUserProfile()
         {
                 var firebaseUser = User.FindFirst(ClaimTypes.NameIdentifier);
