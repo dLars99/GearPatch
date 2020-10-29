@@ -20,13 +20,17 @@ export function GearProvider(props) {
     }
 
     const getGearItem = async (id) => {
-        const token = await getToken();
-        const res = await fetch(`${url}/${id}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${token}`
+        let params = {};
+        if (isLoggedIn) {
+            const token = await getToken();
+            params = {
+                method: "GET",
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             }
-        });
+        }
+        const res = await fetch(`${url}/${id}`, params);
 
         if (!res.ok) {
             // Reroute to homepage if post does not exist
@@ -43,7 +47,6 @@ export function GearProvider(props) {
     }
 
     const saveNewGear = async (gear) => {
-        console.log(gear);
         const token = await getToken();
         const res = await fetch(url, {
             method: "POST",

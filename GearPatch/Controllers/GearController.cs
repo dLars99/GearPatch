@@ -50,7 +50,7 @@ namespace GearPatch.Controllers
                 try
                 {
                     var currentUser = GetCurrentUserProfile();
-                    if (gear.UserProfileId != currentUser.Id)
+                    if (currentUser == null || gear.UserProfileId != currentUser.Id)
                     {
                         return NotFound();
                     }
@@ -97,8 +97,8 @@ namespace GearPatch.Controllers
 
         private UserProfile GetCurrentUserProfile()
         {
-            var firebaseId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userProfileRepository.GetByFirebaseId(firebaseId);
+                var firebaseUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                return (firebaseUser == null) ? null : _userProfileRepository.GetByFirebaseId(firebaseUser.Value);
         }
     }
 }

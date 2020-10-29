@@ -9,7 +9,7 @@ import { ReservationContext } from "../providers/ReservationProvider";
 
 export default function Header() {
 
-    const {isLoggedIn} = useContext(UserProfileContext);
+    const { isLoggedIn, logout } = useContext(UserProfileContext);
     const { unread, getUnread } = useContext(MessageContext);
     const { unconfirmed, getUnconfirmed } = useContext(ReservationContext);
 
@@ -30,8 +30,10 @@ export default function Header() {
     }
 
     useEffect(() => {
-        getUnread();
-        getUnconfirmed();
+        if (isLoggedIn) {
+            getUnread();
+            getUnconfirmed();
+        }
         // eslint-disable-next-line
     }, [isLoggedIn])
 
@@ -58,6 +60,10 @@ export default function Header() {
                                 <NavLink tag={RRNavLink} to="/gear/mygear">
                                     My Gear
                                 </NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <a aria-current="page" className="nav-link"
+                                    style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
                             </NavItem>
                         </>
                         : <>
