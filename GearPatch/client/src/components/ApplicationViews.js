@@ -29,7 +29,7 @@ export default function ApplicationViews() {
                 
                 <Route path="/gear/new" exact>
                     <GearProvider>
-                        {isLoggedIn ? <NewGear /> : "/" }
+                        {isLoggedIn ? <NewGear /> : <Redirect to="/" /> }
                     </GearProvider>
                 </Route>
 
