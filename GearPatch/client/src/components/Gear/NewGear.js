@@ -49,20 +49,20 @@ export default function() {
         <Form>
             <FormGroup>
                 <Label for="headline">Headline</Label>
-                <Input type="text" name="headline" id="headline" />
+                <Input type="text" name="headline" id="headline" maxLength="40" />
                 <FormText>Something short to grab people's attention</FormText>
             </FormGroup>
             <Row form>
                 <Col md={7}>
                     <FormGroup>
                         <Label for="manufacturer">Manufacturer</Label>
-                        <Input type="text" name="manufacturer" id="manufacturer" placeholder="Shure" />
+                        <Input type="text" name="manufacturer" id="manufacturer" placeholder="Shure" maxLength="40" />
                     </FormGroup>
                 </Col>
                 <Col md={5}>
                     <FormGroup>
                         <Label for="model">Model</Label>
-                        <Input type="text" name="model" id="model" placeholder="SM-57" />
+                        <Input type="text" name="model" id="model" placeholder="SM-57" maxLength="40" />
                     </FormGroup>
                 </Col>
             </Row>
@@ -83,14 +83,14 @@ export default function() {
             {gearType && gearType.firstOptionName
             ? <FormGroup>
                 <Label for="firstOptionNotes">{gearType.firstOptionName}</Label>
-                <Input type="text" name="firstOptionNotes" id="firstOptionNotes" />
+                <Input type="text" name="firstOptionNotes" id="firstOptionNotes" maxLength="255" />
             </FormGroup>
             : null} 
 
             {gearType && gearType.secondOptionName
             ? <FormGroup>
                 <Label for="secondOptionNotes">{gearType.secondOptionName}</Label>
-                <Input type="text" name="secondOptionNotes" id="secondOptionNotes" />
+                <Input type="text" name="secondOptionNotes" id="secondOptionNotes" maxLength="255" />
             </FormGroup>
             : null}
 
@@ -109,7 +109,8 @@ export default function() {
                 </FormGroup>
                 <FormGroup>
                     <Label for={`accessoryDescription-${index}`}>Accessory Description</Label>
-                    <Input type="text" name={`accessoryDescription-${index}`} id={`accessoryDescription-${index}`} />
+                    <Input type="text" name={`accessoryDescription-${index}`} id={`accessoryDescription-${index}`}
+                        maxLength="500" />
                 </FormGroup>
                 <Button type="button" id={`removeAccessory-${index}`} onClick={removeAccessory}>Remove</Button>
                 </>

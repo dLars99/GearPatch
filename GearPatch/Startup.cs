@@ -32,6 +32,7 @@ namespace GearPatch
             services.AddTransient<IGearRepository, GearRepository>();
             services.AddTransient<IReservationRepository, ReservationRepository>();
             services.AddTransient<IUserMessageRepository, UserMessageRepository>();
+            services.AddTransient<IGearTypeRepository, GearTypeRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";
