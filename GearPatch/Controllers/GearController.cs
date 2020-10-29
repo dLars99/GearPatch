@@ -18,11 +18,14 @@ namespace GearPatch.Controllers
     {
         private readonly IGearRepository _gearRepository;
         private readonly IUserProfileRepository _userProfileRepository;
+        private readonly IAccessoryRepository _accessoryRepository;
         public GearController(IGearRepository gearRepository,
-                              IUserProfileRepository userProfileRepository)
+                              IUserProfileRepository userProfileRepository,
+                              IAccessoryRepository accessoryRepository)
         {
             _gearRepository = gearRepository;
             _userProfileRepository = userProfileRepository;
+            _accessoryRepository = accessoryRepository;
         }
 
         [HttpGet("search")]
@@ -49,6 +52,7 @@ namespace GearPatch.Controllers
             return Ok(_gearRepository.GetThreeRandomByUser(id));
         }
 
+        //[Authorize]
         [HttpPost]
         public IActionResult Post(Gear gear)
         {
@@ -58,6 +62,12 @@ namespace GearPatch.Controllers
             try
             {
                 _gearRepository.Add(gear);
+                foreach (Accessory accessory in gear.Accessories)
+                {
+                    accessory.GearId = gear.Id;
+                    _accessoryRepository.Add(accessory);
+                }
+
                 return CreatedAtAction("Get", new { id = gear.Id }, gear);
             }
             catch

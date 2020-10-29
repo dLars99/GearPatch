@@ -36,9 +36,10 @@ export function GearProvider(props) {
     }
 
     const saveNewGear = async (gear) => {
+        console.log(gear);
         const token = await getToken();
         const res = await fetch(url, {
-            methods: "POST",
+            method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json"

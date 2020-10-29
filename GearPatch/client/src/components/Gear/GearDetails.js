@@ -20,7 +20,7 @@ export default function GearDetails({ gear }) {
                 ? <>
                     <p><strong>Included With This Rental</strong></p>
                     {gear.accessories.map(accessory => 
-                        <p key={accessory.id}>{accessory.name}</p>
+                        <p key={accessory.id}>{accessory.name}: {accessory.description}</p>
                     )}
                 </>
                 : null

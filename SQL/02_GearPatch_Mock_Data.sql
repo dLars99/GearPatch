@@ -32,8 +32,8 @@ insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (14, '
 insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (15, 'Speaker', 'Cone size in inches', 'Output power in watts');
 insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (16, 'Studio monitor speaker', 'Cone size in inches', 'Output power in watts');
 insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (17, 'Drum, individual', 'Type (snare, tom, etc.)', 'Size');
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (18, 'Violin/fiddle', 'Bow included (yes/now)', null);
-insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (19, 'Cello', 'Bow included (yes/now)', null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (18, 'Violin/fiddle', 'Bow included (yes/no)', null);
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (19, 'Cello', 'Bow included (yes/no)', null);
 insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (20, 'Stage monitor speaker', 'Cone size in inches', 'Output power in watts');
 set identity_insert [GearType] off
 

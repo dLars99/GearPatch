@@ -15,7 +15,7 @@ namespace GearPatch.Models
         [Required]
         [MaxLength(40)]
         public string Model { get; set; }
-        public string Description { get; set; }
+        public string? Description { get; set; }
         [Required]
         public int Price { get; set; }
         [Required]
@@ -27,11 +27,11 @@ namespace GearPatch.Models
         public int GearTypeId { get; set; }
         public GearType GearType { get; set; }
         [MaxLength(255)]
-        public string FirstOptionNotes { get; set; }
+        public string? FirstOptionNotes { get; set; }
         [MaxLength(255)]
-        public string SecondOptionNotes { get; set; }
+        public string? SecondOptionNotes { get; set; }
         [Url]
-        public string ImageLocation { get; set; }
+        public string? ImageLocation { get; set; }
         public Gear()
         {
             IsActive = true;
