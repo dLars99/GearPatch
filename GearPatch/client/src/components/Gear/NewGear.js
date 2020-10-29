@@ -4,7 +4,7 @@ import { GearContext } from "../../providers/GearProvider";
 import { NewGearValidation } from "./NewGearValidation";
 import { Container, Form, FormGroup, Input, Label, FormText, Row, Col, Button, FormFeedback } from "reactstrap";
 
-export default function() {
+export default function NewGear() {
 
     const { saveNewGear, getGearTypes } = useContext(GearContext);
 

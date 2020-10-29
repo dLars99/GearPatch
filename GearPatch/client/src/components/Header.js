@@ -54,6 +54,11 @@ export default function Header() {
                                     Reservations<Badge color="primary" pill>{unconfirmed}</Badge>
                                 </NavLink>
                             </NavItem>
+                            <NavItem>
+                                <NavLink tag={RRNavLink} to="/gear/mygear">
+                                    My Gear
+                                </NavLink>
+                            </NavItem>
                         </>
                         : <>
                             <NavItem>

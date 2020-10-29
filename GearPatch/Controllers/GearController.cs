@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
 using GearPatch.Models;
 using GearPatch.Repositories;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
@@ -32,6 +25,14 @@ namespace GearPatch.Controllers
         public IActionResult Search(string q)
         {
             return Ok(_gearRepository.GetSearchResults(q));
+        }
+
+        [HttpGet("mine")]
+
+        public IActionResult GetMine()
+        {
+            var currentUser = GetCurrentUserProfile();
+            return Ok(_gearRepository.GetMine(currentUser.Id));
         }
 
         [HttpGet("{id}")]
