@@ -1,10 +1,14 @@
 import React from "react";
-import { Col } from "reactstrap";
+import { useHistory } from "react-router-dom";
+import { Col, Button } from "reactstrap";
 
 export default function GearDetails({ gear }) {
 
+    const history = useHistory();
+
     return (
         <Col xs={12} md={8}>
+            <Button type="button" onClick={() => history.goBack()}>Back to list</Button>
             <h1>{gear.headline}</h1>
             <h2>{gear.manufacturer} {gear.model}</h2>
             <p>{gear.description}</p>

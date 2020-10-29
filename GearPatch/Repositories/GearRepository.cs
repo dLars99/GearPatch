@@ -162,7 +162,7 @@ namespace GearPatch.Repositories
             }
         }
 
-        public Gear GetActiveGearById(int id)
+        public Gear GetById(int id)
         {
             using (var conn = Connection)
             {
@@ -184,7 +184,7 @@ namespace GearPatch.Repositories
                          LEFT JOIN UserProfile up ON up.Id = g.UserProfileId
                          LEFT JOIN GearType gt ON gt.Id = g.GearTypeId
                          LEFT JOIN Accessory a ON a.GearId = g.Id
-                             WHERE g.Id = @id AND g.IsActive = 1";
+                             WHERE g.Id = @id";
                     DbUtils.AddParameter(cmd, "@id", id);
 
                     var reader = cmd.ExecuteReader();

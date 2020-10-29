@@ -1,6 +1,8 @@
-﻿using System.Security.Claims;
+﻿using System;
+using System.Security.Claims;
 using GearPatch.Models;
 using GearPatch.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
@@ -38,13 +40,29 @@ namespace GearPatch.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var gear = _gearRepository.GetActiveGearById(id);
+            var gear = _gearRepository.GetById(id);
             if (gear == null)
             {
                 return NotFound();
             }
+            if (gear.IsActive == false)
+            {
+                try
+                {
+                    var currentUser = GetCurrentUserProfile();
+                    if (gear.UserProfileId != currentUser.Id)
+                    {
+                        return NotFound();
+                    }
+                }
+                catch
+                {
+                    return NotFound();
+                }
+            }
 
             return Ok(gear);
+
         }
 
         [HttpGet("more/{id}")]
@@ -53,7 +71,7 @@ namespace GearPatch.Controllers
             return Ok(_gearRepository.GetThreeRandomByUser(id));
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public IActionResult Post(Gear gear)
         {

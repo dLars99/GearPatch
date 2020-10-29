@@ -7,7 +7,7 @@ export const GearContext = createContext();
 export function GearProvider(props) {
     const url = "/api/gear";
 
-    const { getToken } = useContext(UserProfileContext);
+    const { getToken, isLoggedIn } = useContext(UserProfileContext);
 
     const [gear, setGear] = useState([]);
 
@@ -20,7 +20,14 @@ export function GearProvider(props) {
     }
 
     const getGearItem = async (id) => {
-        const res = await fetch(`${url}/${id}`);
+        const token = await getToken();
+        const res = await fetch(`${url}/${id}`, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+
         if (!res.ok) {
             // Reroute to homepage if post does not exist
             history.push("/");

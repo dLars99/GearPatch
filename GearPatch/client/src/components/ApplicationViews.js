@@ -7,6 +7,7 @@ import GearSearchResults from "./Gear/GearSearchResults";
 import GearListing from "./Gear/GearListing";
 import NewGear from "./Gear/NewGear";
 import MyGear from "./Gear/MyGear";
+import OwnerGearListing from "./Gear/OwnerGearListing"
 import ReservationPanel from "./Reservations/ReservationPanel";
 import MessageList from "./Messages/MessageList";
 import Conversation from "./Messages/Conversation";
@@ -40,9 +41,15 @@ export default function ApplicationViews() {
                     </GearProvider>
                 </Route>
 
-                <Route path="/gear/:id">
+                <Route path="/gear/:id" exact>
                     <GearProvider>
                         <GearListing />
+                    </GearProvider>
+                </Route>
+
+                <Route path="/gear/:id/owner">
+                    <GearProvider>
+                        {isLoggedIn ? <OwnerGearListing /> : <Redirect to="/" />}
                     </GearProvider>
                 </Route>
 
