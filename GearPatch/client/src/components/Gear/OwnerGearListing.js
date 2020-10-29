@@ -1,12 +1,8 @@
 import React, { useEffect, useState, useContext } from "react"
 import { useParams, useHistory } from "react-router-dom";
 import { GearContext } from "../../providers/GearProvider";
-import { UserProfileContext } from "../../providers/UserProfileProvider";
 import { Row, Col } from "reactstrap";
 import GearDetails from "./GearDetails";
-import MakeReservation from "./MakeReservation";
-import OwnerMore from "./OwnerMore";
-import OwnerDetails from "./OwnerDetails";
 import Filters from "./Filters";
 
 export default function GearList() {
@@ -15,15 +11,14 @@ export default function GearList() {
 
     const { id } = useParams();
     const { getGearItem } = useContext(GearContext);
-    const { isLoggedIn } = useContext(UserProfileContext);
 
     const history = useHistory();
+    const currentUserId = JSON.parse(sessionStorage.userProfile).id
 
     useEffect(() => {
         getGearItem(id).then((res) => {
-            const currentUserId = (isLoggedIn) ? JSON.parse(sessionStorage.userProfile).id : -1;
-            if (res.userProfileId === currentUserId) {
-                history.push(`/gear/${res.id}/owner`);
+            if (res.userProfileId !== currentUserId) {
+                history.push(`/gear/${res.id}`);
             }
             setGear(res);
         });
@@ -48,11 +43,7 @@ export default function GearList() {
             <Col sm={9}>
                 <Row>
                     <GearDetails gear={gear} />
-                    <MakeReservation gear={gear} />
-                </Row>
-                <Row>
-                    <OwnerMore ownerId={gear.userProfileId} />
-                    <OwnerDetails owner={gear.userProfile} />
+                    {/* Deactivate control in place of reservation? */}
                 </Row>
             </Col>
         </Row>

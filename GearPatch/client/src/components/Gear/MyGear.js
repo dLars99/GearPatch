@@ -1,23 +1,27 @@
 import React, { useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
 import { GearContext } from "../../providers/GearProvider";
 import GearSummary from "./GearSummary";
 import { Row } from "reactstrap";
 
-export default function GearSearchResults() {
+export default function MyGear() {
 
-    const { gear, searchGear } = useContext(GearContext);
-    const { query } = useParams();
+    const { gear, getMyGear } = useContext(GearContext);
 
     useEffect(() => {
-        searchGear(query);
+        getMyGear();
         // eslint-disable-next-line
     }, [])
 
     return (
+        <>
+        <Row>
+            <h1>My Gear</h1>
+        </Row>
         <Row>
             {gear.map(g =>
-                <GearSummary key={g.id} gearItem={g} />)}
+                <GearSummary key={g.id} gearItem={g} />
+            )}
         </Row>
+        </>
     )
 }

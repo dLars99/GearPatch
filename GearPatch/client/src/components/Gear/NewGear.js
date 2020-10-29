@@ -4,7 +4,7 @@ import { GearContext } from "../../providers/GearProvider";
 import { NewGearValidation } from "./NewGearValidation";
 import { Container, Form, FormGroup, Input, Label, FormText, Row, Col, Button, FormFeedback } from "reactstrap";
 
-export default function() {
+export default function NewGear() {
 
     const { saveNewGear, getGearTypes } = useContext(GearContext);
 
@@ -20,7 +20,7 @@ export default function() {
     const addAccessory = (evt) => {
         evt.preventDefault();
         const currentAccessories = [...accessories];
-        currentAccessories.push({invalid: false});
+        currentAccessories.push({});
         setAccessories(currentAccessories);
     }
 
@@ -53,7 +53,9 @@ export default function() {
         evt.preventDefault();
         const inputAccessories = [ ...accessories ];
         // Remove any accessories without a name
-        const accessoriesToSend = inputAccessories.find(a => a.name);
+        const accessoriesToSend = inputAccessories.filter(a => a.name);
+        console.log("Accessories to Send", accessoriesToSend)
+
         const gearToSave = {
             headline: newGear.headline,
             manufacturer: newGear.manufacturer,

@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using GearPatch.Models;
 using GearPatch.Repositories;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
@@ -34,16 +29,40 @@ namespace GearPatch.Controllers
             return Ok(_gearRepository.GetSearchResults(q));
         }
 
+        [HttpGet("mine")]
+
+        public IActionResult GetMine()
+        {
+            var currentUser = GetCurrentUserProfile();
+            return Ok(_gearRepository.GetMine(currentUser.Id));
+        }
+
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var gear = _gearRepository.GetActiveGearById(id);
+            var gear = _gearRepository.GetById(id);
             if (gear == null)
             {
                 return NotFound();
             }
+            if (gear.IsActive == false)
+            {
+                try
+                {
+                    var currentUser = GetCurrentUserProfile();
+                    if (currentUser == null || gear.UserProfileId != currentUser.Id)
+                    {
+                        return NotFound();
+                    }
+                }
+                catch
+                {
+                    return NotFound();
+                }
+            }
 
             return Ok(gear);
+
         }
 
         [HttpGet("more/{id}")]
@@ -52,7 +71,7 @@ namespace GearPatch.Controllers
             return Ok(_gearRepository.GetThreeRandomByUser(id));
         }
 
-        //[Authorize]
+        [Authorize]
         [HttpPost]
         public IActionResult Post(Gear gear)
         {
@@ -78,8 +97,8 @@ namespace GearPatch.Controllers
 
         private UserProfile GetCurrentUserProfile()
         {
-            var firebaseId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
-            return _userProfileRepository.GetByFirebaseId(firebaseId);
+                var firebaseUser = User.FindFirst(ClaimTypes.NameIdentifier);
+                return (firebaseUser == null) ? null : _userProfileRepository.GetByFirebaseId(firebaseUser.Value);
         }
     }
 }

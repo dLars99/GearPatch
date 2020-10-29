@@ -6,7 +6,8 @@ namespace GearPatch.Repositories
     public interface IGearRepository
     {
         List<Gear> GetSearchResults(string query);
-        Gear GetActiveGearById(int id);
+        public List<Gear> GetMine(int userId);
+        Gear GetById(int id);
         List<Gear> GetThreeRandomByUser(int userId);
         public void Add(Gear gear);
     }

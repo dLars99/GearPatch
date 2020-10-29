@@ -95,7 +95,74 @@ namespace GearPatch.Repositories
             }
         }
 
-        public Gear GetActiveGearById(int id)
+        public List<Gear> GetMine(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            SELECT g.Id AS GearId, g.Headline, g.Manufacturer, g.Model, g.Description, g.Price,
+                                   g.IsActive AS GearIsActive, g.FirstOptionNotes, g.SecondOptionNotes, 
+                                   g.UserProfileId, g.ImageLocation as GearImageLocation, g.GearTypeId,
+
+                                   up.FirstName, up.LastName, up.Bio, up.ImageLocation AS UserImageLocation, 
+                                   up.IsActive AS UserIsActive,
+
+                                   gt.Name AS GearTypeName, gt.FirstOptionName, gt.SecondOptionName
+                              FROM Gear g
+                         LEFT JOIN UserProfile up ON up.Id = g.UserProfileId
+                         LEFT JOIN GearType gt ON gt.Id = g.GearTypeId
+                             WHERE g.userProfileId = @userId";
+                    DbUtils.AddParameter(cmd, "@userId", userId);
+                    var reader = cmd.ExecuteReader();
+
+                    var gearList = new List<Gear>();
+
+                    while (reader.Read())
+                    {
+                        var gearId = DbUtils.GetInt(reader, "GearId");
+
+                        var gear = new Gear()
+                        {
+                            Id = gearId,
+                            Headline = DbUtils.GetString(reader, "Headline"),
+                            Manufacturer = DbUtils.GetString(reader, "Manufacturer"),
+                            Model = DbUtils.GetString(reader, "Model"),
+                            Description = DbUtils.GetString(reader, "Description"),
+                            Price = DbUtils.GetInt(reader, "Price"),
+                            IsActive = DbUtils.GetBool(reader, "GearIsActive"),
+                            FirstOptionNotes = DbUtils.GetString(reader, "FirstOptionNotes"),
+                            SecondOptionNotes = DbUtils.GetString(reader, "SecondOptionNotes"),
+                            ImageLocation = DbUtils.GetString(reader, "GearImageLocation"),
+                            UserProfileId = userId,
+                            UserProfile = new UserProfile()
+                            {
+                                Id = userId,
+                                FirstName = DbUtils.GetString(reader, "FirstName"),
+                                LastName = DbUtils.GetString(reader, "LastName"),
+                                ImageLocation = DbUtils.GetString(reader, "UserImageLocation"),
+                                IsActive = DbUtils.GetBool(reader, "UserIsActive")
+                            },
+                            GearTypeId = DbUtils.GetInt(reader, "GearTypeId"),
+                            GearType = new GearType()
+                            {
+                                Id = DbUtils.GetInt(reader, "GearTypeId"),
+                                Name = DbUtils.GetString(reader, "GearTypeName")
+                            },
+                        };
+
+                        gearList.Add(gear);
+                    }
+
+                    reader.Close();
+                    return gearList;
+                }
+            }
+        }
+
+        public Gear GetById(int id)
         {
             using (var conn = Connection)
             {
@@ -117,7 +184,7 @@ namespace GearPatch.Repositories
                          LEFT JOIN UserProfile up ON up.Id = g.UserProfileId
                          LEFT JOIN GearType gt ON gt.Id = g.GearTypeId
                          LEFT JOIN Accessory a ON a.GearId = g.Id
-                             WHERE g.Id = @id AND g.IsActive = 1";
+                             WHERE g.Id = @id";
                     DbUtils.AddParameter(cmd, "@id", id);
 
                     var reader = cmd.ExecuteReader();
