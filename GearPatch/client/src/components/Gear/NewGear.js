@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { GearContext } from "../../providers/GearProvider";
-import { Container, Form, FormGroup, Input, Label, FormText, Row, Col, Button } from "reactstrap";
+import { NewGearValidation } from "./NewGearValidation";
+import { Container, Form, FormGroup, Input, Label, FormText, Row, Col, Button, FormFeedback } from "reactstrap";
 
 export default function() {
 
@@ -11,13 +12,15 @@ export default function() {
     const [gearType, setGearType] = useState();
     const [gearTypeList, setGearTypeList] = useState([]);
     const [accessories, setAccessories] = useState([]);
+    const [invalid, setInvalid] = useState({headline: false, manufacturer: false, model: false, price: false, description: false,
+        imageLocation: false, gearTypeId: false, firstOptionNotes: false, secondOptionNotes: false})
 
     const history = useHistory();
 
     const addAccessory = (evt) => {
         evt.preventDefault();
         const currentAccessories = [...accessories];
-        currentAccessories.push({});
+        currentAccessories.push({invalid: false});
         setAccessories(currentAccessories);
     }
 
@@ -37,14 +40,20 @@ export default function() {
     }
 
     const handleFieldChange = (evt) => {
+        const currentInvalid = { ...invalid };
         const currentGear = { ...newGear };
         currentGear[evt.target.id] = evt.target.value;
         setNewGear(currentGear);
+        // Reset field if it was previously marked invalid
+        currentInvalid[evt.target.id] = false;
+        setInvalid(currentInvalid);
     }
 
     const handleSubmit = (evt) => {
         evt.preventDefault();
-
+        const inputAccessories = [ ...accessories ];
+        // Remove any accessories without a name
+        const accessoriesToSend = inputAccessories.find(a => a.name);
         const gearToSave = {
             headline: newGear.headline,
             manufacturer: newGear.manufacturer,
@@ -55,13 +64,19 @@ export default function() {
             gearTypeId: parseInt(newGear.gearTypeId),
             firstOptionNotes: newGear.firstOptionNotes || null,
             secondOptionNotes: newGear.secondOptionNotes || null,
-            accessories: [...accessories]
+            accessories: accessoriesToSend || []
         }
 
-        saveNewGear(gearToSave)
-        .then((res) => history.push(`/gear/${res.id}`))
-
-        console.log(gearToSave);
+        // Validation
+        const fieldIsInvalid = NewGearValidation(gearToSave, gearType);
+        if (fieldIsInvalid) {
+            const isInvalid = { ...invalid };
+            isInvalid[fieldIsInvalid] = true;
+            setInvalid(isInvalid);
+        } else {
+            saveNewGear(gearToSave)
+            .then((res) => history.push(`/gear/${res.id}`));
+        }
     }
 
     useEffect(() => {
@@ -84,50 +99,57 @@ export default function() {
         <Form>
             <FormGroup>
                 <Label for="headline">Headline</Label>
-                <Input type="text" name="headline" id="headline" maxLength="40" onChange={handleFieldChange} />
+                <Input type="text" invalid={invalid.headline} name="headline" id="headline" maxLength="40" onChange={handleFieldChange} />
+                <FormFeedback>A headline is required</FormFeedback>
                 <FormText>Something short to grab people's attention</FormText>
             </FormGroup>
             <Row form>
                 <Col md={7}>
                     <FormGroup>
                         <Label for="manufacturer">Manufacturer</Label>
-                        <Input type="text" name="manufacturer" id="manufacturer" placeholder="Shure" maxLength="40" 
+                        <Input type="text" invalid={invalid.manufacturer} name="manufacturer" id="manufacturer" placeholder="Shure" maxLength="40" 
                             onChange={handleFieldChange} />
+                        <FormFeedback>Manufacturer is required</FormFeedback>
                     </FormGroup>
                 </Col>
                 <Col md={5}>
                     <FormGroup>
                         <Label for="model">Model</Label>
-                        <Input type="text" name="model" id="model" placeholder="SM-57" maxLength="40" onChange={handleFieldChange} />
+                        <Input type="text" invalid={invalid.model} name="model" id="model" placeholder="SM-57" maxLength="40" onChange={handleFieldChange} />
+                        <FormFeedback>Model is required</FormFeedback>
                     </FormGroup>
                 </Col>
             </Row>
             <FormGroup>
                 <Label for="price">Price</Label>
-                <Input type="number" name="price" id="price" placeholder="50" onChange={handleFieldChange} />
+                <Input type="number" invalid={invalid.price} name="price" id="price" placeholder="50" onChange={handleFieldChange} />
+                <FormFeedback>Price is required</FormFeedback>
                 <FormText>Rentals are priced per day</FormText>
             </FormGroup>
             <FormGroup>
                 <Label for="gearTypeId">Type</Label>
-                <Input type="select" name="gearTypeId" id="gearTypeId"
+                <Input type="select" invalid={invalid.gearTypeId} name="gearTypeId" id="gearTypeId"
                     onChange={handleFieldChange}>
                     <option value="">Select Type</option>
                     {gearTypeList.map(gt => 
                         <option key={gt.id} value={gt.id}>{gt.name}</option>)}
                 </Input>
+                <FormFeedback>Type is required</FormFeedback>
             </FormGroup>
 
             {gearType && gearType.firstOptionName
             ? <FormGroup>
                 <Label for="firstOptionNotes">{gearType.firstOptionName}</Label>
-                <Input type="text" name="firstOptionNotes" id="firstOptionNotes" maxLength="255" onChange={handleFieldChange} />
+                <Input type="text" invalid={invalid.firstOptionNotes} name="firstOptionNotes" id="firstOptionNotes" maxLength="255" onChange={handleFieldChange} />
+                <FormFeedback>This field is required</FormFeedback>
             </FormGroup>
             : null} 
 
             {gearType && gearType.secondOptionName
             ? <FormGroup>
                 <Label for="secondOptionNotes">{gearType.secondOptionName}</Label>
-                <Input type="text" name="secondOptionNotes" id="secondOptionNotes" maxLength="255" onChange={handleFieldChange} />
+                <Input type="text" invalid={invalid.secondOptionNotes} name="secondOptionNotes" id="secondOptionNotes" maxLength="255" onChange={handleFieldChange} />
+                <FormFeedback>This field is required</FormFeedback>
             </FormGroup>
             : null}
 
@@ -139,7 +161,7 @@ export default function() {
 
             <FormGroup>
                 <Label for="imageLocation">Image Location</Label>
-                <Input type="url" name="imageLocation" id="imageLocation" onChange={handleFieldChange} />
+                <Input type="url" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" onChange={handleFieldChange} />
                 <FormText>Enter the URL of a picture of the item</FormText>
             </FormGroup>
 
@@ -152,6 +174,7 @@ export default function() {
                             <Label for={`name-${index}`}>Accessory Name</Label>
                             <Input type="text" name={`name-${index}`} id={`name-${index}`} 
                             maxLength="50" onChange={handleAccessory} />
+                            <FormText>Accessories without a name will be removed</FormText>
                         </FormGroup>
                     </Col>
                     <Col md={6}>
