@@ -47,7 +47,7 @@ export default function GearList() {
             </Col>
             <Col sm={9}>
                 <Row>
-                    <GearDetails gear={gear} />
+                    <GearDetails gear={gear} history={history} />
                     <MakeReservation gear={gear} />
                 </Row>
                 <Row>

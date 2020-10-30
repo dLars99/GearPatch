@@ -1,10 +1,7 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import { Col, Button } from "reactstrap";
 
-export default function GearDetails({ gear }) {
-
-    const history = useHistory();
+export default function GearDetails({ gear, history }) {
 
     return (
         <Col xs={12} md={8}>
