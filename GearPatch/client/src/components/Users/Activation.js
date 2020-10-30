@@ -1,25 +1,18 @@
 import React, { useContext } from "react";
-import { UserProfileContext } from "react-router-dom";
+import { UserProfileContext } from "../../providers/UserProfileProvider";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 
-export default function Activation({ modal, toggle, userProfile, history }) {
+export default function Activation({ modal, toggle, currentUser, history }) {
 
     const { userActivation, logout } = useContext(UserProfileContext);
 
     const activateUser = () => {
-        userActivation(userProfile.id).then(() => {
-            // This is the active state of the user prior to the change
-            if (userProfile.isActive) {
-                logout()
-            } else {
-                history.push("/")
-            }
-        });
+        userActivation(currentUser.id).then(() => logout());
     }
 
     return (
         <Modal isOpen={modal} toggle={toggle} backdrop={true} keyboard={true}>
-            {userProfile.isActive
+            {currentUser.isActive
             ? <>
                 <ModalHeader toggle={toggle}>Deactivate User</ModalHeader>
                 <ModalBody>
@@ -33,6 +26,7 @@ export default function Activation({ modal, toggle, userProfile, history }) {
                 <ModalBody>
                     <h4 className="text-center">Do you wish to reactivate your profile?</h4>
                     <p>This will make any gear that was not previously inactive immediately available for reservations.</p>
+                    <p>You will need to log back in for changes to take effect.</p>
                 </ModalBody>
                 </>
             }
@@ -41,6 +35,5 @@ export default function Activation({ modal, toggle, userProfile, history }) {
                 <Button color="secondary" onClick={toggle}>Cancel</Button>
             </ModalFooter>
         </Modal>
-    )
     )
 }
