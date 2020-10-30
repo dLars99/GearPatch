@@ -1,4 +1,4 @@
-export function NewUserValidation({ newUser }) {
+export function NewUserValidation(newUser, password, confirm) {
     
     // All validations return a string indicating a failed field. No return if all fields valid.
 
@@ -9,18 +9,23 @@ export function NewUserValidation({ newUser }) {
 
     // Last name is required
     if (!newUser.lastName || newUser.lastName.trim() === "") {
-        return "lastName"
+        return "lastName";
     }
 
     // Email is required and valid
     if (!newUser.email || newUser.email.trim() === "" ||
-        !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(newGear.email)) {
-        return "email"
+        !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(newUser.email)) {
+        return "email";
+    }
+
+    // Password is required and must match confirmation
+    if (!password || password.trim() === "" || password !== confirm) {
+        return "password";
     }
 
     // Phone must be a valid phone number
-    if (newGear.phone && !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(newGear.phone)) {
-        return "phone"
+    if (newUser.phone && !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(newUser.phone)) {
+        return "phone";
     }
 
     // ImageLocation must be a valid URL

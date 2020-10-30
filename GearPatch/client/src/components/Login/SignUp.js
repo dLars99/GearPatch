@@ -9,16 +9,16 @@ export default function SignUp() {
     const { register } = useContext(UserProfileContext);
 
     const [newUser, setNewUser] = useState({});
-    const [invalid, setInvalid] = useState({firstName: false, lastName: false, email: false, bio: false, 
+    const [invalid, setInvalid] = useState({firstName: false, lastName: false, email: false, password: false, bio: false, 
         imageLocation: false});
 
     const history = useHistory();
 
     const handleFieldChange = (evt) => {
         const currentInvalid = { ...invalid };
-        const userSoFar = { ...newGear };
+        const userSoFar = { ...newUser };
         userSoFar[evt.target.id] = evt.target.value;
-        setNewGear(userSoFar);
+        setNewUser(userSoFar);
         // Reset field if it was previously marked invalid
         currentInvalid[evt.target.id] = false;
         setInvalid(currentInvalid);
@@ -33,17 +33,17 @@ export default function SignUp() {
             email: newUser.email,
             phone: newUser.phone,
             bio: newUser.bio,
-            imageLocation: newUser.imageLocation,
+            imageLocation: newUser.imageLocation
         }
 
         // Validation
-        const fieldIsInvalid = NewUserValidation(userToSave);
+        const fieldIsInvalid = NewUserValidation(userToSave, newUser.password, newUser.confirm);
         if (fieldIsInvalid) {
             const isInvalid = { ...invalid };
             isInvalid[fieldIsInvalid] = true;
             setInvalid(isInvalid);
         } else {
-            register(userToSave)
+            register(userToSave, newUser.password)
             .then(() => history.push("/"));
         }
     }
@@ -70,14 +70,26 @@ export default function SignUp() {
 
                 <FormGroup>
                     <Label for="email">Email Address</Label>
-                    <Input type="email" invalid={invalid.email} id="email" name="email" maxLength="40"
+                    <Input type="email" invalid={invalid.email} id="email" name="email" maxLength="255"
                         onChange={handleFieldChange} />
                     <FormFeedback>Email is required</FormFeedback>
                     <FormText>Your email will be used to sign in</FormText>
                 </FormGroup>
                 <FormGroup>
-                    <Label for="phone">Last Name</Label>
-                    <Input type="phone" invalid={invalid.phone} id="phone" name="phone" maxLength="40"
+                    <Label for="password">Password</Label>
+                    <Input type="password" invalid={invalid.password} id="password" name="password" maxLength="50"
+                        onChange={handleFieldChange} />
+                    <FormFeedback>Password is required</FormFeedback>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="confirm">Confirm password</Label>
+                    <Input type="password" invalid={invalid.confirm} id="confirm" name="confirm" maxLength="50"
+                        onChange={handleFieldChange} />
+                    <FormFeedback>Password is required</FormFeedback>
+                </FormGroup>
+                <FormGroup>
+                    <Label for="phone">Phone Number</Label>
+                    <Input type="phone" invalid={invalid.phone} id="phone" name="phone" maxLength="20"
                         onChange={handleFieldChange} />
                     <FormFeedback>Enter a valid phone number or leave blank</FormFeedback>
                     <FormText>Phone may be used for contact in future versions</FormText>
@@ -85,7 +97,7 @@ export default function SignUp() {
 
                 <FormGroup>
                     <Label for="imageLocation">Image Location</Label>
-                    <Input type="url" invalid={invalid.imageLocation} id="imageLocation" name="imageLocation" maxLength="40"
+                    <Input type="url" invalid={invalid.imageLocation} id="imageLocation" name="imageLocation" maxLength="255"
                         onChange={handleFieldChange} />
                     <FormFeedback>Enter a valid URL</FormFeedback>
                     <FormText>Enter the URL of a picture to represent you</FormText>
@@ -93,7 +105,7 @@ export default function SignUp() {
 
                 <FormGroup>
                     <Label for="bio">Bio</Label>
-                    <Input type="textarea" invalid={invalid.bio} id="bio" name="imageLocation" maxLength="40"
+                    <Input type="textarea" invalid={invalid.bio} id="bio" name="imageLocation"
                         onChange={handleFieldChange} />
                     <FormText>Tell other users a little about yourself</FormText>
                 </FormGroup>
