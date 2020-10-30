@@ -1,17 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { history } from "react-router-dom";
+import React from "react";
 import { Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, CardFooter, Button } from "reactstrap";
 
-export default function ViewUser() {
 
-    const [currentUser, setCurrentUser] = useState({});
-    const [editing, setEditing] = useState(false);
-
-    const toggleEdit = () => setEditing(!editing);
-    
-    useEffect(() => {
-        setCurrentUser(JSON.parse(sessionStorage.userProfile));
-    }, [])
+export default function UserDetails({ currentUser, history }) {
 
     return (
         <Row className="justify-content-center">
@@ -34,7 +25,7 @@ export default function ViewUser() {
                                 <Button>Deactivate</Button> {' '}
                             </Col>
                             <Col md={4} lg={2}>
-                                <Button>Go Back</Button>
+                                <Button onClick={() => history.goBack()}>Go Back</Button>
                             </Col>
                         </Row>
 

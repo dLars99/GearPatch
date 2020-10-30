@@ -45,5 +45,23 @@ namespace GearPatch.Controllers
             return CreatedAtAction(
                 nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.FirebaseId }, userProfile);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, UserProfile userProfile)
+        {
+            // The client does not have access to the FirebaseId, so we need the full existing object
+            var existingUserProfile = _userProfileRepository.GetById(id);
+            if (existingUserProfile.Id != userProfile.Id || id != userProfile.Id)
+            {
+                return Unauthorized();
+            }
+
+            userProfile.FirebaseId = existingUserProfile.FirebaseId;
+            userProfile.IsActive = existingUserProfile.IsActive;
+
+            _userProfileRepository.Update(userProfile);
+
+            return NoContent();
+        }
     }
 }
