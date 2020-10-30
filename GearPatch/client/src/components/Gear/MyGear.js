@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from "react";
+import { useHistory } from "react-router-dom";
 import { GearContext } from "../../providers/GearProvider";
 import GearSummary from "./GearSummary";
 import { Row } from "reactstrap";
@@ -6,6 +7,8 @@ import { Row } from "reactstrap";
 export default function MyGear() {
 
     const { gear, getMyGear } = useContext(GearContext);
+    
+    const history = useHistory();
     
     useEffect(() => {
         getMyGear();
@@ -19,7 +22,7 @@ export default function MyGear() {
         </Row>
         <Row>
             {gear.map(g => 
-                <GearSummary key={g.id} gearItem={g} />
+                <GearSummary key={g.id} gearItem={g} history={history} />
             )}
         </Row>
         </>

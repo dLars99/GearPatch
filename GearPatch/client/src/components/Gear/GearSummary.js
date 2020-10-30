@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import { Col, Card, CardImg, CardBody, CardTitle, CardImgOverlay } from "reactstrap";
 
-export default function GearSummary({ gearItem }) {
+export default function GearSummary({ gearItem, history }) {
 
     const [showOwner, setShowOwner] = useState(false);
-
-    const history = useHistory();
 
     const cardHover = (evt) => {
         evt.currentTarget.src = gearItem.userProfile.imageLocation;

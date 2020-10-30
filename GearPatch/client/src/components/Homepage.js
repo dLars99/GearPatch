@@ -41,13 +41,13 @@ export default function Homepage() {
                                     <Label for="query">What are you looking for?</Label>
                                 </FormGroup>
                             </Col>
-                            <Col xs={12} sm={5}>
+                            {/* <Col xs={12} sm={5}>
                                 <FormGroup>
                                     <Input type="text" name="location" id="location" placeholder="Nashville, TN" 
                                         value={search.location} onChange={handleFieldChange} />
                                     <Label for="location">Where are you looking?</Label>
                                 </FormGroup>
-                            </Col>
+                            </Col> */}
                             <Col sm={2}>
                                 <Button>Go</Button>
                             </Col>

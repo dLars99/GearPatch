@@ -7,7 +7,6 @@ import GearDetails from "./GearDetails";
 import MakeReservation from "./MakeReservation";
 import OwnerMore from "./OwnerMore";
 import OwnerDetails from "./OwnerDetails";
-import Filters from "./Filters";
 
 export default function GearList() {
 
@@ -28,7 +27,7 @@ export default function GearList() {
             setGear(res);
         });
         // eslint-disable-next-line
-    }, [])
+    }, [id])
 
     if (!gear) {
         return null;
@@ -42,16 +41,14 @@ export default function GearList() {
             </Col>
         </Row>
         <Row>
-            <Col sm={3}>
-                <Filters />
-            </Col>
-            <Col sm={9}>
+
+            <Col>
                 <Row>
                     <GearDetails gear={gear} history={history} />
                     <MakeReservation gear={gear} />
                 </Row>
                 <Row>
-                    <OwnerMore ownerId={gear.userProfileId} />
+                    <OwnerMore ownerId={gear.userProfileId} history={history} />
                     <OwnerDetails owner={gear.userProfile} />
                 </Row>
             </Col>

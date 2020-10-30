@@ -28,7 +28,7 @@ export default function GearList() {
             setGear(res);
         });
         // eslint-disable-next-line
-    }, [])
+    }, [id])
 
     if (!gear) {
         return null;
