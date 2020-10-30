@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
 import { NewUserValidation } from "./NewUserValidation";
+import UserConfirmation from "./UserConfirmation";
 import { Container, Form, FormGroup, Input, Label, FormText, FormFeedback, Col, Row, Button } from "reactstrap";
 
 export default function SignUp() {
@@ -11,8 +12,10 @@ export default function SignUp() {
     const [newUser, setNewUser] = useState({});
     const [invalid, setInvalid] = useState({firstName: false, lastName: false, email: false, password: false, bio: false, 
         imageLocation: false});
+    const [confirm, setConfirm] = useState(false);
 
     const history = useHistory();
+    const confirmToggle = () => setConfirm(!confirm);
 
     const handleFieldChange = (evt) => {
         const currentInvalid = { ...invalid };
@@ -24,9 +27,24 @@ export default function SignUp() {
         setInvalid(currentInvalid);
     }
 
+    // Validate user information and request confirmation
     const handleSubmit = (evt) => {
         evt.preventDefault();
 
+        // Validation
+        const fieldIsInvalid = NewUserValidation(newUser);
+        if (fieldIsInvalid) {
+            const isInvalid = { ...invalid };
+            isInvalid[fieldIsInvalid] = true;
+            setInvalid(isInvalid);
+        } else {
+            confirmToggle();
+        }
+    }
+
+    // Save information after user confirmation
+    const saveUser = () => {
+        console.log("Here")
         const userToSave = {
             firstName: newUser.firstName,
             lastName: newUser.lastName,
@@ -35,17 +53,8 @@ export default function SignUp() {
             bio: newUser.bio,
             imageLocation: newUser.imageLocation
         }
-
-        // Validation
-        const fieldIsInvalid = NewUserValidation(userToSave, newUser.password, newUser.confirm);
-        if (fieldIsInvalid) {
-            const isInvalid = { ...invalid };
-            isInvalid[fieldIsInvalid] = true;
-            setInvalid(isInvalid);
-        } else {
-            register(userToSave, newUser.password)
-            .then(() => history.goBack());
-        }
+        register(userToSave, newUser.password)
+        .then(() => history.goBack());
     }
 
 
@@ -120,6 +129,7 @@ export default function SignUp() {
                 </Row>
 
             </Form>
+            <UserConfirmation modal={confirm} toggle={confirmToggle} user={newUser} saveUser={saveUser} />
         </Container>
     )
 }

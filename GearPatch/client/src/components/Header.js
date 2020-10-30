@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory, NavLink as RRNavLink } from "react-router-dom";
 import Login from "./Login/Login";
-import { Navbar, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, 
+import { Navbar, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, 
     Badge, Button } from "reactstrap";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { MessageContext } from "../providers/MessageProvider";
@@ -15,9 +15,12 @@ export default function Header() {
 
     const [isOpen, setIsOpen] = useState(false);
     const [modal, setModal] = useState(false);
+    const [dropdownOpen, setDropdownOpen] = useState(false);
     
     const toggle = () => setIsOpen(!isOpen);
     const modalToggle = () => setModal(!modal);
+    const headerToggle = () => setDropdownOpen(!dropdownOpen);
+
     const history = useHistory();
 
     const newItemButton = (evt) => {
@@ -40,7 +43,19 @@ export default function Header() {
     return (
         <header>
             <Navbar color="secondary" dark fixed="top" expand="lg">
-                <NavbarBrand tag={RRNavLink} to="/">GearPatch</NavbarBrand>
+                {isLoggedIn
+                ? <Dropdown nav isOpen={dropdownOpen} toggle={headerToggle}>
+                    <DropdownToggle nav>
+                        <NavbarBrand>GearPatch</NavbarBrand>
+                    </DropdownToggle>
+                    <DropdownMenu>
+                        <DropdownItem tag={RRNavLink} to="/">Homepage</DropdownItem>
+                        <DropdownItem tag={RRNavLink} to="/user">User Profile</DropdownItem>
+                    </DropdownMenu>
+                </Dropdown>
+                : <NavbarBrand tag={RRNavLink} to="/">GearPatch</NavbarBrand>
+                }
+
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
                     <Nav navbar>

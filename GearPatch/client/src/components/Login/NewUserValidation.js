@@ -1,4 +1,4 @@
-export function NewUserValidation(newUser, password, confirm) {
+export function NewUserValidation(newUser) {
     
     // All validations return a string indicating a failed field. No return if all fields valid.
 
@@ -19,7 +19,7 @@ export function NewUserValidation(newUser, password, confirm) {
     }
 
     // Password is required and must match confirmation
-    if (!password || password.trim() === "" || password !== confirm) {
+    if (!newUser.password || newUser.password.trim() === "" || newUser.password !== newUser.confirm) {
         return "password";
     }
 
@@ -36,6 +36,11 @@ export function NewUserValidation(newUser, password, confirm) {
             return "imageLocation";
         }
     }
-    
+
+    // Bio is required
+    if (!newUser.bio || newUser.bio.trim() === "") {
+        return "bio";
+    }
+
     return null;
 }
