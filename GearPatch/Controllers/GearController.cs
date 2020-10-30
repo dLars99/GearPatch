@@ -147,6 +147,11 @@ namespace GearPatch.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            // Id 1 is the permanent 'dummy' gear to keep old reservations in the database
+            if (id == 1)
+            {
+                return BadRequest();
+            }
             var reservations = _reservationRepository.GetByGear(id);
             foreach(Reservation reservation in reservations)
             {

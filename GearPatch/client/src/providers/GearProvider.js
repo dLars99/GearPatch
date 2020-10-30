@@ -67,6 +67,7 @@ export function GearProvider(props) {
 
     const saveEditedGear = async (gear) => {
         const token = await getToken();
+        // eslint-disable-next-line
         const res = await fetch(`${url}/${gear.id}`, {
             method: "PUT",
             headers: {
@@ -92,13 +93,16 @@ export function GearProvider(props) {
 
     const toggleActivation = async (id) => {
         const token = await getToken();
+        // eslint-disable-next-line
         const res = await fetch(`${url}/activate/${id}`, {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${token}`,
                 "Content-Type": "application/json"
             }
-        });        
+        });
+        
+        return null;
     }
 
     const getMyGear = async () => {
@@ -114,9 +118,23 @@ export function GearProvider(props) {
         setGear(data);
     }
 
+    const deleteGear = async (id) => {
+        const token = await getToken();
+        // eslint-disable-next-line
+        const res = await fetch(`${url}/${id}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }); 
+        
+        return null;
+    }
+
     return (
         <GearContext.Provider value={{ gear, searchGear, getGearItem, getMore,
-            saveNewGear, getGearTypes, getMyGear, saveEditedGear, toggleActivation }}>
+            saveNewGear, getGearTypes, getMyGear, saveEditedGear, toggleActivation,
+            deleteGear }}>
             {props.children}
         </GearContext.Provider>
     )
