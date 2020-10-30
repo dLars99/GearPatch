@@ -14,13 +14,16 @@ namespace GearPatch.Controllers
         private readonly IGearRepository _gearRepository;
         private readonly IUserProfileRepository _userProfileRepository;
         private readonly IAccessoryRepository _accessoryRepository;
+        private readonly IReservationRepository _reservationRepository;
         public GearController(IGearRepository gearRepository,
                               IUserProfileRepository userProfileRepository,
-                              IAccessoryRepository accessoryRepository)
+                              IAccessoryRepository accessoryRepository,
+                              IReservationRepository reserverationRepository)
         {
             _gearRepository = gearRepository;
             _userProfileRepository = userProfileRepository;
             _accessoryRepository = accessoryRepository;
+            _reservationRepository = reserverationRepository;
         }
 
         [HttpGet("search")]
@@ -138,6 +141,23 @@ namespace GearPatch.Controllers
             _gearRepository.Update(gear);
 
             return NoContent();
+        }
+
+        [Authorize]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var reservations = _reservationRepository.GetByGear(id);
+            foreach(Reservation reservation in reservations)
+            {
+                // Set to reserved, "unavailable" gear
+                reservation.GearId = 1;
+                _reservationRepository.Update(reservation);
+            }
+
+            _gearRepository.Delete(id);
+
+            return NoContent();     
         }
 
         private UserProfile GetCurrentUserProfile()

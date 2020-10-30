@@ -394,5 +394,25 @@ namespace GearPatch.Repositories
                 }
             };
         }
+
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        DELETE FROM Accessories WHERE GearId=@Id;
+                        DELETE FROM GearImages WHERE GearId=@Id;
+                        DELETE FROM GearReview WHERE GearId=@Id;
+                        DELETE FROM Gear WHERE Id=@Id;";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
