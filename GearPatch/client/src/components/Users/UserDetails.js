@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Activation from "./Activation";
-import { Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, CardFooter, Button, NavbarToggler } from "reactstrap";
+import { Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, CardFooter, Button } from "reactstrap";
 
 
 export default function UserDetails({ toggleEdit, currentUser, history }) {

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from "reactstrap";
 
-export default function Activation({ modal, toggle, currentUser, history }) {
+export default function Activation({ modal, toggle, currentUser }) {
 
     const { userActivation, logout } = useContext(UserProfileContext);
 
