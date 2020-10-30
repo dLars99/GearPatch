@@ -48,7 +48,8 @@ namespace GearPatch.Controllers
             {
                 return NotFound();
             }
-            if (gear.IsActive == false)
+            // Only the owner can access gear that is inactive, or that belongs to an inactive owner
+            if (!gear.IsActive || !gear.UserProfile.IsActive)
             {
                 try
                 {

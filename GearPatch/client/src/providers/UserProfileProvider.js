@@ -7,7 +7,7 @@ export const UserProfileContext = createContext();
 
 export function UserProfileProvider(props) {
     
-    const apiUrl = "/api/userprofile";
+    const url = "/api/userprofile";
 
     const userProfile = sessionStorage.getItem("userProfile");
     const [isLoggedIn, setIsLoggedIn] = useState(userProfile != null);
@@ -49,7 +49,7 @@ export function UserProfileProvider(props) {
 
     const getUserProfile = async (firebaseUserId) => {
         const token = await getToken();
-        const res = await fetch(`${apiUrl}/${firebaseUserId}`, {
+        const res = await fetch(`${url}/${firebaseUserId}`, {
             method: "GET",
             headers: {
                 Authorization: `Bearer ${token}`
@@ -61,7 +61,7 @@ export function UserProfileProvider(props) {
 
     const saveUser = async (userProfile) => {
         const token = await getToken();
-        const res = await fetch(apiUrl, {
+        const res = await fetch(url, {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -76,7 +76,7 @@ export function UserProfileProvider(props) {
     const saveEditedUser = async (userProfile) => {
         const token = await getToken();
         // eslint-disable-next-line
-        const res = await fetch(`${apiUrl}/${userProfile.id}`, {
+        const res = await fetch(`${url}/${userProfile.id}`, {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -87,10 +87,23 @@ export function UserProfileProvider(props) {
 
         return null;
     }
+
+    const userActivation = async (id) => {
+        const token = await getToken();
+        // eslint-disable-next-line
+        const res = await fetch(`${url}/activate/${id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
         
+        return null;
+    }  
 
     return (
-        <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken, saveEditedUser }}>
+        <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken, saveEditedUser, userActivation }}>
           {isFirebaseReady
             ? props.children
             : <Spinner className="app-spinner dark" />}

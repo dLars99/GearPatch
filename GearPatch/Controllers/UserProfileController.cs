@@ -67,6 +67,30 @@ namespace GearPatch.Controllers
             return NoContent();
         }
 
+        [HttpPut("activate/{id}")]
+        public IActionResult Put(int id)
+        {
+            // Id 1 is the permanently inactive 'dummy' user to use with old gear and keep old reservations in the database
+            if (id == 1)
+            {
+                return BadRequest();
+            }
+
+
+            var currentUser = GetCurrentUserProfile();
+
+            if (currentUser.Id != id)
+            {
+                return Unauthorized();
+            }
+
+            currentUser.IsActive = !currentUser.IsActive;
+            _userProfileRepository.Update(currentUser);
+
+            return NoContent();
+        }
+
+
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
