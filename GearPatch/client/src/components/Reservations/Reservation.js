@@ -51,7 +51,7 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
                             ? <>
                                     { !reservation.confirmed
                                     && <Button block onClick={(evt) => prompt(evt, reservation)}>Confirm</Button>}
-                                    {console.log(reservation, reservation.confirmed, reservation.itemReturned)}
+                                    
                                     { (reservation.confirmed && !reservation.itemReturned)
                                     && <Button block onClick={(evt) => returnPrompt(evt, reservation)}>Mark Returned</Button>}
                                 </>

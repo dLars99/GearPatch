@@ -56,7 +56,6 @@ export default function NewGear({ gear, toggleEdit }) {
         const accessoriesToSend = inputAccessories.filter(a => a.name);
 
         const gearToSave = {
-            id: newGear.id,
             headline: newGear.headline,
             manufacturer: newGear.manufacturer,
             model: newGear.model,

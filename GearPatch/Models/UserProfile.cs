@@ -36,5 +36,9 @@ namespace GearPatch.Models
                 return $"{FirstName} {LastName[0]}.";
             }
         }
+        public UserProfile()
+        {
+            IsActive = true;
+        }
     }
 }
