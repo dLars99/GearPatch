@@ -15,7 +15,7 @@ namespace GearPatch.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, FirstName, LastName, Email, Phone, FirebaseId, ImageLocation, IsActive
+                        SELECT Id, FirstName, LastName, Email, Phone, FirebaseId, ImageLocation, Bio, IsActive
                           FROM UserProfile
                          WHERE FirebaseId = @FirebaseId";
 
@@ -35,6 +35,7 @@ namespace GearPatch.Repositories
                             Phone = DbUtils.GetString(reader, "Phone"),
                             FirebaseId = DbUtils.GetString(reader, "FirebaseId"),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            Bio = DbUtils.GetString(reader, "Bio"),
                             IsActive = DbUtils.GetBool(reader, "IsActive")
                         };
                     }
