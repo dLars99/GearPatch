@@ -44,7 +44,7 @@ export default function SignUp() {
             setInvalid(isInvalid);
         } else {
             register(userToSave, newUser.password)
-            .then(() => history.push("/"));
+            .then(() => history.goBack());
         }
     }
 
