@@ -1,4 +1,4 @@
-export function NewUserValidation(newUser, password, confirm) {
+export function NewUserValidation(newUser) {
     
     // All validations return a string indicating a failed field. No return if all fields valid.
 
@@ -13,17 +13,19 @@ export function NewUserValidation(newUser, password, confirm) {
     }
 
     // Email is required and valid
+    // eslint-disable-next-line
     if (!newUser.email || newUser.email.trim() === "" ||
         !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(newUser.email)) {
         return "email";
     }
 
     // Password is required and must match confirmation
-    if (!password || password.trim() === "" || password !== confirm) {
+    if (!newUser.password || newUser.password.trim() === "" || newUser.password !== newUser.confirm) {
         return "password";
     }
 
     // Phone must be a valid phone number
+    // eslint-disable-next-line
     if (newUser.phone && !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(newUser.phone)) {
         return "phone";
     }
@@ -36,6 +38,11 @@ export function NewUserValidation(newUser, password, confirm) {
             return "imageLocation";
         }
     }
-    
+
+    // Bio is required
+    if (!newUser.bio || newUser.bio.trim() === "") {
+        return "bio";
+    }
+
     return null;
 }

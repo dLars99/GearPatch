@@ -361,6 +361,26 @@ namespace GearPatch.Repositories
             }
         }
 
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        DELETE FROM Accessory WHERE GearId=@Id;
+                        DELETE FROM GearImages WHERE GearId=@Id;
+                        DELETE FROM GearReview WHERE GearId=@Id;
+                        DELETE FROM Gear WHERE Id=@Id;";
+                    DbUtils.AddParameter(cmd, "@Id", id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private Gear GearFromDb(SqlDataReader reader)
         {
             return new Gear()
@@ -393,26 +413,6 @@ namespace GearPatch.Repositories
                     SecondOptionName = DbUtils.GetString(reader, "SecondOptionName")
                 }
             };
-        }
-
-        public void Delete(int id)
-        {
-            using (var conn = Connection)
-            {
-                conn.Open();
-
-                using (var cmd = conn.CreateCommand())
-                {
-                    cmd.CommandText = @"
-                        DELETE FROM Accessory WHERE GearId=@Id;
-                        DELETE FROM GearImages WHERE GearId=@Id;
-                        DELETE FROM GearReview WHERE GearId=@Id;
-                        DELETE FROM Gear WHERE Id=@Id;";
-                    DbUtils.AddParameter(cmd, "@Id", id);
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
         }
     }
 }

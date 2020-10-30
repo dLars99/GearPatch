@@ -15,7 +15,7 @@ namespace GearPatch.Repositories
                 using (var cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = @"
-                        SELECT Id, FirstName, LastName, Email, Phone, FirebaseId, ImageLocation, IsActive
+                        SELECT Id, FirstName, LastName, Email, Phone, FirebaseId, ImageLocation, Bio, IsActive
                           FROM UserProfile
                          WHERE FirebaseId = @FirebaseId";
 
@@ -35,6 +35,7 @@ namespace GearPatch.Repositories
                             Phone = DbUtils.GetString(reader, "Phone"),
                             FirebaseId = DbUtils.GetString(reader, "FirebaseId"),
                             ImageLocation = DbUtils.GetString(reader, "ImageLocation"),
+                            Bio = DbUtils.GetString(reader, "Bio"),
                             IsActive = DbUtils.GetBool(reader, "IsActive")
                         };
                     }
@@ -108,5 +109,39 @@ namespace GearPatch.Repositories
             }
         }
 
+        public void Update(UserProfile userProfile)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE UserProfile 
+                                           SET FirstName = @FirstName,
+                                               LastName = @LastName,
+                                               Email = @Email,
+                                               Phone = @Phone,
+                                               Bio = @Bio,
+                                               IsActive = @IsActive,
+                                               FirebaseId = @FirebaseId,
+                                               ImageLocation = @ImageLocation
+                                         WHERE Id = @Id;";
+
+                    DbUtils.AddParameter(cmd, "@FirstName", userProfile.FirstName);
+                    DbUtils.AddParameter(cmd, "@LastName", userProfile.LastName);
+                    DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
+                    DbUtils.AddParameter(cmd, "@Phone", userProfile.Phone);
+                    DbUtils.AddParameter(cmd, "@Bio", userProfile.Bio);
+                    DbUtils.AddParameter(cmd, "@IsActive", userProfile.IsActive);
+                    DbUtils.AddParameter(cmd, "@FirebaseId", userProfile.FirebaseId);
+                    DbUtils.AddParameter(cmd, "@ImageLocation", userProfile.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@Id", userProfile.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
+

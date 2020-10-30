@@ -44,7 +44,7 @@ export default function GearList() {
         <Row>
             {editActive
             ? <EditGear gear={gear} toggleEdit={toggleEdit} />
-            : <GearDetails gear={gear} />
+            : <GearDetails gear={gear} history={history}/>
             }
             <OwnerControls toggleEdit={toggleEdit} isActive={gear.isActive} gearId={gear.id} />
         </Row>

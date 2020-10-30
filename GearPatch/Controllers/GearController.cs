@@ -102,7 +102,8 @@ namespace GearPatch.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, Gear gear)
         {
-            if (id != gear.Id)
+            // Id 1 is the unmodifiable 'dummy' gear to keep old reservations in the database
+            if (id != gear.Id || id == 1)
             {
                 return BadRequest();
             }
@@ -129,6 +130,12 @@ namespace GearPatch.Controllers
         [HttpPut("activate/{id}")]
         public IActionResult Put(int id)
         {
+            // Id 1 is the permanently inactive 'dummy' gear to keep old reservations in the database
+            if (id == 1)
+            {
+                return BadRequest();
+            }
+
             var gear = _gearRepository.GetById(id);
             var currentUser = GetCurrentUserProfile();
 

@@ -65,15 +65,15 @@ namespace GearPatch.Controllers
             message.SenderId = currentUser.Id;
             message.CreateDateTime = DateTime.Now;
 
-            //try
-            //{
+            try
+            {
                 _userMessageRepository.Add(message);
                 return CreatedAtAction("Get", new { id = message.Id }, message);
-            //}
-            //catch
-            //{
-            //    return StatusCode(500);
-            //}
+            }
+            catch
+            {
+                return StatusCode(500);
+            }
         }
 
         [HttpPut("{id}")]

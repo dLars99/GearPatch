@@ -3,7 +3,8 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { GearProvider } from "../providers/GearProvider";
 import Homepage from "./Homepage";
-import SignUp from "./Login/SignUp";
+import SignUp from "./Users/SignUp";
+import ViewUser from "./Users/ViewUser";
 import GearSearchResults from "./Gear/GearSearchResults";
 import GearListing from "./Gear/GearListing";
 import NewGear from "./Gear/NewGear";
@@ -68,6 +69,10 @@ export default function ApplicationViews() {
 
                 <Route path="/messages/:userId">
                     {isLoggedIn ? <Conversation /> : <Redirect to="/" />}
+                </Route>
+
+                <Route path="/user">
+                    {isLoggedIn ? <ViewUser /> : <Redirect to="/" />}
                 </Route>
             </Switch>
         </main>

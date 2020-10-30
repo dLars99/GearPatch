@@ -6,7 +6,7 @@ import { Row } from "reactstrap";
 export default function MyGear() {
 
     const { gear, getMyGear } = useContext(GearContext);
-
+    
     useEffect(() => {
         getMyGear();
         // eslint-disable-next-line

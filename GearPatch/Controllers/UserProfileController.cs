@@ -2,6 +2,7 @@
 using GearPatch.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GearPatch.Controllers
 {
@@ -45,5 +46,32 @@ namespace GearPatch.Controllers
             return CreatedAtAction(
                 nameof(GetByFirebaseUserId), new { firebaseUserId = userProfile.FirebaseId }, userProfile);
         }
+
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, UserProfile userProfile)
+        {
+            // Id 1 is a permanent 'dummy' user to link deleted gear to keep reservations in the database
+            if (id == 1)
+            {
+                return BadRequest();
+            }
+
+            var currentUser = GetCurrentUserProfile();
+            if (id != userProfile.Id || id != currentUser.Id || userProfile.Id != currentUser.Id)
+            {
+                return Unauthorized();
+            }
+
+            _userProfileRepository.Update(userProfile);
+
+            return NoContent();
+        }
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseId(firebaseId);
+        }
+
     }
 }

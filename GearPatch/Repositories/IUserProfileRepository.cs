@@ -7,5 +7,6 @@ namespace GearPatch.Repositories
         UserProfile GetByFirebaseId(string firebaseId);
         UserProfile GetById(int id);
         void Add(UserProfile userProfile);
+        void Update(UserProfile userProfile);
     }
 }
