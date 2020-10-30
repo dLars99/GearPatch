@@ -74,8 +74,7 @@ export function GearProvider(props) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(gear)
-        });
-        
+        });        
     }
 
     const getGearTypes = async () => {
@@ -89,6 +88,17 @@ export function GearProvider(props) {
         const data = await res.json();
 
         return data;
+    }
+
+    const toggleActivation = async (id) => {
+        const token = await getToken();
+        const res = await fetch(`${url}/activate/${id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });        
     }
 
     const getMyGear = async () => {
@@ -106,7 +116,7 @@ export function GearProvider(props) {
 
     return (
         <GearContext.Provider value={{ gear, searchGear, getGearItem, getMore,
-            saveNewGear, getGearTypes, getMyGear, saveEditedGear }}>
+            saveNewGear, getGearTypes, getMyGear, saveEditedGear, toggleActivation }}>
             {props.children}
         </GearContext.Provider>
     )
