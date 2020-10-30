@@ -110,6 +110,14 @@ namespace GearPatch.Controllers
             }
 
             _gearRepository.Update(gear);
+            foreach (Accessory accessory in gear.Accessories)
+            {
+                if (accessory.GearId != gear.Id)
+                {
+                    return BadRequest();
+                }
+                _accessoryRepository.Update(accessory);
+            }
 
             return NoContent();
         }

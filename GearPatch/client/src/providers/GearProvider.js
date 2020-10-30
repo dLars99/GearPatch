@@ -67,7 +67,7 @@ export function GearProvider(props) {
 
     const saveEditedGear = async (gear) => {
         const token = await getToken();
-        const res = await fetch(`url/${gear.id}`, {
+        const res = await fetch(`${url}/${gear.id}`, {
             method: "PUT",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -75,13 +75,7 @@ export function GearProvider(props) {
             },
             body: JSON.stringify(gear)
         });
-        const data = await res.json();
-
-        if (res.ok) {
-            return data;
-        } else {
-            alert("An error has occurred. Please try again.");
-        }
+        
     }
 
     const getGearTypes = async () => {

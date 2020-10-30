@@ -56,6 +56,7 @@ export default function NewGear({ gear, toggleEdit }) {
         const accessoriesToSend = inputAccessories.filter(a => a.name);
 
         const gearToSave = {
+            id: newGear.id,
             headline: newGear.headline,
             manufacturer: newGear.manufacturer,
             model: newGear.model,
@@ -63,6 +64,7 @@ export default function NewGear({ gear, toggleEdit }) {
             description: newGear.description,
             imageLocation: newGear.imageLocation,
             gearTypeId: parseInt(newGear.gearTypeId),
+            userProfileId: JSON.parse(sessionStorage.userProfile).id,
             firstOptionNotes: newGear.firstOptionNotes || null,
             secondOptionNotes: newGear.secondOptionNotes || null,
             accessories: accessoriesToSend || []
