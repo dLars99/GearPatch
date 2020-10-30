@@ -54,7 +54,6 @@ export default function NewGear() {
         const inputAccessories = [ ...accessories ];
         // Remove any accessories without a name
         const accessoriesToSend = inputAccessories.filter(a => a.name);
-        console.log("Accessories to Send", accessoriesToSend)
 
         const gearToSave = {
             headline: newGear.headline,
@@ -170,7 +169,6 @@ export default function NewGear() {
             {accessories.length > 0
             ? accessories.map((accessory, index) =>
                 <Row key={accessory.id} className="align-items-center">
-                    {console.log(accessory)}
                     <Col md={4}>
                         <FormGroup>
                             <Label for={`name-${index}`}>Accessory Name</Label>

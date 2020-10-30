@@ -40,7 +40,7 @@ export function NewGearValidation(gear, gearType){
     if (gearType.firstOptionName && (!gear.firstOptionNotes || gear.firstOptionNotes.trim() === "")) {
         return "firstOptionNotes";
     }
-    console.log(gearType, gear)
+
     if (gearType.secondOptionName && (!gear.secondOptionNotes || gear.secondOptionNotes.trim() === "")) {
         return "secondOptionNotes";
     }
