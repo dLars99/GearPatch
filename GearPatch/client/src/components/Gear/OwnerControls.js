@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom"
 import { GearContext } from "../../providers/GearProvider";
 import ActivationModal from "./ActivationModal";
-import { Col, Card, CardBody, Row, Button } from "reactstrap";
+import { Col, Card, CardTitle, CardBody, Row, Button } from "reactstrap";
 
 export default function OwnerControls({ toggleEdit, isActive, gearId }) {
 
@@ -25,6 +25,7 @@ export default function OwnerControls({ toggleEdit, isActive, gearId }) {
     return (
         <Col xs={12} md={4}>
             <Card>
+                <CardTitle className="text-center">Owner Controls</CardTitle>
                 <CardBody>
                     <Row>
                         <Button onClick={toggleEdit}>Edit</Button>

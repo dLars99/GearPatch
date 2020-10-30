@@ -35,10 +35,11 @@ insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (17, '
 insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (18, 'Violin/fiddle', 'Bow included (yes/no)', null);
 insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (19, 'Cello', 'Bow included (yes/no)', null);
 insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (20, 'Stage monitor speaker', 'Cone size in inches', 'Output power in watts');
+insert into GearType (Id, Name, FirstOptionName, SecondOptionName) values (21, 'Other', 'Specify Item', null);
 set identity_insert [GearType] off
 
 set identity_insert [Gear] on
-insert into Gear (id, Headline, Manufacturer, Model, Description, Price, IsActive, ImageLocation, UserProfileId, GearTypeId, FirstOptionNotes, SecondOptionNotes) values (1, 'vel est', 'Dodge', 'Caravan', 'Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.', 128, 1, 'http://dummyimage.com/247x230.bmp/5fa2dd/ffffff', 5, 5, 'eget eros elementum pellentesque quisque porta volutpat erat quisque erat', 'vivamus vestibulum sagittis sapien cum sociis natoque penatibus et magnis');
+insert into Gear (id, Headline, Manufacturer, Model, Description, Price, IsActive, ImageLocation, UserProfileId, GearTypeId, FirstOptionNotes, SecondOptionNotes) values (1, 'Unavailable', 'This item', 'is no longer available', 'Unavailable', 1, 0, null, 10, 21, null, null);
 insert into Gear (id, Headline, Manufacturer, Model, Description, Price, IsActive, ImageLocation, UserProfileId, GearTypeId, FirstOptionNotes, SecondOptionNotes) values (2, 'diam nam', 'Lexus', 'SC', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.
 
 Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.', 17, 1, 'http://dummyimage.com/191x202.bmp/dddddd/000000', 4, 8, null, 'donec dapibus duis at velit eu est congue elementum');
