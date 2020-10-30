@@ -91,12 +91,17 @@ namespace GearPatch.Repositories
                 conn.Open();
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO UserProfile (FirebaseUserId, Name, Email, UserTypeId)
+                    cmd.CommandText = @"INSERT INTO UserProfile (FirstName, LastName, Email, Phone, Bio, FirebaseId, ImageLocation, IsActive)
                                         OUTPUT INSERTED.ID
-                                        VALUES (@FirebaseUserId, @Name, @Email, @UserTypeId)";
-                    DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseId);
-                    DbUtils.AddParameter(cmd, "@Name", userProfile.FirstName);
+                                        VALUES (@FirstName, @LastName, @Email, @Phone, @Bio, @FirebaseId, @ImageLocation, @IsActive)";
+                    DbUtils.AddParameter(cmd, "@FirstName", userProfile.FirstName);
+                    DbUtils.AddParameter(cmd, "@LastName", userProfile.LastName);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
+                    DbUtils.AddParameter(cmd, "@Phone", userProfile.Phone);
+                    DbUtils.AddParameter(cmd, "@Bio", userProfile.Bio);
+                    DbUtils.AddParameter(cmd, "@FirebaseId", userProfile.FirebaseId);
+                    DbUtils.AddParameter(cmd, "@ImageLocation", userProfile.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@IsActive", userProfile.IsActive);
 
                     userProfile.Id = (int)cmd.ExecuteScalar();
                 }
