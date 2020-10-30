@@ -72,10 +72,25 @@ export function UserProfileProvider(props) {
         const data = await res.json();
         return data;
     };
+
+    const saveEditedUser = async (userProfile) => {
+        const token = await getToken();
+        // eslint-disable-next-line
+        const res = await fetch(`${apiUrl}/${userProfile.id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userProfile)
+        });
+
+        return null;
+    }
         
 
     return (
-        <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken }}>
+        <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken, saveEditedUser }}>
           {isFirebaseReady
             ? props.children
             : <Spinner className="app-spinner dark" />}

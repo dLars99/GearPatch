@@ -2,6 +2,7 @@
 using GearPatch.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace GearPatch.Controllers
 {
@@ -49,19 +50,28 @@ namespace GearPatch.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, UserProfile userProfile)
         {
-            // The client does not have access to the FirebaseId, so we need the full existing object
-            var existingUserProfile = _userProfileRepository.GetById(id);
-            if (existingUserProfile.Id != userProfile.Id || id != userProfile.Id)
+            // Id 1 is a permanent 'dummy' user to link deleted gear to keep reservations in the database
+            if (id == 1)
+            {
+                return BadRequest();
+            }
+
+            var currentUser = GetCurrentUserProfile();
+            if (id != userProfile.Id || id != currentUser.Id || userProfile.Id != currentUser.Id)
             {
                 return Unauthorized();
             }
-
-            userProfile.FirebaseId = existingUserProfile.FirebaseId;
-            userProfile.IsActive = existingUserProfile.IsActive;
 
             _userProfileRepository.Update(userProfile);
 
             return NoContent();
         }
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseId(firebaseId);
+        }
+
     }
 }

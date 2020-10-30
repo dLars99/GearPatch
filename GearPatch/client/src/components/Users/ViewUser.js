@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { history, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import EditUser from "./EditUser";
+import UserDetails from "./UserDetails";
 
 export default function ViewUser() {
 
@@ -16,9 +18,10 @@ export default function ViewUser() {
 
     return (
         <>
+        {console.log(currentUser)}
         {editing
-            ? <EditUser history={history} id={currentUser.id} />
-            : <UserDetails currentUser={currentUser} history={history} />
+            ? <EditUser toggleEdit={toggleEdit} history={history} currentUser={currentUser} />
+            : <UserDetails toggleEdit={toggleEdit} currentUser={currentUser} history={history} />
         }
         </>
     )

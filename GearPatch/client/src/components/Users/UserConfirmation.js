@@ -7,7 +7,7 @@ export default function UserConfirmation({ modal, toggle, user, saveUser }) {
         <ModalHeader toggle={toggle}>Confirm User</ModalHeader>
             <ModalBody>
                 <h4 className="text=center">Is this information correct?</h4>
-                <p>{user.firstName} {user.LastName}</p>
+                <p>{user.firstName} {user.lastName}</p>
                 <p>Email: {user.email}</p>
                 <p>Phone: {user.phone}</p>
                 <p>Bio: {user.bio}</p>

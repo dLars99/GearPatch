@@ -13,6 +13,7 @@ export function NewUserValidation(newUser) {
     }
 
     // Email is required and valid
+    // eslint-disable-next-line
     if (!newUser.email || newUser.email.trim() === "" ||
         !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(newUser.email)) {
         return "email";
@@ -24,6 +25,7 @@ export function NewUserValidation(newUser) {
     }
 
     // Phone must be a valid phone number
+    // eslint-disable-next-line
     if (newUser.phone && !/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(newUser.phone)) {
         return "phone";
     }

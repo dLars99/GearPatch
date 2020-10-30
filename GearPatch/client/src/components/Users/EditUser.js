@@ -1,22 +1,76 @@
 import React, { useContext, useState, useEffect } from "react";
 import { UserProfileContext } from "../../providers/UserProfileProvider";
+import { NewUserValidation } from "./NewUserValidation";
+import UserConfirmation from "./UserConfirmation";
+import { Container, Form, FormGroup, Input, Label, FormText, FormFeedback, Col, Row, Button } from "reactstrap";
 
-export default function EditUser({ history, currentUser }) {
+export default function EditUser({ toggleEdit, history, currentUser }) {
 
-    const {  } = useContext(UserProfileContext);
+    const { saveEditedUser } = useContext(UserProfileContext);
 
-    const [newUser, setNewUser] = useState({});
+    const [newUser, setNewUser] = useState();
+    const [invalid, setInvalid] = useState({firstName: false, lastName: false, bio: false, 
+        imageLocation: false });
+    const [confirm, setConfirm] = useState(false);
+
+    const confirmToggle = () => setConfirm(!confirm);
+
+    const handleFieldChange = (evt) => {
+        const currentInvalid = { ...invalid };
+        const userSoFar = { ...newUser };
+        userSoFar[evt.target.id] = evt.target.value;
+        setNewUser(userSoFar);
+        // Reset field if it was previously marked invalid
+        currentInvalid[evt.target.id] = false;
+        setInvalid(currentInvalid);
+    }
+
+    // Validate user information and request confirmation
+    const handleSubmit = (evt) => {
+        evt.preventDefault();
+
+        // Validation
+        const fieldIsInvalid = NewUserValidation(newUser);
+        if (fieldIsInvalid && fieldIsInvalid !== "password" && fieldIsInvalid !== "email") {
+            console.log("invalid")
+            const isInvalid = { ...invalid };
+            isInvalid[fieldIsInvalid] = true;
+            setInvalid(isInvalid);
+        } else {
+            confirmToggle();
+        }
+    }
+
+    // Save information after user confirmation
+    const saveUser = () => {
+        const userToSave = {
+            id: newUser.id,
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            email: newUser.email,
+            phone: newUser.phone,
+            bio: newUser.bio,
+            imageLocation: newUser.imageLocation,
+            firebaseId: newUser.firebaseId,
+            isActive: newUser.isActive
+        }
+        saveEditedUser(userToSave)
+        .then(() => history.push("/"));
+    }    
 
     useEffect(() => {
         setNewUser(currentUser);
         // eslint-disable-next-line
     }, [])
 
+    if (!newUser) {
+        return null;
+    }
+
     return (
         <Container>
             <h1 className="text-center">Edit User</h1>
             <Form>
-
                 <FormGroup>
                     <Label for="firstName">First Name</Label>
                     <Input type="text" invalid={invalid.firstName} id="firstName" name="firstName" maxLength="40" value={newUser.firstName}
@@ -32,15 +86,8 @@ export default function EditUser({ history, currentUser }) {
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="email">Email Address</Label>
-                    <Input type="email" invalid={invalid.email} id="email" name="email" maxLength="255"
-                        onChange={handleFieldChange} />
-                    <FormFeedback>Email is required</FormFeedback>
-                    <FormText>Your email will be used to sign in</FormText>
-                </FormGroup>
-                <FormGroup>
                     <Label for="phone">Phone Number</Label>
-                    <Input type="phone" invalid={invalid.phone} id="phone" name="phone" maxLength="20"
+                    <Input type="phone" invalid={invalid.phone} id="phone" name="phone" maxLength="20" value={newUser.phone}
                         onChange={handleFieldChange} />
                     <FormFeedback>Enter a valid phone number or leave blank</FormFeedback>
                     <FormText>Phone may be used for contact in future versions</FormText>
@@ -48,15 +95,15 @@ export default function EditUser({ history, currentUser }) {
 
                 <FormGroup>
                     <Label for="imageLocation">Image Location</Label>
-                    <Input type="url" invalid={invalid.imageLocation} id="imageLocation" name="imageLocation" maxLength="255"
-                        onChange={handleFieldChange} />
+                    <Input type="url" invalid={invalid.imageLocation} id="imageLocation" name="imageLocation" maxLength="255" 
+                        value={newUser.imageLocation} onChange={handleFieldChange} />
                     <FormFeedback>Enter a valid URL</FormFeedback>
                     <FormText>Enter the URL of a picture to represent you</FormText>
                 </FormGroup>
 
                 <FormGroup>
                     <Label for="bio">Bio</Label>
-                    <Input type="textarea" invalid={invalid.bio} id="bio" name="imageLocation"
+                    <Input type="textarea" invalid={invalid.bio} id="bio" name="imageLocation" value={newUser.bio}
                         onChange={handleFieldChange} />
                     <FormText>Tell other users a little about yourself</FormText>
                 </FormGroup>
@@ -66,7 +113,7 @@ export default function EditUser({ history, currentUser }) {
                         <Button onClick={handleSubmit}>Save</Button>
                     </Col>
                     <Col xs={9} sm={10} lg={11}>
-                        <Button onClick={() => history.push("/")}>Back to Homepage</Button>
+                        <Button onClick={toggleEdit}>Cancel</Button>
                     </Col>
                 </Row>
 
