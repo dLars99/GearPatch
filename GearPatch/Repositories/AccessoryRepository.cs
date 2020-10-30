@@ -61,5 +61,30 @@ namespace GearPatch.Repositories
                 }
             }
         }
+
+        public void Update(Accessory accessory)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Accessory 
+                                           SET Name = @Name,
+                                               Description = @Description,
+                                               GearId = @GearId
+                                         WHERE Id = @Id;";
+
+                    DbUtils.AddParameter(cmd, "@Name", accessory.Name);
+                    DbUtils.AddParameter(cmd, "@Description", accessory.Description);
+                    DbUtils.AddParameter(cmd, "@GearId", accessory.GearId);
+                    DbUtils.AddParameter(cmd, "@Id", accessory.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+        }
     }
 }

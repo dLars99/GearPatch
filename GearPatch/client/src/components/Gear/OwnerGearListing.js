@@ -3,21 +3,26 @@ import { useParams, useHistory } from "react-router-dom";
 import { GearContext } from "../../providers/GearProvider";
 import { Row, Col } from "reactstrap";
 import GearDetails from "./GearDetails";
-import Filters from "./Filters";
+import EditGear from "./EditGear";
+import OwnerControls from "./OwnerControls";
 
 export default function GearList() {
 
     const [gear, setGear] = useState();
+    const [editActive, setEditActive] = useState(false);
 
     const { id } = useParams();
     const { getGearItem } = useContext(GearContext);
 
     const history = useHistory();
     const currentUserId = JSON.parse(sessionStorage.userProfile).id
+    
+    const toggleEdit = () => setEditActive(!editActive);
 
     useEffect(() => {
         getGearItem(id).then((res) => {
             if (res.userProfileId !== currentUserId) {
+                // Kick out of owner view if user is not the owner
                 history.push(`/gear/${res.id}`);
             }
             setGear(res);
@@ -37,15 +42,11 @@ export default function GearList() {
             </Col>
         </Row>
         <Row>
-            <Col sm={3}>
-                <Filters />
-            </Col>
-            <Col sm={9}>
-                <Row>
-                    <GearDetails gear={gear} />
-                    {/* Deactivate control in place of reservation? */}
-                </Row>
-            </Col>
+            {editActive
+            ? <EditGear gear={gear} toggleEdit={toggleEdit} />
+            : <GearDetails gear={gear} />
+            }
+            <OwnerControls toggleEdit={toggleEdit} />
         </Row>
         </>        
     );

@@ -6,5 +6,6 @@ namespace GearPatch.Repositories
     {
         Accessory GetById(int id);
         void Add(Accessory accessory);
+        void Update(Accessory accessory);
     }
 }

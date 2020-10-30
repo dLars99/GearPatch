@@ -65,6 +65,19 @@ export function GearProvider(props) {
         }
     }
 
+    const saveEditedGear = async (gear) => {
+        const token = await getToken();
+        const res = await fetch(`${url}/${gear.id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(gear)
+        });
+        
+    }
+
     const getGearTypes = async () => {
         const token = await getToken();
         const res = await fetch("/api/geartype", {
@@ -93,7 +106,7 @@ export function GearProvider(props) {
 
     return (
         <GearContext.Provider value={{ gear, searchGear, getGearItem, getMore,
-            saveNewGear, getGearTypes, getMyGear }}>
+            saveNewGear, getGearTypes, getMyGear, saveEditedGear }}>
             {props.children}
         </GearContext.Provider>
     )

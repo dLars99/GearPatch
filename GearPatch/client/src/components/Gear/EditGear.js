@@ -4,9 +4,9 @@ import { GearContext } from "../../providers/GearProvider";
 import { NewGearValidation } from "./NewGearValidation";
 import { Container, Form, FormGroup, Input, Label, FormText, Row, Col, Button, FormFeedback } from "reactstrap";
 
-export default function NewGear() {
+export default function NewGear({ gear, toggleEdit }) {
 
-    const { saveNewGear, getGearTypes } = useContext(GearContext);
+    const { saveEditedGear, getGearTypes } = useContext(GearContext);
 
     const [newGear, setNewGear] = useState({});
     const [gearType, setGearType] = useState();
@@ -54,9 +54,9 @@ export default function NewGear() {
         const inputAccessories = [ ...accessories ];
         // Remove any accessories without a name
         const accessoriesToSend = inputAccessories.filter(a => a.name);
-        console.log("Accessories to Send", accessoriesToSend)
 
         const gearToSave = {
+            id: newGear.id,
             headline: newGear.headline,
             manufacturer: newGear.manufacturer,
             model: newGear.model,
@@ -64,6 +64,7 @@ export default function NewGear() {
             description: newGear.description,
             imageLocation: newGear.imageLocation,
             gearTypeId: parseInt(newGear.gearTypeId),
+            userProfileId: JSON.parse(sessionStorage.userProfile).id,
             firstOptionNotes: newGear.firstOptionNotes || null,
             secondOptionNotes: newGear.secondOptionNotes || null,
             accessories: accessoriesToSend || []
@@ -76,13 +77,16 @@ export default function NewGear() {
             isInvalid[fieldIsInvalid] = true;
             setInvalid(isInvalid);
         } else {
-            saveNewGear(gearToSave)
-            .then((res) => history.push(`/gear/${res.id}`));
+            saveEditedGear(gearToSave)
+            .then(() => history.push(`/gear/${gear.id}`));
         }
     }
 
     useEffect(() => {
-        getGearTypes().then(setGearTypeList);
+        if (gear.accessories) setAccessories(gear.accessories);
+        getGearTypes().then(setGearTypeList)
+            .then(() => setNewGear(gear)
+        );
         // eslint-disable-next-line
     }, [])
 
@@ -95,13 +99,18 @@ export default function NewGear() {
         // eslint-disable-next-line
     }, [newGear.gearTypeId])
 
+    if (!gearType || accessories.length === 0) {
+        return null;
+    }
+
     return (
-        <Container className="mt-4">
-        <h1 className="text-center">New Gear Listing</h1>
+        <Col md={8}>
+        <h1>Edit Gear Listing</h1>
         <Form>
             <FormGroup>
                 <Label for="headline">Headline</Label>
-                <Input type="text" invalid={invalid.headline} name="headline" id="headline" maxLength="40" onChange={handleFieldChange} />
+                <Input type="text" invalid={invalid.headline} name="headline" id="headline" maxLength="40" value={newGear.headline}
+                    onChange={handleFieldChange} />
                 <FormFeedback>A headline is required</FormFeedback>
                 <FormText>Something short to grab people's attention</FormText>
             </FormGroup>
@@ -109,28 +118,30 @@ export default function NewGear() {
                 <Col md={7}>
                     <FormGroup>
                         <Label for="manufacturer">Manufacturer</Label>
-                        <Input type="text" invalid={invalid.manufacturer} name="manufacturer" id="manufacturer" placeholder="Shure" maxLength="40" 
-                            onChange={handleFieldChange} />
+                        <Input type="text" invalid={invalid.manufacturer} name="manufacturer" id="manufacturer" placeholder="Shure" 
+                            value={newGear.manufacturer} maxLength="40" onChange={handleFieldChange} />
                         <FormFeedback>Manufacturer is required</FormFeedback>
                     </FormGroup>
                 </Col>
                 <Col md={5}>
                     <FormGroup>
                         <Label for="model">Model</Label>
-                        <Input type="text" invalid={invalid.model} name="model" id="model" placeholder="SM-57" maxLength="40" onChange={handleFieldChange} />
+                        <Input type="text" invalid={invalid.model} name="model" id="model" placeholder="SM-57" value={newGear.model}
+                            maxLength="40" onChange={handleFieldChange} />
                         <FormFeedback>Model is required</FormFeedback>
                     </FormGroup>
                 </Col>
             </Row>
             <FormGroup>
                 <Label for="price">Price</Label>
-                <Input type="number" invalid={invalid.price} name="price" id="price" placeholder="50" onChange={handleFieldChange} />
+                <Input type="number" invalid={invalid.price} name="price" id="price" placeholder="50" value={newGear.price}
+                    onChange={handleFieldChange} />
                 <FormFeedback>Price is required</FormFeedback>
                 <FormText>Rentals are priced per day</FormText>
             </FormGroup>
             <FormGroup>
                 <Label for="gearTypeId">Type</Label>
-                <Input type="select" invalid={invalid.gearTypeId} name="gearTypeId" id="gearTypeId"
+                <Input type="select" invalid={invalid.gearTypeId} name="gearTypeId" id="gearTypeId" value={newGear.gearTypeId}
                     onChange={handleFieldChange}>
                     <option value="">Select Type</option>
                     {gearTypeList.map(gt => 
@@ -139,50 +150,50 @@ export default function NewGear() {
                 <FormFeedback>Type is required</FormFeedback>
             </FormGroup>
 
-            {gearType && gearType.firstOptionName
-            ? <FormGroup>
+            <FormGroup>
                 <Label for="firstOptionNotes">{gearType.firstOptionName}</Label>
-                <Input type="text" invalid={invalid.firstOptionNotes} name="firstOptionNotes" id="firstOptionNotes" maxLength="255" onChange={handleFieldChange} />
+                <Input type="text" invalid={invalid.firstOptionNotes} name="firstOptionNotes" id="firstOptionNotes" maxLength="255" 
+                    value={newGear.firstOptionNotes || ""} onChange={handleFieldChange} />
                 <FormFeedback>This field is required</FormFeedback>
             </FormGroup>
-            : null} 
 
             {gearType && gearType.secondOptionName
             ? <FormGroup>
                 <Label for="secondOptionNotes">{gearType.secondOptionName}</Label>
-                <Input type="text" invalid={invalid.secondOptionNotes} name="secondOptionNotes" id="secondOptionNotes" maxLength="255" onChange={handleFieldChange} />
+                <Input type="text" invalid={invalid.secondOptionNotes} name="secondOptionNotes" id="secondOptionNotes" maxLength="255" 
+                    value={newGear.secondOptionNotes || ""} onChange={handleFieldChange} />
                 <FormFeedback>This field is required</FormFeedback>
             </FormGroup>
             : null}
 
             <FormGroup>
                 <Label for="description">Description</Label>
-                <Input type="textarea" name="description" id="description" onChange={handleFieldChange} />
+                <Input type="textarea" name="description" id="description" value={newGear.description || ""} onChange={handleFieldChange} />
                 <FormText>Good details help other people rent your gear!</FormText>
             </FormGroup>
 
             <FormGroup>
                 <Label for="imageLocation">Image Location</Label>
-                <Input type="url" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" onChange={handleFieldChange} />
+                <Input type="url" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" value={newGear.imageLocation || ""}
+                    onChange={handleFieldChange} />
                 <FormText>Enter the URL of a picture of the item</FormText>
             </FormGroup>
 
             {accessories.length > 0
             ? accessories.map((accessory, index) =>
                 <Row key={accessory.id} className="align-items-center">
-                    {console.log(accessory)}
                     <Col md={4}>
                         <FormGroup>
                             <Label for={`name-${index}`}>Accessory Name</Label>
-                            <Input type="text" name={`name-${index}`} id={`name-${index}`} 
-                            maxLength="50" onChange={handleAccessory} />
+                            <Input type="text" name={`name-${index}`} id={`name-${index}`} value={accessory.name}
+                                maxLength="50" onChange={handleAccessory} />
                             <FormText>Accessories without a name will be removed</FormText>
                         </FormGroup>
                     </Col>
                     <Col md={6}>
                         <FormGroup>
                             <Label for={`description-${index}`}>Accessory Description</Label>
-                            <Input type="text" name={`description-${index}`} id={`description-${index}`}
+                            <Input type="text" name={`description-${index}`} id={`description-${index}`} value={accessory.description || ""}
                                 maxLength="500" onChange={handleAccessory} />
                         </FormGroup>
                     </Col>
@@ -207,10 +218,10 @@ export default function NewGear() {
                 <Button onClick={handleSubmit}>Save</Button>
             </Col>
             <Col xs={9} sm={10} lg={11}>
-                <Button onClick={() => history.push("/")}>Back to Homepage</Button>
+                <Button onClick={toggleEdit}>Cancel</Button>
             </Col>
         </Row>
 
-        </Container>
+        </Col>
     )
 }

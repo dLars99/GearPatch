@@ -321,6 +321,46 @@ namespace GearPatch.Repositories
             }
         }
 
+        public void Update(Gear gear)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"UPDATE Gear 
+                                           SET UserProfileId = @UserProfileId,
+                                               Headline = @Headline,
+                                               Manufacturer = @Manufacturer,
+                                               Model = @Model,
+                                               Description = @Description,
+                                               Price = @Price,
+                                               IsActive = @IsActive,
+                                               GearTypeId = @GearTypeId,
+                                               ImageLocation = @ImageLocation,
+                                               FirstOptionNotes = @FirstOptionNotes,
+                                               SecondOptionNotes = @SecondOptionNotes
+                                         WHERE Id = @Id;";
+
+                    DbUtils.AddParameter(cmd, "@UserProfileId", gear.UserProfileId);
+                    DbUtils.AddParameter(cmd, "@Headline", gear.Headline);
+                    DbUtils.AddParameter(cmd, "@Manufacturer", gear.Manufacturer);
+                    DbUtils.AddParameter(cmd, "@Model", gear.Model);
+                    DbUtils.AddParameter(cmd, "@Description", gear.Description);
+                    DbUtils.AddParameter(cmd, "@Price", gear.Price);
+                    DbUtils.AddParameter(cmd, "@IsActive", gear.IsActive);
+                    DbUtils.AddParameter(cmd, "@GearTypeId", gear.GearTypeId);
+                    DbUtils.AddParameter(cmd, "@ImageLocation", gear.ImageLocation);
+                    DbUtils.AddParameter(cmd, "@FirstOptionNotes", gear.FirstOptionNotes);
+                    DbUtils.AddParameter(cmd, "@SecondOptionNotes", gear.SecondOptionNotes);
+                    DbUtils.AddParameter(cmd, "@Id", gear.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private Gear GearFromDb(SqlDataReader reader)
         {
             return new Gear()
