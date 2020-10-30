@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { GearContext } from "../../providers/GearProvider";
 import { NewGearValidation } from "./NewGearValidation";
-import { Container, Form, FormGroup, Input, Label, FormText, Row, Col, Button, FormFeedback } from "reactstrap";
+import { Form, FormGroup, Input, Label, FormText, Row, Col, Button, FormFeedback } from "reactstrap";
 
 export default function NewGear({ gear, toggleEdit }) {
 
@@ -64,6 +64,7 @@ export default function NewGear({ gear, toggleEdit }) {
             description: newGear.description,
             imageLocation: newGear.imageLocation,
             gearTypeId: parseInt(newGear.gearTypeId),
+            isActive: newGear.isActive,
             userProfileId: JSON.parse(sessionStorage.userProfile).id,
             firstOptionNotes: newGear.firstOptionNotes || null,
             secondOptionNotes: newGear.secondOptionNotes || null,

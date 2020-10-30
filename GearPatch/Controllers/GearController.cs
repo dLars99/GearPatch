@@ -95,6 +95,7 @@ namespace GearPatch.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Put(int id, Gear gear)
         {
@@ -118,6 +119,23 @@ namespace GearPatch.Controllers
                 }
                 _accessoryRepository.Update(accessory);
             }
+
+            return NoContent();
+        }
+        [Authorize]
+        [HttpPut("activate/{id}")]
+        public IActionResult Put(int id)
+        {
+            var gear = _gearRepository.GetById(id);
+            var currentUser = GetCurrentUserProfile();
+
+            if (currentUser.Id != gear.UserProfileId)
+            {
+                return Unauthorized();
+            }
+
+            gear.IsActive = !gear.IsActive;
+            _gearRepository.Update(gear);
 
             return NoContent();
         }

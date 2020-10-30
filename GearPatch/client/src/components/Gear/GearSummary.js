@@ -40,6 +40,9 @@ export default function GearSummary({ gearItem }) {
                 <CardTitle className="text-center">{gearItem.headline}</CardTitle>
             </CardBody>
         </Card>
+        {!gearItem.isActive
+        ? <p className="text-center"><em>Inactive</em></p>
+        : null}
         </Col>
     );
 }

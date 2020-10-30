@@ -18,7 +18,7 @@ export default function MyGear() {
             <h1>My Gear</h1>
         </Row>
         <Row>
-            {gear.map(g =>
+            {gear.map(g => 
                 <GearSummary key={g.id} gearItem={g} />
             )}
         </Row>
