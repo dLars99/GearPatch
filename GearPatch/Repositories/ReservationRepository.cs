@@ -128,6 +128,34 @@ namespace GearPatch.Repositories
             }
         }
 
+        public List<Reservation> GetByGear(int gearId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        SELECT Id AS ReservationId, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned
+                          FROM Reservation
+                         WHERE GearId = @GearId";
+                    DbUtils.AddParameter(cmd, "@GearId", gearId);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var reservations = new List<Reservation>();
+
+                    while (reader.Read())
+                    {
+                        reservations.Add(ReservationFromDb(reader));
+                    }
+
+                    reader.Close();
+                    return reservations;
+                }
+            }
+        }
+
         public int NewRequestCount(int userId)
         {
             using (var conn = Connection)

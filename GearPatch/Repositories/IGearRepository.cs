@@ -11,5 +11,6 @@ namespace GearPatch.Repositories
         List<Gear> GetThreeRandomByUser(int userId);
         void Add(Gear gear);
         void Update(Gear gear);
+        void Delete(int id);
     }
 }

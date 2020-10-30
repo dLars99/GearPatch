@@ -8,6 +8,7 @@ namespace GearPatch.Repositories
     {
         List<Reservation> GetByUserId(int id);
         Reservation GetById(int id);
+        List<Reservation> GetByGear(int gearId);
         int NewRequestCount(int userId);
         void Add(Reservation reservation);
         bool CheckAvailability(int gearId, DateTime startDate, DateTime endDate);
