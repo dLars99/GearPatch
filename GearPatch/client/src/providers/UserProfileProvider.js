@@ -87,10 +87,23 @@ export function UserProfileProvider(props) {
 
         return null;
     }
+
+    const userActivation = async (id) => {
+        const token = await getToken();
+        // eslint-disable-next-line
+        const res = await fetch(`${url}/activate/${id}`, {
+            method: "PUT",
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json"
+            }
+        });
         
+        return null;
+    }  
 
     return (
-        <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken, saveEditedUser }}>
+        <UserProfileContext.Provider value={{ isLoggedIn, login, logout, register, getToken, saveEditedUser, userActivation }}>
           {isFirebaseReady
             ? props.children
             : <Spinner className="app-spinner dark" />}

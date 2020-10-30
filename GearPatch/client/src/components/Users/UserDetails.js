@@ -1,8 +1,13 @@
 import React from "react";
+import Activation from "./Activation";
 import { Row, Col, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, CardFooter, Button } from "reactstrap";
 
 
 export default function UserDetails({ toggleEdit, currentUser, history }) {
+
+    const [activation, setActivation] = useState(false);
+    
+    const toggleActivation = () => setActivation(!activation);
 
     return (
         <Row className="justify-content-center">
@@ -28,10 +33,10 @@ export default function UserDetails({ toggleEdit, currentUser, history }) {
                                 <Button onClick={() => history.goBack()}>Go Back</Button>
                             </Col>
                         </Row>
-
-                        </CardFooter>
+                    </CardFooter>
                 </Card>
             </Col>
+            <Activation modal={activation} toggle={toggleActivation} currentUser={currentUser} history={history} />
         </Row>
     )
 }
