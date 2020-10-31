@@ -106,11 +106,7 @@ namespace GearPatch.Repositories
                      FULL JOIN (SELECT Count(Id) AS UnreadCount, OtherParty
                                   FROM (SELECT Id, SenderId AS OtherParty
                                           FROM UserMessage
-                                          WHERE RecipientId = @Id AND Unread = 1
-                                      UNION ALL
-                                         SELECT Id, RecipientId AS OtherParty
-                                           FROM UserMessage
-                                          WHERE SenderId = @Id AND Unread = 1) UnreadMessages
+                                          WHERE RecipientId = @Id AND Unread = 1) UnreadMessages
                               GROUP BY OtherParty) unr
                                ON msg.OtherParty = unr.OtherParty
 
