@@ -25,3 +25,4 @@ yarn-error.log*
 
 # locally-stored images
 /public/gear-images
+/public/user-images

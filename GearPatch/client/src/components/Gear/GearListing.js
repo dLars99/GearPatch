@@ -24,6 +24,9 @@ export default function GearList() {
             if (res.userProfileId === currentUserId) {
                 history.push(`/gear/${res.id}/owner`);
             }
+            if (!res.imageLocation) res.imageLocation = 'null-gear.png'
+            if (!res.userProfile.imageLocation) res.userProfile.imageLocation = "null-user.jpg"
+        
             setGear(res);
         });
         // eslint-disable-next-line
@@ -37,7 +40,7 @@ export default function GearList() {
         <>
         <Row>
             <Col xs={12} sm={8} md={6}>
-                <img width="100%" src={gear.imageLocation} alt={gear.headline} />
+                <img width="100%" src={gear.imageLocation.startsWith("http") ? gear.imageLocation : `/gear-images/${gear.imageLocation}`} alt={gear.headline} />
             </Col>
         </Row>
         <Row>

@@ -25,14 +25,14 @@ namespace GearPatch.Repositories
                                    up.FirstName, up.LastName, up.Bio, up.ImageLocation AS UserImageLocation, 
                                    up.IsActive AS UserIsActive,
 
-                                   gt.Name AS GearTypeName, gt.FirstOptionName, gt.SecondOptionName
+                                   gt.[Name] AS GearTypeName, gt.FirstOptionName, gt.SecondOptionName
                               FROM Gear g
                          LEFT JOIN UserProfile up ON up.Id = g.UserProfileId
                          LEFT JOIN GearType gt ON gt.Id = g.GearTypeId
-                             WHERE (g.Headline LIKE @query OR g.Manufacturer LIKE @query OR g.Model LIKE @query
-                                    OR gt.Name LIKE @query OR gt.FirstOptionName LIKE @query OR gt.SecondOptionName LIKE @query
-                                    OR g.FirstOptionNotes LIKE @query OR g.SecondOptionNotes LIKE @query)
-                                    AND up.IsActive = 1 AND g.IsActive = 1";
+                             WHERE (g.Headline LIKE @query OR g.Manufacturer LIKE @query OR g.Model LIKE @query OR
+                                    gt.[Name] LIKE @query OR gt.FirstOptionName LIKE @query OR gt.SecondOptionName LIKE @query OR
+                                    g.FirstOptionNotes LIKE @query OR g.SecondOptionNotes LIKE @query) AND
+                                    up.IsActive = 1 AND g.IsActive = 1";
                     DbUtils.AddParameter(cmd, "@query", $"%{query}%");
 
                     var reader = cmd.ExecuteReader();

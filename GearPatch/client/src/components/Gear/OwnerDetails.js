@@ -11,7 +11,7 @@ export default function OwnerDetails( {owner} ) {
             </CardTitle>
             <CardSubtitle className="text-center">Owner</CardSubtitle>
             <div style={{width: "60%", borderRadius: "50%", margin: "0 auto"}}>
-                <img src={owner.imageLocation} alt={owner.firstName} />
+                <img src={owner.imageLocation.startsWith("http") ? owner.imageLocation : `/gear-images/${owner.imageLocation}`} alt={owner.firstName} />
             </div>
             <CardBody>
                 <CardText>{owner.bio}</CardText>
