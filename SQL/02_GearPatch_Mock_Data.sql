@@ -246,9 +246,7 @@ set identity_insert [Accessory] on
 insert into Accessory (Id, GearId, Name, Description) values (1, 21, 'id', 'Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem.
 
 Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.');
-insert into Accessory (Id, GearId, Name, Description) values (2, 46, 'nisi nam', 'In quis justo. Maecenas rhoncus aliquam lacus. Morbi quis tortor id nulla ultrices aliquet.
-
-Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.');
+insert into Accessory (Id, GearId, Name, Description) values (2, 46, 'nisi nam', 'nice padded strap');
 insert into Accessory (Id, GearId, Name, Description) values (3, 38, 'nascetur', null);
 insert into Accessory (Id, GearId, Name, Description) values (4, 45, 'pellentesque ultrices', 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.');
 insert into Accessory (Id, GearId, Name, Description) values (5, 49, 'sapien', 'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.
@@ -271,9 +269,7 @@ insert into Accessory (Id, GearId, Name, Description) values (10, 28, 'lorem int
 Curabitur in libero ut massa volutpat convallis. Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est.
 
 Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum.');
-insert into Accessory (Id, GearId, Name, Description) values (11, 6, 'nunc', 'Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.
-
-Duis bibendum. Morbi non quam nec dui luctus rutrum. Nulla tellus.');
+insert into Accessory (Id, GearId, Name, Description) values (11, 6, 'Strap', 'Nice padded strap');
 insert into Accessory (Id, GearId, Name, Description) values (12, 43, 'mauris sit', null);
 insert into Accessory (Id, GearId, Name, Description) values (13, 23, 'a feugiat', 'Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.
 
@@ -281,20 +277,16 @@ In congue. Etiam justo. Etiam pretium iaculis justo.
 
 In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.');
 insert into Accessory (Id, GearId, Name, Description) values (14, 45, 'porttitor lacus', null);
-insert into Accessory (Id, GearId, Name, Description) values (15, 15, 'aliquam quis', 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.
-
-Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.');
+insert into Accessory (Id, GearId, Name, Description) values (15, 15, 'hardware', 'everything you could need, hi hat stand, three cymmbal stands, ride, crash, china, kick petal, snare stand, all mounts, great deal, you get everything!');
 insert into Accessory (Id, GearId, Name, Description) values (16, 37, 'duis', null);
 insert into Accessory (Id, GearId, Name, Description) values (17, 45, 'magnis', 'Cras non velit nec nisi vulputate nonummy. Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.');
-insert into Accessory (Id, GearId, Name, Description) values (18, 12, 'elementum', null);
+insert into Accessory (Id, GearId, Name, Description) values (18, 12, 'Hardshell case', null);
 insert into Accessory (Id, GearId, Name, Description) values (19, 36, 'id', 'Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.
 
 Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor. Morbi vel lectus in quam fringilla rhoncus.');
-insert into Accessory (Id, GearId, Name, Description) values (20, 13, 'odio', null);
-insert into Accessory (Id, GearId, Name, Description) values (21, 16, 'erat vestibulum sed', 'In hac habitasse platea dictumst. Etiam faucibus cursus urna. Ut tellus.');
-insert into Accessory (Id, GearId, Name, Description) values (22, 20, 'et', 'Maecenas leo odio, condimentum id, luctus nec, molestie sed, justo. Pellentesque viverra pede ac diam. Cras pellentesque volutpat dui.
-
-Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.');
+insert into Accessory (Id, GearId, Name, Description) values (20, 13, 'Gig bag', null);
+insert into Accessory (Id, GearId, Name, Description) values (21, 16, 'Power adaptar', 'Included power adapter');
+insert into Accessory (Id, GearId, Name, Description) values (22, 20, 'Power cable', 'You can''t use the board without power! Must be returned with the power cable, or else I will not mark the return!');
 insert into Accessory (Id, GearId, Name, Description) values (23, 36, 'aliquam convallis nunc', null);
 insert into Accessory (Id, GearId, Name, Description) values (24, 40, 'faucibus orci luctus', null);
 insert into Accessory (Id, GearId, Name, Description) values (25, 42, 'at velit', null);
