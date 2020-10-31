@@ -27,14 +27,14 @@ export default function({ message, currentUserId }) {
             <p><em>Sent {message.createDateTime.replace("T", " ")}</em></p>
         </Col>
                 <Col md={2} className="text-center">
-                    <img src={message.sender.imageLocation.startsWith("http") ? message.sender.imageLocation : `/user-images/${message.sender.imageLocation}`} 
+                    <img width="100%" src={message.sender.imageLocation.startsWith("http") ? message.sender.imageLocation : `/user-images/${message.sender.imageLocation}`} 
                         alt="You" className="rounded-circle" />
                     <p><strong>You</strong></p>
                 </Col>
             </Row>
             : <Row className="border-dark justify-content-start mx-4">
                 <Col md={2} className="text-center">
-                <img width="100%" src={message.recipient.imageLocation.startsWith("http") ? message.recipient.imageLocation : `/user-images/${message.recipient.imageLocation}`} 
+                <img width="100%" src={message.sender.imageLocation.startsWith("http") ? message.sender.imageLocation : `/user-images/${message.sender.imageLocation}`} 
                         alt={message.sender.fullName} className="rounded-circle" />
                     <p><strong>{message.sender.fullName}</strong></p>
                 </Col>

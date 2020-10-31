@@ -3,7 +3,7 @@ import { NumberOfDays } from "../Helpers/DateHelper";
 import { Row, Col, Button } from "reactstrap";
 
 export default function ({ reservation, currentUserId, prompt, composeMessage, cancelPrompt, returnPrompt }) {
-
+    console.log(reservation)
     const totalPrice = NumberOfDays(reservation.startDate, reservation.endDate) * reservation.agreedPrice;
 
     const today = new Date();
@@ -58,7 +58,8 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
                             ? <>
                                     { !reservation.confirmed
                                     && <Button block onClick={(evt) => prompt(evt, reservation)}>Confirm</Button>}
-                                    
+                                    {console.log(reservation.ownerId, currentUserId)}
+                                    {console.log(reservation.id, reservation.confirmed, reservation.itemReturned)}
                                     { (reservation.confirmed && !reservation.itemReturned)
                                     && <Button block onClick={(evt) => returnPrompt(evt, reservation)}>Mark Returned</Button>}
                                 </>

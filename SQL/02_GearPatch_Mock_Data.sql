@@ -45,7 +45,7 @@ insert into Gear (id, Headline, Manufacturer, Model, Description, Price, IsActiv
 Maecenas tristique, est et tempus semper, est quam pharetra magna, ac consequat metus sapien ut nunc. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Mauris viverra diam vitae quam. Suspendisse potenti.', 79, 1, 'bachstrad.jpg', 4, 8, null, null);
 insert into Gear (id, Headline, Manufacturer, Model, Description, Price, IsActive, ImageLocation, UserProfileId, GearTypeId, FirstOptionNotes, SecondOptionNotes) values (3, 'Old, reliable speaker', 'Yamaha', 'BR-12', 'Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus.
 
-Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 55, 0, '../media/gear-images/br112.jpg', 3, 15, '12', 300);
+Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla. Quisque arcu libero, rutrum ac, lobortis vel, dapibus at, diam.', 55, 0, 'br112.jpg', 3, 15, '12', 300);
 insert into Gear (id, Headline, Manufacturer, Model, Description, Price, IsActive, ImageLocation, UserProfileId, GearTypeId, FirstOptionNotes, SecondOptionNotes) values (4, 'Great little mixer', 'Yamaha', 'EMX 5016', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Proin risus. Praesent lectus.
 
 Vestibulum quam sapien, varius ut, blandit non, interdum in, ante. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis.', 99, 1, 'YAM-EMX5016CF_E.jpg', 8, 14, '16', null);
@@ -222,7 +222,7 @@ set identity_insert [GearImages] off
 set identity_insert [Reservation] on
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (1, 4, 6, 5, 233, '05/02/2020', '03/02/2020', 0, 0);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (2, 9, 7, 47, 170, '12/23/2019', '08/13/2020', 1, 1);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (3, 7, 2, 3, 234, '10/30/2020', '11/02/2020', 1, 0);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (3, 7, 2, 3, 234, '10/30/2020', '11/02/2020', 0, 0);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (4, 2, 7, 15, 198, '09/18/2020', '09/25/2020', 1, 1);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (5, 3, 6, 41, 214, '10/01/2020', '05/20/2020', 1, 0);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (6, 7, 5, 40, 76, '08/01/2020', '01/31/2020', 0, 0);
@@ -234,7 +234,7 @@ insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (12, 6, 8, 23, 146, '03/09/2020', '05/14/2020', 1, 1);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (13, 4, 2, 17, 63, '03/02/2020', '03/07/2020', 1, 1);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (14, 2, 8, 37, 101, '11/13/2019', '11/14/2019', 1, 1);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (15, 2, 10, 12, 119, '11/01/2020', '11/05/2020', 0, 1);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (15, 2, 10, 12, 119, '10/31/2020', '11/05/2020', 1, 0);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (16, 7, 3, 8, 234, '07/10/2020', '07/26/2020', 0, 0);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (17, 2, 4, 50, 248, '12/27/2019', '01/02/2019', 1, 1);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (18, 3, 4, 13, 46, '10/26/2019', '05/15/2020', 1, 1);
