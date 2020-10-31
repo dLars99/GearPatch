@@ -25,10 +25,11 @@ export default function GearList() {
                 // Kick out of owner view if user is not the owner
                 history.push(`/gear/${res.id}`);
             }
+            if (!res.imageLocation) res.imageLocation = 'null-gear.png'
             setGear(res);
         });
         // eslint-disable-next-line
-    }, [])
+    }, [id])
 
     if (!gear) {
         return null;
@@ -38,7 +39,7 @@ export default function GearList() {
         <>
         <Row>
             <Col xs={12} sm={8} md={6}>
-                <img width="100%" src={gear.imageLocation} alt={gear.headline} />
+                <img width="100%" src={gear.imageLocation.startsWith("http") ? gear.imageLocation : `/gear-images/${gear.imageLocation}`} alt={gear.headline} />
             </Col>
         </Row>
         <Row>

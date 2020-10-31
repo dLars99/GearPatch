@@ -7,7 +7,6 @@ import GearDetails from "./GearDetails";
 import MakeReservation from "./MakeReservation";
 import OwnerMore from "./OwnerMore";
 import OwnerDetails from "./OwnerDetails";
-import Filters from "./Filters";
 
 export default function GearList() {
 
@@ -25,10 +24,13 @@ export default function GearList() {
             if (res.userProfileId === currentUserId) {
                 history.push(`/gear/${res.id}/owner`);
             }
+            if (!res.imageLocation) res.imageLocation = 'null-gear.png'
+            if (!res.userProfile.imageLocation) res.userProfile.imageLocation = "null-user.jpg"
+        
             setGear(res);
         });
         // eslint-disable-next-line
-    }, [])
+    }, [id])
 
     if (!gear) {
         return null;
@@ -38,20 +40,18 @@ export default function GearList() {
         <>
         <Row>
             <Col xs={12} sm={8} md={6}>
-                <img width="100%" src={gear.imageLocation} alt={gear.headline} />
+                <img width="100%" src={gear.imageLocation.startsWith("http") ? gear.imageLocation : `/gear-images/${gear.imageLocation}`} alt={gear.headline} />
             </Col>
         </Row>
         <Row>
-            <Col sm={3}>
-                <Filters />
-            </Col>
-            <Col sm={9}>
+
+            <Col>
                 <Row>
                     <GearDetails gear={gear} history={history} />
                     <MakeReservation gear={gear} />
                 </Row>
                 <Row>
-                    <OwnerMore ownerId={gear.userProfileId} />
+                    <OwnerMore ownerId={gear.userProfileId} history={history} />
                     <OwnerDetails owner={gear.userProfile} />
                 </Row>
             </Col>

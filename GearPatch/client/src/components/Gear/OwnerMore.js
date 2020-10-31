@@ -1,9 +1,9 @@
 import React, { useEffect, useContext } from "react";
-import { CardDeck, Col } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import { GearContext } from "../../providers/GearProvider";
 import GearSummary from "./GearSummary";
 
-export default function OwnerMore({ ownerId }) {
+export default function OwnerMore({ ownerId, history }) {
 
     const { gear, getMore } = useContext(GearContext);
 
@@ -15,11 +15,11 @@ export default function OwnerMore({ ownerId }) {
     return (
         <Col xs={12} md={8}>
             <h3>More from this owner</h3>
-            <CardDeck>
+            <Row>
                 {gear.map(g =>
-                    <GearSummary key={g.id} gearItem={g} />
+                    <GearSummary key={g.id} gearItem={g} history={history} />
                 )}
-            </CardDeck>
+            </Row>
         </Col>
     );
 }

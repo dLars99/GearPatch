@@ -3,11 +3,16 @@ import { NumberOfDays } from "../Helpers/DateHelper";
 import { Row, Col, Button } from "reactstrap";
 
 export default function ({ reservation, currentUserId, prompt, composeMessage, cancelPrompt, returnPrompt }) {
-
+    console.log(reservation)
     const totalPrice = NumberOfDays(reservation.startDate, reservation.endDate) * reservation.agreedPrice;
 
     const today = new Date();
     const startDate = new Date(reservation.startDate);
+
+    // Set default images if no image present
+    if (!reservation.gear.imageLocation) reservation.gear.imageLocation = 'null-gear.png'
+    if (!reservation.owner.imageLocation) reservation.owner.imageLocation = "null-user.jpg"
+    
 
     return (
         <>
@@ -20,14 +25,16 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
             </Row>
             <Row>
                 <Col md={2} className="overflow-hidden">
-                    <img className="rounded img-thumbnail" src={reservation.gear.imageLocation} alt={reservation.gear.model} />
+                    <img className="rounded img-thumbnail" 
+                    src={reservation.gear.imageLocation.startsWith("http") ? reservation.gear.imageLocation : `/gear-images/${reservation.gear.imageLocation}`}
+                    alt={reservation.gear.model} />
                 </Col>
                 <Col md={8}>
                     <Row>
                         <Col md={4}>
                             {reservation.ownerId === currentUserId
-                            ? <p>Renter: {reservation.customer.firstName} {reservation.customer.lastName[0]}.</p>
-                            : <p>Owner: {reservation.owner.firstName} {reservation.owner.lastName[0]}.</p>
+                            ? <p>Renter: {reservation.customer.fullName}</p>
+                            : <p>Owner: {reservation.owner.fullName}</p>
                             }
                             <p>{reservation.gear.manufacturer} {reservation.gear.model}</p>
                         </Col>
@@ -51,7 +58,8 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
                             ? <>
                                     { !reservation.confirmed
                                     && <Button block onClick={(evt) => prompt(evt, reservation)}>Confirm</Button>}
-                                    
+                                    {console.log(reservation.ownerId, currentUserId)}
+                                    {console.log(reservation.id, reservation.confirmed, reservation.itemReturned)}
                                     { (reservation.confirmed && !reservation.itemReturned)
                                     && <Button block onClick={(evt) => returnPrompt(evt, reservation)}>Mark Returned</Button>}
                                 </>
@@ -68,7 +76,9 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
                     </Row>
                 </Col>
                 <Col md={2} className="overflow-hidden">
-                    <img height="160px" className="rounded img-thumbnail" src={reservation.owner.imageLocation} alt={reservation.owner.lastName} />
+                    <img height="160px" className="rounded img-thumbnail" 
+                    src={reservation.owner.imageLocation.startsWith("http") ? reservation.owner.imageLocation : `/user-images/${reservation.owner.imageLocation}`}
+                    alt={reservation.owner.lastName} />
                 </Col>
             </Row>
             <Row>
