@@ -21,7 +21,7 @@ export default function GearSummary({ gearItem, history }) {
             {/* Show owner's image when mouse is positioned over the item */}
             {showOwner
             ? <>
-                <CardImg top maxHeight="50%" src={gearItem.userProfile.imageLocation} alt={gearItem.userProfile.lastName}/>
+                <CardImg top src={gearItem.userProfile.imageLocation} alt={gearItem.userProfile.lastName}/>
                 <CardImgOverlay width="100%" height="100%" className="d-flex align-items-center">
                     <CardBody>
                         <CardTitle className="text-center text-white">
@@ -30,7 +30,7 @@ export default function GearSummary({ gearItem, history }) {
                     </CardBody>
                 </CardImgOverlay>
             </>
-            : <CardImg top width="100%" src={gearItem.imageLocation} alt={gearItem.headline}/>
+            : <CardImg top width="100%" src={gearItem.imageLocation.startsWith("http") ? gearItem.imageLocation : `/gear-images/${gearItem.imageLocation}`} alt={gearItem.headline}/>
             }
 
             <CardBody>

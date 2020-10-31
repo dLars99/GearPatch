@@ -43,7 +43,7 @@ export default function Homepage() {
                             </Col>
                             {/* <Col xs={12} sm={5}>
                                 <FormGroup>
-                                    <Input type="text" name="location" id="location" placeholder="Nashville, TN" 
+                                    <Input type="text" name="loceation" id="location" placeholder="Nashville, TN" 
                                         value={search.location} onChange={handleFieldChange} />
                                     <Label for="location">Where are you looking?</Label>
                                 </FormGroup>
