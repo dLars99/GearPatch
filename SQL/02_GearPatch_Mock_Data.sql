@@ -221,25 +221,25 @@ set identity_insert [GearImages] off
 
 set identity_insert [Reservation] on
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (1, 4, 6, 5, 233, '05/02/2020', '03/02/2020', 0, 0);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (2, 9, 7, 47, 170, '12/23/2019', '08/13/2020', 0, 1);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (3, 7, 1, 1, 234, '09/30/2020', '12/29/2019', 1, 0);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (4, 1, 7, 15, 198, '09/18/2020', '08/31/2020', 0, 1);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (2, 9, 7, 47, 170, '12/23/2019', '08/13/2020', 1, 1);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (3, 7, 1, 1, 234, '10/30/2020', '11/02/2020', 1, 0);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (4, 1, 7, 15, 198, '09/18/2020', '09/25/2020', 1, 1);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (5, 3, 6, 41, 214, '10/01/2020', '05/20/2020', 1, 0);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (6, 7, 5, 40, 76, '08/01/2020', '01/31/2020', 0, 0);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (7, 4, 10, 32, 128, '05/16/2020', '01/02/2020', 0, 1);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (8, 3, 1, 42, 82, '10/13/2020', '07/22/2020', 1, 1);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (9, 9, 2, 1, 167, '12/24/2019', '10/26/2019', 1, 1);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (7, 4, 10, 32, 128, '05/16/2020', '01/02/2020', 1, 1);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (8, 3, 1, 42, 82, '10/13/2020', '10/22/2020', 1, 1);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (9, 9, 2, 1, 167, '12/24/2019', '01/02/2020', 1, 1);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (10, 9, 5, 10, 179, '07/26/2020', '06/23/2020', 1, 1);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (11, 7, 3, 20, 77, '08/19/2020', '02/22/2020', 1, 1);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (12, 6, 8, 23, 146, '03/09/2020', '05/14/2020', 0, 1);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (13, 4, 1, 17, 63, '03/02/2020', '12/07/2019', 0, 1);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (14, 1, 8, 37, 101, '11/13/2019', '07/07/2020', 1, 1);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (15, 1, 10, 12, 119, '10/25/2019', '04/01/2020', 0, 1);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (12, 6, 8, 23, 146, '03/09/2020', '05/14/2020', 1, 1);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (13, 4, 1, 17, 63, '03/02/2020', '03/07/2020', 1, 1);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (14, 1, 8, 37, 101, '11/13/2019', '11/14/2019', 1, 1);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (15, 1, 10, 12, 119, '11/01/2020', '11/05/2020', 0, 1);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (16, 7, 3, 8, 234, '07/10/2020', '07/26/2020', 0, 0);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (17, 2, 4, 50, 248, '12/27/2019', '10/27/2019', 1, 0);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (17, 2, 4, 50, 248, '12/27/2019', '01/02/2019', 1, 1);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (18, 3, 4, 13, 46, '10/26/2019', '05/15/2020', 1, 1);
 insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (19, 7, 9, 38, 40, '11/23/2019', '05/18/2020', 1, 0);
-insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (20, 9, 2, 41, 103, '06/16/2020', '08/21/2020', 1, 1);
+insert into Reservation (Id, OwnerId, CustomerId, GearId, AgreedPrice, StartDate, EndDate, Confirmed, ItemReturned) values (20, 9, 2, 41, 103, '06/16/2020', '06/21/2020', 1, 1);
 set identity_insert [Reservation] off
 
 set identity_insert [Accessory] on
