@@ -6,6 +6,8 @@ export default function({ conversation }) {
 
     const history = useHistory();
 
+    if (!conversation.otherUser.imageLocation) conversation.otherUser.imageLocation = "null-user.jpg"
+
     // Error check if messages holds data from another page
     if (!conversation.otherUser) {
         return null;
@@ -13,9 +15,11 @@ export default function({ conversation }) {
 
     return (
         <Card onClick={() => history.push(`/messages/${conversation.otherUserId}`)}>
-            <CardImg top width="90%" src={conversation.otherUser.imageLocation} alt={conversation.otherUser.firstName} />
+            <CardImg top width="90%" 
+                src={conversation.otherUser.imageLocation.startsWith("http") ? conversation.otherUser.imageLocation : `/user-images/${conversation.otherUser.imageLocation}`} 
+                alt={conversation.otherUser.firstName} />
             <CardBody>
-                <CardTitle>{conversation.otherUser.firstName} {conversation.otherUser.lastName[0]}.</CardTitle>
+                <CardTitle>{conversation.otherUser.fullName}</CardTitle>
                     <CardText>
                         <em>{conversation.lastMessage.content.length < 50
                         ? `${conversation.lastMessage.content} ...`
