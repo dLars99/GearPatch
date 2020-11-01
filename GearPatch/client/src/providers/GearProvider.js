@@ -1,4 +1,5 @@
 import React, { useState, createContext, useContext } from "react";
+import { post } from "axios";
 import { UserProfileContext } from "./UserProfileProvider";
 import { useHistory } from "react-router-dom";
 
@@ -62,6 +63,20 @@ export function GearProvider(props) {
             return data;
         } else {
             alert("An error has occurred. Please try again.");
+        }
+    }
+
+    const uploadFile = async (file) => {
+        const token = await getToken();
+        const formData = new FormData();
+        formData.append("formFile", file);
+        try {
+            return post(`${url}/file`, formData, {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }});
+        } catch (ex) {
+            alert("An error has occurred");
         }
     }
 
@@ -133,7 +148,7 @@ export function GearProvider(props) {
 
     return (
         <GearContext.Provider value={{ gear, searchGear, getGearItem, getMore,
-            saveNewGear, getGearTypes, getMyGear, saveEditedGear, toggleActivation,
+            saveNewGear, uploadFile, getGearTypes, getMyGear, saveEditedGear, toggleActivation,
             deleteGear }}>
             {props.children}
         </GearContext.Provider>
