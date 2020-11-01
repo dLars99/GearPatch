@@ -83,9 +83,12 @@ export default function NewGear() {
             isInvalid[fieldIsInvalid] = true;
             setInvalid(isInvalid);
         } else {
-            uploadFile(file, newGear.imageLocation)
-            .then((res) => saveNewGear(gearToSave))
-                 .then((res) => history.push(`/gear/${res.id}`));
+            saveNewGear(gearToSave)
+            .then(() => uploadFile(file))
+            .then((res) => {
+                console.log(res)
+                history.push(`/gear/${res.id}`)
+            });
         }
     }
 

@@ -116,7 +116,8 @@ namespace GearPatch.Repositories
                               FROM Gear g
                          LEFT JOIN UserProfile up ON up.Id = g.UserProfileId
                          LEFT JOIN GearType gt ON gt.Id = g.GearTypeId
-                             WHERE g.userProfileId = @userId";
+                             WHERE g.userProfileId = @userId
+                          ORDER BY g.Headline";
                     DbUtils.AddParameter(cmd, "@userId", userId);
                     var reader = cmd.ExecuteReader();
 

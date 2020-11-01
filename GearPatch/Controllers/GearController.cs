@@ -115,7 +115,6 @@ namespace GearPatch.Controllers
             if (formFile.Length > 0 && formFile.Length < 2097152)
             {
                 using (var stream = new FileStream(saveFile, FileMode.Create))
-
                 {
                     await formFile.CopyToAsync(stream);
                 }
