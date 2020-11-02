@@ -40,7 +40,7 @@ export default function GearList() {
         <>
         <Row>
             <Col xs={12} sm={8} md={6}>
-                <img width="100%" src={gear.imageLocation.startsWith("http") ? gear.imageLocation : `/api/image/gear/${gear.imageLocation}`} alt={gear.headline} />
+                <img width="100%" src={`/api/image/gear/${gear.imageLocation}`} alt={gear.headline} />
             </Col>
         </Row>
         <Row>

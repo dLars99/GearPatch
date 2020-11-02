@@ -25,7 +25,7 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
             <Row>
                 <Col md={2} className="overflow-hidden">
                     <img className="rounded img-thumbnail" 
-                    src={reservation.gear.imageLocation.startsWith("http") ? reservation.gear.imageLocation : `/api/image/gear/${reservation.gear.imageLocation}`}
+                    src={`/api/image/gear/${reservation.gear.imageLocation}`}
                     alt={reservation.gear.model} />
                 </Col>
                 <Col md={8}>
@@ -76,7 +76,7 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
                 </Col>
                 <Col md={2} className="overflow-hidden">
                     <img height="160px" className="rounded img-thumbnail" 
-                    src={reservation.owner.imageLocation.startsWith("http") ? reservation.owner.imageLocation : `/user-images/${reservation.owner.imageLocation}`}
+                    src={`/api/image/user/${reservation.owner.imageLocation}`}
                     alt={reservation.owner.lastName} />
                 </Col>
             </Row>
