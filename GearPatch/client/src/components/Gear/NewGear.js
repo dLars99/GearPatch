@@ -71,12 +71,6 @@ export default function NewGear() {
             },
             body: formData
         });
-
-        if (res.ok) {
-            return;
-        } else {
-            alert("An error has occurred while uploading the image");
-        }
     }
 
     const handleSubmit = (evt) => {
