@@ -13,7 +13,6 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
     if (!reservation.gear.imageLocation) reservation.gear.imageLocation = 'null-gear.png'
     if (!reservation.owner.imageLocation) reservation.owner.imageLocation = "null-user.jpg"
     
-
     return (
         <>
             <Row className="my-4">
@@ -26,7 +25,7 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
             <Row>
                 <Col md={2} className="overflow-hidden">
                     <img className="rounded img-thumbnail" 
-                    src={reservation.gear.imageLocation.startsWith("http") ? reservation.gear.imageLocation : `/gear-images/${reservation.gear.imageLocation}`}
+                    src={reservation.gear.imageLocation.startsWith("http") ? reservation.gear.imageLocation : `/api/image/gear/${reservation.gear.imageLocation}`}
                     alt={reservation.gear.model} />
                 </Col>
                 <Col md={8}>

@@ -22,15 +22,6 @@ export function NewGearValidation(gear, gearType){
         return "price"
     }
 
-    // ImageLocation must be a valid URL
-    if (gear.imageLocation) {
-        try {
-            new URL(gear.imageLocation)
-        } catch (_){
-            return "imageLocation";
-        }
-    }
-
     // GearTypeId is required
     if (!gear.gearTypeId || gear.gearTypeId < 0 || typeof gear.gearTypeId !== "number") {
         return "gearTypeId"

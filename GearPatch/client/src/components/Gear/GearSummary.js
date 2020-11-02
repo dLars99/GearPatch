@@ -34,7 +34,7 @@ export default function GearSummary({ gearItem, history }) {
                     </CardBody>
                 </CardImgOverlay>
             </>
-            : <CardImg top width="100%" src={gearItem.imageLocation.startsWith("http") ? gearItem.imageLocation : `/gear-images/${gearItem.imageLocation}`} alt={gearItem.headline}/>
+            : <CardImg top width="100%" src={gearItem.imageLocation.startsWith("http") ? gearItem.imageLocation : `/api/image/gear/${gearItem.imageLocation}`} alt={gearItem.headline}/>
             }
 
             <CardBody>
