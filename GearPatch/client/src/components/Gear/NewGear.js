@@ -1,12 +1,14 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { GearContext } from "../../providers/GearProvider";
+import { UserProfileContext } from "../../providers/UserProfileProvider";
 import { NewGearValidation } from "./NewGearValidation";
 import { Container, Form, FormGroup, Input, Label, FormText, Row, Col, Button, FormFeedback } from "reactstrap";
 
 export default function NewGear() {
 
-    const { saveNewGear, uploadFile, getGearTypes } = useContext(GearContext);
+    const { saveNewGear, getGearTypes } = useContext(GearContext);
+    const { getToken } = useContext(UserProfileContext);
 
     const [newGear, setNewGear] = useState({});
     const [gearType, setGearType] = useState();
@@ -57,6 +59,26 @@ export default function NewGear() {
         setNewGear(currentGear);
     }
 
+    const saveImage = async (url) => {
+        const formData = new FormData();
+        formData.append("file", file, url);
+        console.log(formData);
+        const token = await getToken();
+        const res = fetch("/api/image/gear", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            body: formData
+        });
+
+        if (res.ok) {
+            return;
+        } else {
+            alert("An error has occurred while uploading the image");
+        }
+    }
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
         const inputAccessories = [ ...accessories ];
@@ -69,7 +91,7 @@ export default function NewGear() {
             model: newGear.model,
             price: parseInt(newGear.price),
             description: newGear.description,
-            imageLocation: newGear.imageLocation,
+            imageLocation: `${new Date().getTime()}_${newGear.imageLocation}`,
             gearTypeId: parseInt(newGear.gearTypeId),
             firstOptionNotes: newGear.firstOptionNotes || null,
             secondOptionNotes: newGear.secondOptionNotes || null,
@@ -83,12 +105,9 @@ export default function NewGear() {
             isInvalid[fieldIsInvalid] = true;
             setInvalid(isInvalid);
         } else {
-            saveNewGear(gearToSave)
-            .then(() => uploadFile(file))
-            .then((res) => {
-                console.log(res)
-                history.push(`/gear/${res.id}`)
-            });
+            saveImage(gearToSave.imageLocation)
+            .then(() => saveNewGear(gearToSave))
+            .then((res) => history.push(`/gear/${res.id}`));
         }
     }
 

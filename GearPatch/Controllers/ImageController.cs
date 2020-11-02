@@ -18,7 +18,7 @@ namespace Tabloid.Controllers
             _webhost = webhost;
         }
 
-        [HttpPost]
+        [HttpPost("gear")]
         public IActionResult UploadGearImage(IFormFile file)
         {
             //where images are stored
@@ -40,7 +40,7 @@ namespace Tabloid.Controllers
                     image.Mutate(i => i.Resize(maxWidth, newHeight));
                 }
 
-                image.Save(savedImagePath + file.FileName);
+                image.Save(savedImagePath);
             }
             catch
             {
@@ -50,7 +50,7 @@ namespace Tabloid.Controllers
             return Ok();
         }
 
-        [HttpGet("{imageUrl}")]
+        [HttpGet("gear/{imageUrl}")]
         public IActionResult GetGearImage(string imageUrl)
         {
             var path = Path.Combine(_webhost.WebRootPath, "gear-images", imageUrl);
