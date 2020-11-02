@@ -50,7 +50,7 @@ export default function Homepage() {
                                 </FormGroup>
                             </Col> */}
                             <Col sm={2} lg={1}>
-                                <Button>Go</Button>
+                                <Button color="primary">Go</Button>
                             </Col>
                         </Row>
                     </Form>
