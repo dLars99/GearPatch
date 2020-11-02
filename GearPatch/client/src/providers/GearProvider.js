@@ -65,20 +65,6 @@ export function GearProvider(props) {
         }
     }
 
-    // const uploadFile = async (file) => {
-    //     const token = await getToken();
-    //     const formData = new FormData();
-    //     formData.append("formFile", file);
-    //     try {
-    //         return post(`${url}/file`, formData, {
-    //         headers: {
-    //             Authorization: `Bearer ${token}`
-    //         }});
-    //     } catch (ex) {
-    //         alert("An error has occurred");
-    //     }
-    // }
-
     const saveEditedGear = async (gear) => {
         const token = await getToken();
         // eslint-disable-next-line

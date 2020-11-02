@@ -108,25 +108,6 @@ namespace GearPatch.Controllers
         }
 
         [Authorize]
-        [HttpPost("file")]
-        public async Task<IActionResult> Post(IFormFile formFile)
-        {
-            var saveFile = Path.Combine(_environment.ContentRootPath, "client", "public", "gear-images", formFile.FileName);
-            if (formFile.Length > 0 && formFile.Length < 2097152)
-            {
-                using (var stream = new FileStream(saveFile, FileMode.Create))
-                {
-                    await formFile.CopyToAsync(stream);
-                }
-            }
-            else
-            {
-                return StatusCode(413); 
-            }
-            return StatusCode(201);
-        }
-
-        [Authorize]
         [HttpPut("{id}")]
         public IActionResult Put(int id, Gear gear)
         {
