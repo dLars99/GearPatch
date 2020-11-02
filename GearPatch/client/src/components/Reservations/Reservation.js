@@ -13,7 +13,6 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
     if (!reservation.gear.imageLocation) reservation.gear.imageLocation = 'null-gear.png'
     if (!reservation.owner.imageLocation) reservation.owner.imageLocation = "null-user.jpg"
     
-
     return (
         <>
             <Row className="my-4">
