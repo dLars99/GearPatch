@@ -362,5 +362,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 # Locally stored images
-wwwroot/gear-images
-wwwroot/user-images
+wwwroot/
