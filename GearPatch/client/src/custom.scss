@@ -1,5 +1,13 @@
-$theme-colors {
-    
+$theme-colors: (
+    "primary": #FCBF49,
+    "secondary": #EAE2B7,
+    "orange": #F77F00,
+    "danger": #D62828,
+    "black": #001B29
+);
+
+.formBlock {
+    background-color: rgba(92, 92, 92, 0.287);
 }
 
 @import "node_modules/bootstrap/scss/bootstrap";
