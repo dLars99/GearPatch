@@ -8,11 +8,13 @@ import { Container, Form, FormGroup, Input, Label, FormText, FormFeedback, Col, 
 export default function SignUp() {
 
     const { register } = useContext(UserProfileContext);
+    const { getToken } = useContext(UserProfileContext);
 
     const [newUser, setNewUser] = useState({});
     const [invalid, setInvalid] = useState({firstName: false, lastName: false, email: false, password: false, bio: false, 
         imageLocation: false});
     const [confirm, setConfirm] = useState(false);
+    const [file, setFile] = useState();
 
     const history = useHistory();
     const confirmToggle = () => setConfirm(!confirm);
@@ -26,6 +28,29 @@ export default function SignUp() {
         currentInvalid[evt.target.id] = false;
         setInvalid(currentInvalid);
     }
+
+    const saveFile = (evt) => {
+        setFile(evt.target.files[0]);
+        const currentUser = { ...newUser };
+        currentUser[evt.target.id] = evt.target.files[0].name;
+        setNewUser(currentUser);
+    }
+
+    const saveImage = async (url) => {
+        const formData = new FormData();
+        formData.append("file", file, url);
+        console.log(formData);
+        const token = await getToken();
+        const res = await fetch("/api/image/user", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            body: formData
+        });
+         return res;
+    }
+
 
     // Validate user information and request confirmation
     const handleSubmit = (evt) => {
@@ -44,19 +69,27 @@ export default function SignUp() {
 
     // Save information after user confirmation
     const saveUser = () => {
-        console.log("Here")
         const userToSave = {
             firstName: newUser.firstName,
             lastName: newUser.lastName,
             email: newUser.email,
             phone: newUser.phone,
             bio: newUser.bio,
-            imageLocation: newUser.imageLocation
+            imageLocation: `${new Date().getTime()}_${newUser.imageLocation}`,
         }
+        // User must be created first to get access token to save image
         register(userToSave, newUser.password)
-        .then(() => history.goBack());
+        .then(() => saveImage(userToSave.imageLocation))
+        .then((res) => {
+            if (res.ok) {
+                history.goBack();
+            }
+            else {
+                alert("An error occurred while uploading the image")
+                history.push("/user");
+            }
+        });
     }
-
 
     return (
         <Container>
@@ -106,10 +139,9 @@ export default function SignUp() {
 
                 <FormGroup>
                     <Label for="imageLocation">Image Location</Label>
-                    <Input type="url" invalid={invalid.imageLocation} id="imageLocation" name="imageLocation" maxLength="255"
-                        onChange={handleFieldChange} />
-                    <FormFeedback>Enter a valid URL</FormFeedback>
-                    <FormText>Enter the URL of a picture to represent you</FormText>
+                    <Input type="file" accept="image/*" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" onChange={saveFile} />
+                    <FormFeedback>A valid image file is required for all users</FormFeedback>
+                    <FormText>Upload a picture to represent you</FormText>
                 </FormGroup>
 
                 <FormGroup>

@@ -3,6 +3,8 @@ import { Col, Card, CardTitle, CardSubtitle, CardBody, CardText } from "reactstr
 
 export default function OwnerDetails( {owner} ) {
 
+    if (!owner.imageLocation) owner.imageLocation = "null-user.jpg"
+
     return (
         <Col xs={12} md={4}>
         <Card className="justify-content-center">
@@ -11,7 +13,7 @@ export default function OwnerDetails( {owner} ) {
             </CardTitle>
             <CardSubtitle className="text-center">Owner</CardSubtitle>
             <div style={{width: "60%", borderRadius: "50%", margin: ".5rem auto"}}>
-                <img width="100%" src={owner.imageLocation.startsWith("http") ? owner.imageLocation : `/user-images/${owner.imageLocation}`} 
+                <img width="100%" src={owner.imageLocation.startsWith("http") ? owner.imageLocation : `/api/image/user/${owner.imageLocation}`} 
                     alt={owner.firstName} className="rounded-circle"/>
             </div>
             <CardBody>

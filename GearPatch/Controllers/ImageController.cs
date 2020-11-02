@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tabloid.Controllers
 {
@@ -18,6 +18,7 @@ namespace Tabloid.Controllers
             _webhost = webhost;
         }
 
+        [Authorize]
         [HttpPost("gear")]
         public IActionResult UploadGearImage(IFormFile file)
         {
@@ -50,6 +51,7 @@ namespace Tabloid.Controllers
             return Ok();
         }
 
+        [Authorize]
         [HttpPost("user")]
         public IActionResult UploadUserImage(IFormFile file)
         {
@@ -86,6 +88,14 @@ namespace Tabloid.Controllers
         public IActionResult GetGearImage(string imageUrl)
         {
             var path = Path.Combine(_webhost.WebRootPath, "gear-images", imageUrl);
+            var imageFileStream = System.IO.File.OpenRead(path);
+            return File(imageFileStream, "image/jpeg");
+        }
+
+        [HttpGet("user/{imageUrl}")]
+        public IActionResult GetUserImage(string imageUrl)
+        {
+            var path = Path.Combine(_webhost.WebRootPath, "user-images", imageUrl);
             var imageFileStream = System.IO.File.OpenRead(path);
             return File(imageFileStream, "image/jpeg");
         }

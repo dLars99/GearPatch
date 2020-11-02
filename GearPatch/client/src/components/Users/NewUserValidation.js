@@ -31,18 +31,18 @@ export function NewUserValidation(newUser) {
     }
 
     // ImageLocation must be a valid URL
-    if (newUser.imageLocation) {
-        try {
-            new URL(newUser.imageLocation)
-        } catch (_){
-            return "imageLocation";
-        }
-    }
+    // if (newUser.imageLocation) {
+    //     try {
+    //         new URL(newUser.imageLocation)
+    //     } catch (_){
+    //         return "imageLocation";
+    //     }
+    // }
 
     // Bio is required
-    if (!newUser.bio || newUser.bio.trim() === "") {
-        return "bio";
-    }
+    // if (!newUser.bio || newUser.bio.trim() === "") {
+    //     return "bio";
+    // }
 
     return null;
 }
