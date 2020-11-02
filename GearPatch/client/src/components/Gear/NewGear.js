@@ -85,7 +85,7 @@ export default function NewGear() {
             model: newGear.model,
             price: parseInt(newGear.price),
             description: newGear.description,
-            imageLocation: `${new Date().getTime()}_${newGear.imageLocation}`,
+            imageLocation: `${new Date().getTime()}_${newGear.imageLocation}` || null,
             gearTypeId: parseInt(newGear.gearTypeId),
             firstOptionNotes: newGear.firstOptionNotes || null,
             secondOptionNotes: newGear.secondOptionNotes || null,
@@ -99,9 +99,14 @@ export default function NewGear() {
             isInvalid[fieldIsInvalid] = true;
             setInvalid(isInvalid);
         } else {
-            saveImage(gearToSave.imageLocation)
-            .then(() => saveNewGear(gearToSave))
-            .then((res) => history.push(`/gear/${res.id}`));
+            if (file) {
+                saveImage(gearToSave.imageLocation)
+                .then(() => saveNewGear(gearToSave))
+                .then((res) => history.push(`/gear/${res.id}`));
+            } else {
+                saveNewGear(gearToSave)
+                .then((res) => history.push(`/gear/${res.id}`))
+            }
         }
     }
 
