@@ -101,6 +101,8 @@ export default function() {
         // eslint-disable-next-line
     }, [thisReservation])
 
+    if (!reservations) return null;
+    
     return (
         <>
             <Row className="mt-3">
