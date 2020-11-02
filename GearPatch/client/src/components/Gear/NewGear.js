@@ -64,13 +64,14 @@ export default function NewGear() {
         formData.append("file", file, url);
         console.log(formData);
         const token = await getToken();
-        const res = fetch("/api/image/gear", {
+        const res = await fetch("/api/image/gear", {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`
             },
             body: formData
         });
+         return res;
     }
 
     const handleSubmit = (evt) => {
@@ -101,8 +102,15 @@ export default function NewGear() {
         } else {
             if (file) {
                 saveImage(gearToSave.imageLocation)
-                .then(() => saveNewGear(gearToSave))
-                .then((res) => history.push(`/gear/${res.id}`));
+                .then((res) => {
+                    if (res.ok) {
+                        saveNewGear(gearToSave)
+                        .then((gearRes) => history.push(`/gear/${gearRes.id}`));
+                    }
+                    else {
+                        alert("An error occurred while uploading the image");
+                    }
+                });
             } else {
                 saveNewGear(gearToSave)
                 .then((res) => history.push(`/gear/${res.id}`))
