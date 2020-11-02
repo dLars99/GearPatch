@@ -360,3 +360,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Locally stored images
+wwwroot/gear-images
+wwwroot/user-images
