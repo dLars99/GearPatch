@@ -27,6 +27,13 @@ export function NewGearValidation(gear, gearType){
         return "gearTypeId"
     }
 
+    // ImageLocation must represent a valid image type
+    const fileType = gear.imageLocation.split(".").pop().toLowerCase();
+    const validFileTypes = ["png", "bmp", "jpeg", "jpg", "gif"]
+    if (!validFileTypes.includes(fileType)) {
+        return "imageLocation";
+    }
+
     // OptionNotes must be present for any gearType Option fields
     if (gearType.firstOptionName && (!gear.firstOptionNotes || gear.firstOptionNotes.trim() === "")) {
         return "firstOptionNotes";

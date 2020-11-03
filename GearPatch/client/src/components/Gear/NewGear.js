@@ -204,6 +204,7 @@ export default function NewGear() {
                 <Label for="imageLocation">Image</Label>
                 <Input type="file" accept="image/*" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" onChange={addFile} />
                 <FormText>Upload a picture of the item</FormText>
+                <FormFeedback>Picture must be a valid image file</FormFeedback>
             </FormGroup>
 
             {imagePreview
