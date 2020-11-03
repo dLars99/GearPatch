@@ -1,4 +1,5 @@
 import React, { useState, useEffect, createContext } from "react";
+import { useHistory } from "react-router-dom";
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import { Spinner } from "reactstrap";
@@ -12,6 +13,8 @@ export function UserProfileProvider(props) {
     const userProfile = sessionStorage.getItem("userProfile");
     const [isLoggedIn, setIsLoggedIn] = useState(userProfile != null);
     const [isFirebaseReady, setIsFirebaseReady] = useState(false);
+
+    const history = useHistory();
 
     useEffect(() => {
         firebase.auth().onAuthStateChanged((u) => {
@@ -33,6 +36,7 @@ export function UserProfileProvider(props) {
           .then(() => {
             sessionStorage.clear()
             setIsLoggedIn(false);
+            history.push("/");
           });
       };
     

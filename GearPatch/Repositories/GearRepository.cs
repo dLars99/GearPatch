@@ -210,7 +210,7 @@ namespace GearPatch.Repositories
                             {
                                 Id = DbUtils.GetInt(reader, "AccessoryId"),
                                 Name = DbUtils.GetString(reader, "AccessoryName"),
-                                Description = DbUtils.GetString(reader, "Description"),
+                                Description = DbUtils.GetString(reader, "AccessoryDescription"),
                                 GearId = gear.Id
                             });
                         }

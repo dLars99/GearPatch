@@ -135,8 +135,8 @@ export default function NewGear() {
     }, [newGear.gearTypeId])
 
     return (
-        <Container className="mt-4">
-        <h1 className="text-center">New Gear Listing</h1>
+        <Container className="my-5">
+        <h1 className="text-center my-4">New Gear Listing</h1>
         <Form>
             <FormGroup>
                 <Label for="headline">Headline</Label>

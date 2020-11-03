@@ -105,8 +105,8 @@ export default function() {
     
     return (
         <>
-            <Row className="mt-4">
-                <Col sm={12} className="text-center">
+            <Row className="mt-5">
+                <Col sm={12} className="text-center mt-4">
                     <h1>Reservations</h1>
                 </Col>
             </Row>
