@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useHistory, NavLink as RRNavLink } from "react-router-dom";
+import { useHistory, useLocation, NavLink as RRNavLink } from "react-router-dom";
 import Login from "./Users/Login";
 import { Navbar, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarBrand, NavbarToggler,
     Collapse, Nav, NavItem, NavLink, Badge, Button } from "reactstrap";
@@ -22,6 +22,7 @@ export default function Header() {
     const headerToggle = () => setDropdownOpen(!dropdownOpen);
 
     const history = useHistory();
+    const location = useLocation();
 
     const newItemButton = (evt) => {
         evt.preventDefault();
@@ -38,7 +39,7 @@ export default function Header() {
             getUnconfirmed();
         }
         // eslint-disable-next-line
-    }, [isLoggedIn])
+    }, [isLoggedIn, location])
 
     return (
         <header>

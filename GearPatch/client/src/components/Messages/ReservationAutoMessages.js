@@ -33,7 +33,7 @@ export function ConfirmReservationMessage(reservation) {
 export function CancelReservationMessage(currentUser, otherUser, reservation) {
 
     const messageText = `${currentUser.fullName} has CANCELED your reservation for ${reservation.gear.manufacturer} ${reservation.gear.model} from ${reservation.startDate} to ${reservation.endDate}.
-    Please contact ${otherUser.fullName} with any questions and to make arrangements for pick up and drop off.`
+    Please contact ${currentUser.fullName} with any questions or to request alternate arrangements.`
 
     return {
         recipientId: otherUser.id,
