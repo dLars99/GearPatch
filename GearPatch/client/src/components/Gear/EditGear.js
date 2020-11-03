@@ -1,19 +1,25 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { GearContext } from "../../providers/GearProvider";
+import { UserProfileContext } from "../../providers/UserProfileProvider";
 import { NewGearValidation } from "./NewGearValidation";
 import { Form, FormGroup, Input, Label, FormText, Row, Col, Button, FormFeedback } from "reactstrap";
 
 export default function NewGear({ gear, toggleEdit }) {
 
     const { saveEditedGear, getGearTypes } = useContext(GearContext);
+    const { getToken } = useContext(UserProfileContext);
 
     const [newGear, setNewGear] = useState({});
     const [gearType, setGearType] = useState();
     const [gearTypeList, setGearTypeList] = useState([]);
     const [accessories, setAccessories] = useState([]);
     const [invalid, setInvalid] = useState({headline: false, manufacturer: false, model: false, price: false, description: false,
-        imageLocation: false, gearTypeId: false, firstOptionNotes: false, secondOptionNotes: false})
+        imageLocation: false, gearTypeId: false, firstOptionNotes: false, secondOptionNotes: false});
+    const [file, setFile] = useState();
+    const [imagePreview, setImagePreview] = useState();
+    const [previousImage, setPreviousImage] = useState();
+
 
     const history = useHistory();
 
@@ -49,6 +55,29 @@ export default function NewGear({ gear, toggleEdit }) {
         setInvalid(currentInvalid);
     }
 
+    const addFile = (evt) => {
+        setFile(evt.target.files[0]);
+        const currentGear = { ...newGear };
+        currentGear[evt.target.id] = evt.target.files[0].name;
+        setImagePreview(URL.createObjectURL(evt.target.files[0]));
+        setNewGear(currentGear);
+    }
+
+    const saveImage = async (url) => {
+        const formData = new FormData();
+        formData.append("file", file, url);
+        console.log(formData);
+        const token = await getToken();
+        const res = await fetch("/api/image/gear", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            body: formData
+        });
+         return res;
+    }
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
         const inputAccessories = [ ...accessories ];
@@ -56,14 +85,15 @@ export default function NewGear({ gear, toggleEdit }) {
         const accessoriesToSend = inputAccessories.filter(a => a.name);
 
         const gearToSave = {
+            id: newGear.id,
             headline: newGear.headline,
             manufacturer: newGear.manufacturer,
             model: newGear.model,
             price: parseInt(newGear.price),
             description: newGear.description,
-            imageLocation: newGear.imageLocation,
             gearTypeId: parseInt(newGear.gearTypeId),
             isActive: newGear.isActive,
+            imageLocation: newGear.imageLocation,
             userProfileId: JSON.parse(sessionStorage.userProfile).id,
             firstOptionNotes: newGear.firstOptionNotes || null,
             secondOptionNotes: newGear.secondOptionNotes || null,
@@ -77,8 +107,21 @@ export default function NewGear({ gear, toggleEdit }) {
             isInvalid[fieldIsInvalid] = true;
             setInvalid(isInvalid);
         } else {
-            saveEditedGear(gearToSave)
-            .then(() => history.push(`/gear/${gear.id}`));
+            if (gearToSave.imageLocation !== previousImage) {
+                gearToSave.imageLocation = `${new Date().getTime()}_${newGear.imageLocation}`;
+                saveImage(gearToSave.imageLocation)
+                .then((res) => {
+                    if (res.ok) {
+                        saveEditedGear(gearToSave)
+                        .then(() => history.push(`/gear/${gear.id}`));
+                    } else {
+                        alert("An error occurred while uploading the image");
+                    }
+                });
+            } else {
+                saveEditedGear(gearToSave)
+                .then(() => history.push(`/gear/${gear.id}`))
+            }
         }
     }
 
@@ -86,7 +129,11 @@ export default function NewGear({ gear, toggleEdit }) {
         getGearTypes().then(setGearTypeList)
             .then(() => {
                 if (gear.accessories) setAccessories([...gear.accessories]);
-                setNewGear(gear)                   
+                if (gear.imageLocation) {
+                    setImagePreview(`/api/image/gear/${gear.imageLocation}`);
+                    setPreviousImage(gear.imageLocation);
+                }
+                setNewGear(gear);                 
             });
         // eslint-disable-next-line
     }, [])
@@ -174,11 +221,18 @@ export default function NewGear({ gear, toggleEdit }) {
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="imageLocation">Image Location</Label>
-                    <Input type="url" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" value={newGear.imageLocation || ""}
-                        onChange={handleFieldChange} />
-                    <FormText>Enter the URL of a picture of the item</FormText>
+                    <Label for="imageLocation">Image</Label>
+                    <Input type="file" accept="image/*" invalid={invalid.imageLocation} defaultValue="" name="imageLocation" id="imageLocation" onChange={addFile} />
+                    <FormFeedback>Please upload a valid image file</FormFeedback>
+                    <FormText>Upload a picture of the item</FormText>
                 </FormGroup>
+
+                {imagePreview
+                ? <FormGroup>
+                    <img src={imagePreview} alt="preview" className="img-thumbnail" />
+                </FormGroup>
+                : null}
+                
                 {accessories.length > 0
                 ? accessories.map((accessory, index) =>
                     <Row key={accessory.id} className="align-items-center">

@@ -6,12 +6,15 @@ import { Container, Form, FormGroup, Input, Label, FormText, FormFeedback, Col, 
 
 export default function EditUser({ toggleEdit, history, currentUser }) {
 
-    const { saveEditedUser } = useContext(UserProfileContext);
+    const { getToken, saveEditedUser, getUserProfile } = useContext(UserProfileContext);
 
     const [newUser, setNewUser] = useState();
     const [invalid, setInvalid] = useState({firstName: false, lastName: false, bio: false, 
         imageLocation: false });
     const [confirm, setConfirm] = useState(false);
+    const [file, setFile] = useState();
+    const [imagePreview, setImagePreview] = useState();
+    const [previousImage, setPreviousImage] = useState();
 
     const confirmToggle = () => setConfirm(!confirm);
 
@@ -41,6 +44,29 @@ export default function EditUser({ toggleEdit, history, currentUser }) {
         }
     }
 
+    const addFile = (evt) => {
+        setFile(evt.target.files[0]);
+        const currentUser = { ...newUser };
+        currentUser[evt.target.id] = evt.target.files[0].name;
+        setImagePreview(URL.createObjectURL(evt.target.files[0]));
+        setNewUser(currentUser);
+    }
+
+    const saveImage = async (url) => {
+        const formData = new FormData();
+        formData.append("file", file, url);
+        console.log(formData);
+        const token = await getToken();
+        const res = await fetch("/api/image/user", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            body: formData
+        });
+         return res;
+    }
+
     // Save information after user confirmation
     const saveUser = () => {
         const userToSave = {
@@ -49,17 +75,43 @@ export default function EditUser({ toggleEdit, history, currentUser }) {
             lastName: newUser.lastName,
             email: newUser.email,
             phone: newUser.phone,
-            bio: newUser.bio,
+            bio: newUser.bio || null,
             imageLocation: newUser.imageLocation,
             firebaseId: newUser.firebaseId,
             isActive: newUser.isActive
         }
-        saveEditedUser(userToSave)
-        .then(() => history.push("/"));
+
+        if (userToSave.imageLocation !== previousImage) {
+            userToSave.imageLocation = `${new Date().getTime()}_${userToSave.imageLocation}`;
+            saveImage(userToSave.imageLocation)
+            .then((res) => {
+                if (res.ok) {
+                    saveEditedUser(userToSave)
+                    .then(() => getUserProfile(userToSave.firebaseId))
+                    .then((updatedUser) => {
+                        sessionStorage.setItem("userProfile", JSON.stringify(updatedUser));
+                        history.push("/")
+                    });
+                } else {
+                    alert("An error occurred while uploading the image");
+                }
+            });
+        } else {
+            saveEditedUser(userToSave)
+            .then(() => getUserProfile(userToSave.firebaseId))
+            .then((updatedUser) => {
+                sessionStorage.setItem("userProfile", JSON.stringify(updatedUser));
+                history.push("/")
+            });
+        }
     }    
 
     useEffect(() => {
         setNewUser(currentUser);
+        if (currentUser.imageLocation) {
+            setImagePreview(`/api/image/user/${currentUser.imageLocation}`);
+            setPreviousImage(currentUser.imageLocation);
+        }
         // eslint-disable-next-line
     }, [])
 
@@ -94,12 +146,17 @@ export default function EditUser({ toggleEdit, history, currentUser }) {
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="imageLocation">Image Location</Label>
-                    <Input type="url" invalid={invalid.imageLocation} id="imageLocation" name="imageLocation" maxLength="255" 
-                        value={newUser.imageLocation} onChange={handleFieldChange} />
-                    <FormFeedback>Enter a valid URL</FormFeedback>
-                    <FormText>Enter the URL of a picture to represent you</FormText>
+                    <Label for="imageLocation">Image</Label>
+                    <Input type="file" accept="image/*" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" onChange={addFile} />
+                    <FormFeedback>A valid image file is required for all users</FormFeedback>
+                    <FormText>Upload a picture to represent you</FormText>
                 </FormGroup>
+
+                {imagePreview
+                ? <FormGroup>
+                    <img src={imagePreview} alt="preview" className="img-thumbnail" />
+                </FormGroup>
+                : null}
 
                 <FormGroup>
                     <Label for="bio">Bio</Label>

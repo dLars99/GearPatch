@@ -76,8 +76,8 @@ export default function SignUp() {
             lastName: newUser.lastName,
             email: newUser.email,
             phone: newUser.phone,
-            bio: newUser.bio,
-            imageLocation: `${new Date().getTime()}_${newUser.imageLocation}`,
+            bio: newUser.bio || null,
+            imageLocation: `${new Date().getTime()}_${newUser.imageLocation}` || null,
         }
         // User must be created first to get access token to save image
         register(userToSave, newUser.password)
