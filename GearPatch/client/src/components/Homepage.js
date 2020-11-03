@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Card, CardImg, CardImgOverlay, Form, Row, FormGroup, Col, Input, Label, Button } from "reactstrap";
 
+
 export default function Homepage() {
 
     const history = useHistory();
@@ -26,15 +27,15 @@ export default function Homepage() {
     }
 
     return (
-            <Card>
+            <Card width="100%">
                 {/* Featured Background Image */}
-                <CardImg width="100%" src={require(`../media/${background}`)} alt="Welcome to Gearpatch" />
+                <CardImg height="100%" src={require(`../media/${background}`)} alt="Welcome to Gearpatch" />
                 <CardImgOverlay>
                     {/* Form frame */}
-                    <Card body width="100%" className="mt-5">
+                    <Card body className="mt-5 text-white" style={{backgroundColor: 'rgba(100, 100, 100, 0.5)'}}>
                     <Form onSubmit={submitForm}>
-                        <Row form>
-                            <Col xs={12} sm={5}>
+                        <Row form className="justify-content-center">
+                            <Col xs={12} sm={10} lg={11}>
                                 <FormGroup>
                                     <Input type="text" name="query" id="query" placeholder="guitar" 
                                         value={search.query} onChange={handleFieldChange} />
@@ -43,13 +44,13 @@ export default function Homepage() {
                             </Col>
                             {/* <Col xs={12} sm={5}>
                                 <FormGroup>
-                                    <Input type="text" name="loceation" id="location" placeholder="Nashville, TN" 
+                                    <Input type="text" name="location" id="location" placeholder="Nashville, TN" 
                                         value={search.location} onChange={handleFieldChange} />
                                     <Label for="location">Where are you looking?</Label>
                                 </FormGroup>
                             </Col> */}
-                            <Col sm={2}>
-                                <Button>Go</Button>
+                            <Col sm={2} lg={1}>
+                                <Button color="primary">Go</Button>
                             </Col>
                         </Row>
                     </Form>

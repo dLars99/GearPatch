@@ -5,7 +5,7 @@ export default function GearDetails({ gear, history }) {
 
     return (
         <Col xs={12} md={8}>
-            <Button type="button" onClick={() => history.goBack()}>Back to list</Button>
+            <Button type="button" className="my-2 mx-3" onClick={() => history.goBack()}>Back to list</Button>
             <h1>{gear.headline}</h1>
             <h2>{gear.manufacturer} {gear.model}</h2>
             <p>{gear.description}</p>

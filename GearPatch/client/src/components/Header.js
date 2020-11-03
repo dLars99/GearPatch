@@ -1,8 +1,8 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useHistory, NavLink as RRNavLink } from "react-router-dom";
 import Login from "./Users/Login";
-import { Navbar, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarBrand, NavbarToggler, Collapse, Nav, NavItem, NavLink, 
-    Badge, Button } from "reactstrap";
+import { Navbar, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarBrand, NavbarToggler,
+    Collapse, Nav, NavItem, NavLink, Badge, Button } from "reactstrap";
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { MessageContext } from "../providers/MessageProvider";
 import { ReservationContext } from "../providers/ReservationProvider";
@@ -42,7 +42,7 @@ export default function Header() {
 
     return (
         <header>
-            <Navbar color="secondary" dark fixed="top" expand="lg">
+            <Navbar color="secondary" light fixed="top" expand="lg">
                 {isLoggedIn
                 ? <Dropdown nav isOpen={dropdownOpen} toggle={headerToggle}>
                     <DropdownToggle nav>
@@ -58,17 +58,17 @@ export default function Header() {
 
                 <NavbarToggler onClick={toggle} />
                 <Collapse isOpen={isOpen} navbar>
-                    <Nav navbar>
+                    <Nav navbar className="ml-auto">
                         {isLoggedIn
                         ? <>
                             <NavItem>
                                 <NavLink tag={RRNavLink} to="/messages">
-                                    Messages<Badge color="primary" pill>{unread}</Badge>
+                                    Messages <Badge color="primary" pill>{unread}</Badge>
                                     </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink tag={RRNavLink} to="/reservations">
-                                    Reservations<Badge color="primary" pill>{unconfirmed}</Badge>
+                                    Reservations <Badge color="primary" pill>{unconfirmed}</Badge>
                                 </NavLink>
                             </NavItem>
                             <NavItem>
@@ -77,6 +77,7 @@ export default function Header() {
                                 </NavLink>
                             </NavItem>
                             <NavItem>
+                                {/* eslint-disable-next-line */}
                                 <a aria-current="page" className="nav-link"
                                     style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
                             </NavItem>
@@ -86,6 +87,7 @@ export default function Header() {
                                 <NavLink tag={RRNavLink} to="/register">Sign Up</NavLink>
                             </NavItem>
                             <NavItem className="mx-0 mx-lg-1">
+                                {/* eslint-disable-next-line */}
                                 <a aria-current="page" className="nav-link"
                                     style={{ cursor: "pointer" }} onClick={modalToggle}>Sign In</a>
                             </NavItem>
