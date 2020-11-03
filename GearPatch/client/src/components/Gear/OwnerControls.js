@@ -36,18 +36,18 @@ export default function OwnerControls({ toggleEdit, isActive, gearId }) {
     return (
         <Col xs={12} md={4}>
             <Card>
-                <CardTitle className="text-center">Owner Controls</CardTitle>
+                <CardTitle className="text-center mt-3"><h3>Owner Controls</h3></CardTitle>
                 <CardBody>
-                    <Row>
-                        <Button onClick={toggleEdit}>Edit</Button>
+                    <Row width="100%" className="justify-content-center my-1">
+                        <Button color="primary" onClick={toggleEdit}>Edit</Button>
                     </Row>
-                    <Row>
+                    <Row width="100%" className="justify-content-center my-1">
                         {isActive
                         ? <Button onClick={toggleConfirmation}>Deactivate</Button>
                         : <Button onClick={toggleConfirmation}>Reactivate</Button>
                         }
                     </Row>
-                    <Row>
+                    <Row width="100%" className="justify-content-center my-1">
                         <Button color="danger" onClick={toggleDeletion}>Delete Listing</Button>
                     </Row>
                 </CardBody>

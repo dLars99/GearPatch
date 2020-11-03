@@ -63,12 +63,12 @@ export default function Header() {
                         ? <>
                             <NavItem>
                                 <NavLink tag={RRNavLink} to="/messages">
-                                    Messages<Badge color="primary" pill>{unread}</Badge>
+                                    Messages <Badge color="primary" pill>{unread}</Badge>
                                     </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink tag={RRNavLink} to="/reservations">
-                                    Reservations<Badge color="primary" pill>{unconfirmed}</Badge>
+                                    Reservations <Badge color="primary" pill>{unconfirmed}</Badge>
                                 </NavLink>
                             </NavItem>
                             <NavItem>

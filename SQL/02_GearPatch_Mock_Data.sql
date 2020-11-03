@@ -247,13 +247,11 @@ insert into Accessory (Id, GearId, Name, Description) values (1, 21, 'id', 'Proi
 
 Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit.');
 insert into Accessory (Id, GearId, Name, Description) values (2, 46, 'nisi nam', 'nice padded strap');
-insert into Accessory (Id, GearId, Name, Description) values (3, 38, 'nascetur', null);
+insert into Accessory (Id, GearId, Name, Description) values (3, 38, 'Cable', 'Good quality, 10 foot speaker cable');
 insert into Accessory (Id, GearId, Name, Description) values (4, 45, 'pellentesque ultrices', 'Fusce posuere felis sed lacus. Morbi sem mauris, laoreet ut, rhoncus aliquet, pulvinar sed, nisl. Nunc rhoncus dui vel sem.');
-insert into Accessory (Id, GearId, Name, Description) values (5, 49, 'sapien', 'Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est. Donec odio justo, sollicitudin ut, suscipit a, feugiat et, eros.
+insert into Accessory (Id, GearId, Name, Description) values (5, 49, 'Stand', 'Something to set the horn on while you''re not playing. I ask that, if the horn is outside of the case, it rest on the stand. Please DO NOT lean the sax on other objects or lie it down on a chair.
 
-Vestibulum ac est lacinia nisi venenatis tristique. Fusce congue, diam id ornare imperdiet, sapien urna pretium nisl, ut volutpat sapien arcu sed augue. Aliquam erat volutpat.
-
-In congue. Etiam justo. Etiam pretium iaculis justo.');
+I shouldn''t have to say this, but it''s happened: do NOT, do NOT, do NOT leave the saxophone on the floor. You will be responsible for any damages.');
 insert into Accessory (Id, GearId, Name, Description) values (6, 41, 'lacinia nisi venenatis', null);
 insert into Accessory (Id, GearId, Name, Description) values (7, 43, 'sagittis sapien cum', 'Morbi non lectus. Aliquam sit amet diam in magna bibendum imperdiet. Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.
 
@@ -293,23 +291,23 @@ insert into Accessory (Id, GearId, Name, Description) values (25, 42, 'at velit'
 set identity_insert [Accessory] off
 
 set identity_insert [UserMessage] on
-insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (1, 10, 2, '2019-05-15 03:37:58', 'Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est.', 1);
+insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (1, 10, 2, '2019-05-15 03:37:58', 'What is love? Baby don''t hurt me. Don''t hurt me no more. No, I don''t know why you''re not fair. I give you my guitar, but you don''t care. So what is right and what is wrong? Give me a sign.', 1);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (2, 9, 5, '2020-03-15 02:46:46', 'Vivamus metus arcu, adipiscing molestie, hendrerit at, vulputate vitae, nisl. Aenean lectus. Pellentesque eget nunc.', 0);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (3, 8, 9, '2020-03-06 23:56:53', 'Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa.', 0);
-insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (4, 10, 2, '2020-10-07 23:14:47', 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', 0);
+insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (4, 10, 2, '2020-10-07 23:14:47', 'Dies irae, dies illa. Solvet saeclum in favilla. Teste David cum Sibylla.', 0);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (5, 4, 7, '2019-09-23 04:41:54', 'Ut at dolor quis odio consequat varius. Integer ac leo.', 0);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (6, 7, 8, '2020-07-23 17:44:11', 'Sed vel enim sit amet nunc viverra dapibus. Nulla suscipit ligula in lacus. Curabitur at ipsum ac tellus semper interdum. Mauris ullamcorper purus sit amet nulla.', 1);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (7, 5, 2, '2020-03-12 18:22:19', 'Does it include the stand?', 0);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (8, 8, 2, '2019-11-20 05:29:55', 'I''m so grateful for this, I''m really in a bind! Do you have a cable you can throw in? I''ll slip you a fiver for it if you do. ', 0);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (9, 5, 2, '2020-07-15 04:50:34', 'I really, really need this for a live video shoot and mine is in the shop! Are you cool with it being out of town, travelling for a week? Let me know!', 1);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (10, 2, 9, '2019-09-01 09:51:14', 'Can you give me any more detail about the item? How well is it maintained? I want to make sure it sounds great for a recording gig.', 0);
-insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (11, 3, 6, '2020-03-09 05:50:47', 'Etiam vel augue. Vestibulum rutrum rutrum neque. Aenean auctor gravida sem. Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo.', 1);
-insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (12, 2, 6, '2019-06-23 15:28:28', 'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Duis faucibus accumsan odio. Curabitur convallis. Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor.', 0);
-insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (13, 3, 4, '2019-05-27 10:42:58', 'Nulla justo.', 1);
+insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (11, 3, 6, '2020-03-09 05:50:47', 'Hey man, can you do pick up at 7 instead of 4? I got a thing.', 1);
+insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (12, 2, 6, '2019-06-23 15:28:28', 'Shawty got them apple bottom jeans and the boots with the fur. You know the whole club was looking at her. She hit the floor. Next thing I know, shawty got low, low, low, low. Low, low, low.', 0);
+insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (13, 3, 4, '2019-05-27 10:42:58', 'Yessir.', 1);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (14, 4, 7, '2020-03-15 13:08:41', 'Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante.', 0);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (15, 8, 2, '2019-11-30 16:21:52', 'Thank you again for the rental! It really saved me!', 0);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (16, 2, 8, '2019-07-26 22:07:10', 'Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.', 0);
-insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (17, 4, 3, '2020-08-28 04:01:33', 'Duis ac nibh. Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.', 0);
+insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (17, 4, 3, '2020-08-28 04:01:33', 'What''s the best way to get there from the south side? I''m still new to town. How can I avoid the traffic?', 0);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (18, 3, 2, '2020-10-20 02:48:06', 'This worked great for me overall, but I had some trouble keeping the D string in tune. The tuner feels a little loose, you may want to get that looked at.', 1);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (19, 4, 10, '2019-04-13 19:54:35', 'Praesent id massa id nisl venenatis lacinia. Aenean sit amet justo. Morbi ut odio.', 0);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (20, 7, 10, '2020-10-04 21:34:45', 'Nulla tellus.', 0);
@@ -317,5 +315,5 @@ insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unr
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (22, 4, 10, '2019-12-29 06:01:38', 'Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh. Quisque id justo sit amet sapien dignissim vestibulum. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla dapibus dolor vel est.', 1);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (23, 9, 5, '2019-12-31 05:48:37', 'Nullam sit amet turpis elementum ligula vehicula consequat. Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus.', 0);
 insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (24, 4, 5, '2020-06-22 13:50:32', 'Aliquam erat volutpat. In congue. Etiam justo. Etiam pretium iaculis justo. In hac habitasse platea dictumst.', 0);
-insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (25, 9, 2, '2019-04-30 20:02:10', 'Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante.', 1);
+insert into UserMessage (Id, SenderId, RecipientId, CreateDateTime, Content, Unread) values (25, 9, 2, '2019-04-30 20:02:10', 'That''s great! It starts with an earthquake, birds, snakes, and airplanes. Lenny Bruce is not afraid. Eye of a hurricane, listen to yourself churn, world serves its own needs. Don''t misserve your own deeds. Speed it up a notch, speed, grunt, no, strength. The ladder starts to clatter with a fear of height. Down, height.', 1);
 set identity_insert [UserMessage] off
