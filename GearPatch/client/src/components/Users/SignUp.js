@@ -15,6 +15,7 @@ export default function SignUp() {
         imageLocation: false});
     const [confirm, setConfirm] = useState(false);
     const [file, setFile] = useState();
+    const [imagePreview, setImagePreview] = useState();
 
     const history = useHistory();
     const confirmToggle = () => setConfirm(!confirm);
@@ -29,10 +30,11 @@ export default function SignUp() {
         setInvalid(currentInvalid);
     }
 
-    const saveFile = (evt) => {
+    const addFile = (evt) => {
         setFile(evt.target.files[0]);
         const currentUser = { ...newUser };
         currentUser[evt.target.id] = evt.target.files[0].name;
+        setImagePreview(URL.createObjectURL(evt.target.files[0]));
         setNewUser(currentUser);
     }
 
@@ -138,11 +140,17 @@ export default function SignUp() {
                 </FormGroup>
 
                 <FormGroup>
-                    <Label for="imageLocation">Image Location</Label>
-                    <Input type="file" accept="image/*" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" onChange={saveFile} />
+                    <Label for="imageLocation">Image</Label>
+                    <Input type="file" accept="image/*" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" onChange={addFile} />
                     <FormFeedback>A valid image file is required for all users</FormFeedback>
                     <FormText>Upload a picture to represent you</FormText>
                 </FormGroup>
+
+                {imagePreview
+                ? <FormGroup>
+                    <img src={imagePreview} alt="preview" className="img-thumbnail" />
+                </FormGroup>
+                : null}
 
                 <FormGroup>
                     <Label for="bio">Bio</Label>
