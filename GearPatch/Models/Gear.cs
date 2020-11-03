@@ -30,6 +30,7 @@ namespace GearPatch.Models
         public string? FirstOptionNotes { get; set; }
         [MaxLength(255)]
         public string? SecondOptionNotes { get; set; }
+        [MaxLength(255)]
         public string? ImageLocation { get; set; }
         public Gear()
         {

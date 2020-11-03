@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Hosting;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Processing;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Tabloid.Controllers
 {
@@ -18,6 +18,7 @@ namespace Tabloid.Controllers
             _webhost = webhost;
         }
 
+        [Authorize]
         [HttpPost("gear")]
         public IActionResult UploadGearImage(IFormFile file)
         {
@@ -50,10 +51,51 @@ namespace Tabloid.Controllers
             return Ok();
         }
 
+        [Authorize]
+        [HttpPost("user")]
+        public IActionResult UploadUserImage(IFormFile file)
+        {
+            //where images are stored
+            var savedImagePath = Path.Combine(_webhost.WebRootPath, "user-images", file.FileName);
+            try
+            {
+                using var image = Image.Load(file.OpenReadStream());
+
+                int originalWidth = image.Width;
+                int originalHeight = image.Height;
+
+
+                int maxWidth = 640;
+                if (originalWidth > maxWidth)
+                {
+                    int newHeight = maxWidth * originalHeight;
+                    newHeight /= originalWidth;
+
+                    image.Mutate(i => i.Resize(maxWidth, newHeight));
+                }
+
+                image.Save(savedImagePath);
+            }
+            catch
+            {
+                return Conflict();
+            }
+
+            return Ok();
+        }
+
         [HttpGet("gear/{imageUrl}")]
         public IActionResult GetGearImage(string imageUrl)
         {
             var path = Path.Combine(_webhost.WebRootPath, "gear-images", imageUrl);
+            var imageFileStream = System.IO.File.OpenRead(path);
+            return File(imageFileStream, "image/jpeg");
+        }
+
+        [HttpGet("user/{imageUrl}")]
+        public IActionResult GetUserImage(string imageUrl)
+        {
+            var path = Path.Combine(_webhost.WebRootPath, "user-images", imageUrl);
             var imageFileStream = System.IO.File.OpenRead(path);
             return File(imageFileStream, "image/jpeg");
         }

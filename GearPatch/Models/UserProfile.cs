@@ -22,9 +22,7 @@ namespace GearPatch.Models
         [Required]
         [StringLength(28, MinimumLength = 28)]
         public string FirebaseId { get; set; }
-        [Required]
         public string Bio { get; set; }
-        [Url]
         [MaxLength(255)]
         public string ImageLocation { get; set; }
         [Required]

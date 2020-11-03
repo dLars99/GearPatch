@@ -13,9 +13,11 @@ export default function UserDetails({ toggleEdit, currentUser, history }) {
         <Row className="justify-content-center">
             <Col md={8} xl={5} >
                 <Card>
-                    <CardImg top width="100%" src={currentUser.imageLocation} alt={currentUser.fullName} />
+                    <CardImg top width="100%" 
+                src={`/api/image/user/${currentUser.imageLocation}`} 
+                alt={currentUser.fullName} />
                     <CardBody>
-                        <CardTitle className="text-center">{currentUser.firstName} {currentUser.lastName}</CardTitle>
+                        <CardTitle className="text-center">{currentUser.fullName}</CardTitle>
                         <CardSubtitle className="text-center">{currentUser.isActive ? `(${currentUser.fullName})` : 'INACTIVE'}</CardSubtitle>
                         <CardText>Email: {currentUser.email}</CardText>
                         <CardText>Phone: {currentUser.phone}</CardText>

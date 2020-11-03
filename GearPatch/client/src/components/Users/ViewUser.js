@@ -13,12 +13,16 @@ export default function ViewUser() {
     const history = useHistory();
     
     useEffect(() => {
-        setCurrentUser(JSON.parse(sessionStorage.userProfile));
+        let loggedInUser = JSON.parse(sessionStorage.userProfile);
+        if (!loggedInUser.imageLocation) loggedInUser.imageLocation = "null-user.jpg"
+
+        setCurrentUser(loggedInUser);
     }, [])
+
+    if (!currentUser.id) return null;
 
     return (
         <>
-        {console.log(currentUser)}
         {editing
             ? <EditUser toggleEdit={toggleEdit} history={history} currentUser={currentUser} />
             : <UserDetails toggleEdit={toggleEdit} currentUser={currentUser} history={history} />

@@ -15,6 +15,7 @@ export default function NewGear() {
     const [gearTypeList, setGearTypeList] = useState([]);
     const [accessories, setAccessories] = useState([]);
     const [file, setFile] = useState();
+    const [imagePreview, setImagePreview] = useState();
     const [invalid, setInvalid] = useState({headline: false, manufacturer: false, model: false, price: false, description: false,
         imageLocation: false, gearTypeId: false, firstOptionNotes: false, secondOptionNotes: false})
 
@@ -52,10 +53,11 @@ export default function NewGear() {
         setInvalid(currentInvalid);
     }
 
-    const saveFile = (evt) => {
+    const addFile = (evt) => {
         setFile(evt.target.files[0]);
         const currentGear = { ...newGear };
         currentGear[evt.target.id] = evt.target.files[0].name;
+        setImagePreview(URL.createObjectURL(evt.target.files[0]));
         setNewGear(currentGear);
     }
 
@@ -64,13 +66,14 @@ export default function NewGear() {
         formData.append("file", file, url);
         console.log(formData);
         const token = await getToken();
-        const res = fetch("/api/image/gear", {
+        const res = await fetch("/api/image/gear", {
             method: "POST",
             headers: {
                 Authorization: `Bearer ${token}`
             },
             body: formData
         });
+         return res;
     }
 
     const handleSubmit = (evt) => {
@@ -101,8 +104,15 @@ export default function NewGear() {
         } else {
             if (file) {
                 saveImage(gearToSave.imageLocation)
-                .then(() => saveNewGear(gearToSave))
-                .then((res) => history.push(`/gear/${res.id}`));
+                .then((res) => {
+                    if (res.ok) {
+                        saveNewGear(gearToSave)
+                        .then((gearRes) => history.push(`/gear/${gearRes.id}`));
+                    }
+                    else {
+                        alert("An error occurred while uploading the image");
+                    }
+                });
             } else {
                 saveNewGear(gearToSave)
                 .then((res) => history.push(`/gear/${res.id}`))
@@ -192,9 +202,16 @@ export default function NewGear() {
 
             <FormGroup>
                 <Label for="imageLocation">Image</Label>
-                <Input type="file" accept="image/*" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" onChange={saveFile} />
+                <Input type="file" accept="image/*" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" onChange={addFile} />
                 <FormText>Upload a picture of the item</FormText>
+                <FormFeedback>Picture must be a valid image file</FormFeedback>
             </FormGroup>
+
+            {imagePreview
+            ? <FormGroup>
+                <img src={imagePreview} alt="preview" className="img-thumbnail" />
+            </FormGroup>
+            : null}
 
             {accessories.length > 0
             ? accessories.map((accessory, index) =>
