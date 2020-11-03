@@ -39,9 +39,9 @@ export default function Header() {
     }
 
     useEffect(() => {
-        refreshCounters();
         let interval = null;
         if (isLoggedIn) {
+            refreshCounters();
             interval = setInterval(() => {
                 refreshCounters();
             }, 5000)
@@ -76,12 +76,18 @@ export default function Header() {
                         ? <>
                             <NavItem>
                                 <NavLink tag={RRNavLink} to="/messages">
-                                    Messages <Badge color="primary" pill>{unread}</Badge>
+                                    Messages {' '}
+                                    {unread !== 0 
+                                    ?<Badge color="primary" pill>{unread}</Badge>
+                                    : null}
                                     </NavLink>
                             </NavItem>
                             <NavItem>
                                 <NavLink tag={RRNavLink} to="/reservations">
-                                    Reservations <Badge color="primary" pill>{unconfirmed}</Badge>
+                                    Reservations {' '}
+                                    {unconfirmed !== 0
+                                    ? <Badge color="primary" pill>{unconfirmed}</Badge>
+                                    : null}
                                 </NavLink>
                             </NavItem>
                             <NavItem>
