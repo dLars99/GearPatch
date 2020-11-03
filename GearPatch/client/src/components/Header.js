@@ -43,7 +43,7 @@ export default function Header() {
 
     return (
         <header>
-            <Navbar color="secondary" light fixed="top" expand="lg">
+            <Navbar color="secondary" light fixed="top" expand="lg" className="align-items-center">
                 {isLoggedIn
                 ? <Dropdown nav isOpen={dropdownOpen} toggle={headerToggle}>
                     <DropdownToggle nav>
