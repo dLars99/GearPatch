@@ -16,7 +16,7 @@ export default function({ conversation }) {
     return (
         <Card onClick={() => history.push(`/messages/${conversation.otherUserId}`)}>
             <CardImg top width="90%" 
-                src={conversation.otherUser.imageLocation.startsWith("http") ? conversation.otherUser.imageLocation : `/user-images/${conversation.otherUser.imageLocation}`} 
+                src={`/api/image/user/${conversation.otherUser.imageLocation}`} 
                 alt={conversation.otherUser.firstName} />
             <CardBody>
                 <CardTitle>{conversation.otherUser.fullName}</CardTitle>

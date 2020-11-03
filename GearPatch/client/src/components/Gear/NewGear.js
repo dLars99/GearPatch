@@ -1,17 +1,21 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { GearContext } from "../../providers/GearProvider";
+import { UserProfileContext } from "../../providers/UserProfileProvider";
 import { NewGearValidation } from "./NewGearValidation";
 import { Container, Form, FormGroup, Input, Label, FormText, Row, Col, Button, FormFeedback } from "reactstrap";
 
 export default function NewGear() {
 
     const { saveNewGear, getGearTypes } = useContext(GearContext);
+    const { getToken } = useContext(UserProfileContext);
 
     const [newGear, setNewGear] = useState({});
     const [gearType, setGearType] = useState();
     const [gearTypeList, setGearTypeList] = useState([]);
     const [accessories, setAccessories] = useState([]);
+    const [file, setFile] = useState();
+    const [imagePreview, setImagePreview] = useState();
     const [invalid, setInvalid] = useState({headline: false, manufacturer: false, model: false, price: false, description: false,
         imageLocation: false, gearTypeId: false, firstOptionNotes: false, secondOptionNotes: false})
 
@@ -49,6 +53,29 @@ export default function NewGear() {
         setInvalid(currentInvalid);
     }
 
+    const addFile = (evt) => {
+        setFile(evt.target.files[0]);
+        const currentGear = { ...newGear };
+        currentGear[evt.target.id] = evt.target.files[0].name;
+        setImagePreview(URL.createObjectURL(evt.target.files[0]));
+        setNewGear(currentGear);
+    }
+
+    const saveImage = async (url) => {
+        const formData = new FormData();
+        formData.append("file", file, url);
+        console.log(formData);
+        const token = await getToken();
+        const res = await fetch("/api/image/gear", {
+            method: "POST",
+            headers: {
+                Authorization: `Bearer ${token}`
+            },
+            body: formData
+        });
+         return res;
+    }
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
         const inputAccessories = [ ...accessories ];
@@ -61,7 +88,7 @@ export default function NewGear() {
             model: newGear.model,
             price: parseInt(newGear.price),
             description: newGear.description,
-            imageLocation: newGear.imageLocation,
+            imageLocation: `${new Date().getTime()}_${newGear.imageLocation}` || null,
             gearTypeId: parseInt(newGear.gearTypeId),
             firstOptionNotes: newGear.firstOptionNotes || null,
             secondOptionNotes: newGear.secondOptionNotes || null,
@@ -75,8 +102,21 @@ export default function NewGear() {
             isInvalid[fieldIsInvalid] = true;
             setInvalid(isInvalid);
         } else {
-            saveNewGear(gearToSave)
-            .then((res) => history.push(`/gear/${res.id}`));
+            if (file) {
+                saveImage(gearToSave.imageLocation)
+                .then((res) => {
+                    if (res.ok) {
+                        saveNewGear(gearToSave)
+                        .then((gearRes) => history.push(`/gear/${gearRes.id}`));
+                    }
+                    else {
+                        alert("An error occurred while uploading the image");
+                    }
+                });
+            } else {
+                saveNewGear(gearToSave)
+                .then((res) => history.push(`/gear/${res.id}`))
+            }
         }
     }
 
@@ -161,10 +201,17 @@ export default function NewGear() {
             </FormGroup>
 
             <FormGroup>
-                <Label for="imageLocation">Image Location</Label>
-                <Input type="url" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" onChange={handleFieldChange} />
-                <FormText>Enter the URL of a picture of the item</FormText>
+                <Label for="imageLocation">Image</Label>
+                <Input type="file" accept="image/*" invalid={invalid.imageLocation} name="imageLocation" id="imageLocation" onChange={addFile} />
+                <FormText>Upload a picture of the item</FormText>
+                <FormFeedback>Picture must be a valid image file</FormFeedback>
             </FormGroup>
+
+            {imagePreview
+            ? <FormGroup>
+                <img src={imagePreview} alt="preview" className="img-thumbnail" />
+            </FormGroup>
+            : null}
 
             {accessories.length > 0
             ? accessories.map((accessory, index) =>
@@ -202,7 +249,7 @@ export default function NewGear() {
         </Form>
         <Row className="mt-3">
             <Col xs={3} sm={2} lg={1}>
-                <Button onClick={handleSubmit}>Save</Button>
+                <Button type="button" onClick={handleSubmit}>Save</Button>
             </Col>
             <Col xs={9} sm={10} lg={11}>
                 <Button onClick={() => history.push("/")}>Back to Homepage</Button>

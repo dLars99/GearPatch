@@ -1,8 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using GearPatch.Models;
 using GearPatch.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GearPatch.Controllers
@@ -15,15 +19,19 @@ namespace GearPatch.Controllers
         private readonly IUserProfileRepository _userProfileRepository;
         private readonly IAccessoryRepository _accessoryRepository;
         private readonly IReservationRepository _reservationRepository;
+        private readonly IWebHostEnvironment _environment;
+
         public GearController(IGearRepository gearRepository,
                               IUserProfileRepository userProfileRepository,
                               IAccessoryRepository accessoryRepository,
-                              IReservationRepository reserverationRepository)
+                              IReservationRepository reserverationRepository,
+                              IWebHostEnvironment environment)
         {
             _gearRepository = gearRepository;
             _userProfileRepository = userProfileRepository;
             _accessoryRepository = accessoryRepository;
             _reservationRepository = reserverationRepository;
+            _environment = environment;
         }
 
         [HttpGet("search")]

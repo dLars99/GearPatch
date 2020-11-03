@@ -22,18 +22,16 @@ export function NewGearValidation(gear, gearType){
         return "price"
     }
 
-    // ImageLocation must be a valid URL
-    if (gear.imageLocation) {
-        try {
-            new URL(gear.imageLocation)
-        } catch (_){
-            return "imageLocation";
-        }
-    }
-
     // GearTypeId is required
     if (!gear.gearTypeId || gear.gearTypeId < 0 || typeof gear.gearTypeId !== "number") {
         return "gearTypeId"
+    }
+
+    // ImageLocation must represent a valid image type
+    const fileType = gear.imageLocation.split(".").pop().toLowerCase();
+    const validFileTypes = ["png", "bmp", "jpeg", "jpg", "gif"]
+    if (!validFileTypes.includes(fileType)) {
+        return "imageLocation";
     }
 
     // OptionNotes must be present for any gearType Option fields

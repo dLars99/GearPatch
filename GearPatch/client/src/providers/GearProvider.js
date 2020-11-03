@@ -133,8 +133,7 @@ export function GearProvider(props) {
 
     return (
         <GearContext.Provider value={{ gear, searchGear, getGearItem, getMore,
-            saveNewGear, getGearTypes, getMyGear, saveEditedGear, toggleActivation,
-            deleteGear }}>
+            saveNewGear, getGearTypes, getMyGear, saveEditedGear, toggleActivation, deleteGear }}>
             {props.children}
         </GearContext.Provider>
     )
