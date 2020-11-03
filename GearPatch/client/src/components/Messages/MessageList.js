@@ -14,9 +14,9 @@ export default function() {
 
     return (
         <>
-            <Row className="my-4">
+            <Row className="my-5">
                 <Col xs={12}>
-                    <h1 className="text-center">Messages</h1>
+                    <h1 className="text-center my-4">Messages</h1>
                 </Col>
             </Row>
             <CardDeck>

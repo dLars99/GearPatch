@@ -19,7 +19,7 @@ export default function ApplicationViews() {
     const { isLoggedIn } = useContext(UserProfileContext);
 
     return (
-        <main className="container-fluid mt-5 pt-5">
+        <main className="container-fluid mt-5 pt-2">
             <Switch>
                 <Route path="/" exact>
                     <Homepage />

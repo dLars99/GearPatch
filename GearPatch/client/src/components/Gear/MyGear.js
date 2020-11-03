@@ -17,8 +17,8 @@ export default function MyGear() {
 
     return (
         <>
-        <Row className="justify-content-center my-4">
-            <h1 className="text-center">My Gear</h1>
+        <Row className="justify-content-center my-5">
+            <h1 className="text-center my-4">My Gear</h1>
         </Row>
         <Row>
             {gear.map(g => 

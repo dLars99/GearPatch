@@ -29,7 +29,7 @@ export default function Homepage() {
     return (
             <Card width="100%">
                 {/* Featured Background Image */}
-                <CardImg height="100%" src={require(`../media/${background}`)} alt="Welcome to Gearpatch" />
+                <CardImg width="100%" src={require(`../media/${background}`)} alt="Welcome to Gearpatch" />
                 <CardImgOverlay>
                     {/* Form frame */}
                     <Card body className="mt-5 text-white" style={{backgroundColor: 'rgba(100, 100, 100, 0.5)'}}>
