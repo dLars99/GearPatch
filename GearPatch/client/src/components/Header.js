@@ -6,11 +6,12 @@ import { Navbar, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarBra
 import { UserProfileContext } from "../providers/UserProfileProvider";
 import { MessageContext } from "../providers/MessageProvider";
 import { ReservationContext } from "../providers/ReservationProvider";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 
 export default function Header() {
 
     const { isLoggedIn, logout } = useContext(UserProfileContext);
-    const { unread, getUnread } = useContext(MessageContext);
+    const { unread, setUnread, getUnread } = useContext(MessageContext);
     const { unconfirmed, getUnconfirmed } = useContext(ReservationContext);
 
     const [isOpen, setIsOpen] = useState(false);
@@ -35,11 +36,23 @@ export default function Header() {
 
     useEffect(() => {
         if (isLoggedIn) {
-            getUnread();
-            getUnconfirmed();
+            const connection = new HubConnectionBuilder()
+                .withUrl('https://localhost:3000/hubs/message')
+                .withAutomaticReconnect()
+                .build();
+
+                connection.start()
+                .then(result => {
+                    console.log("Message connection established!");
+
+                    connection.on('UpdateCount', messageCount => {
+                        setUnread(messageCount);
+                    });
+                })
+                .catch(e => console.log("Connection failed: ", e));            
         }
         // eslint-disable-next-line
-    }, [isLoggedIn, location])
+    }, [isLoggedIn])
 
     return (
         <header>

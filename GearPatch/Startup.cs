@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GearPatch.Hubs;
 using GearPatch.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -52,6 +53,8 @@ namespace GearPatch
                     };
                 });
 
+            services.AddSignalR();
+
             services.AddControllers();
         }
 
@@ -74,6 +77,7 @@ namespace GearPatch
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MessageHub>("/hubs/message");
             });
         }
     }

@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Security.Claims;
+using System.Threading.Tasks;
+using GearPatch.Hubs;
+using GearPatch.Hubs.Clients;
 using GearPatch.Models;
 using GearPatch.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace GearPatch.Controllers
 {
@@ -14,12 +18,15 @@ namespace GearPatch.Controllers
     {
         private readonly IUserMessageRepository _userMessageRepository;
         private readonly IUserProfileRepository _userProfileRepository;
+        private readonly IHubContext<MessageHub, IMessageClient> _messageHub;
 
         public UserMessageController(IUserMessageRepository userMessageRepository,
-                                    IUserProfileRepository userProfileRepository)
+                                    IUserProfileRepository userProfileRepository,
+                                    IHubContext<MessageHub, IMessageClient> messageHub)
         {
             _userMessageRepository = userMessageRepository;
             _userProfileRepository = userProfileRepository;
+            _messageHub = messageHub;
         }
 
         [HttpGet("user/{id}")]
@@ -59,21 +66,23 @@ namespace GearPatch.Controllers
         }
 
         [HttpPost]
-        public IActionResult Post(UserMessage message)
+        public async Task Post(UserMessage message)
         {
             var currentUser = GetCurrentUserProfile();
             message.SenderId = currentUser.Id;
             message.CreateDateTime = DateTime.Now;
 
-            try
-            {
+            // try
+            //{
                 _userMessageRepository.Add(message);
-                return CreatedAtAction("Get", new { id = message.Id }, message);
-            }
-            catch
-            {
-                return StatusCode(500);
-            }
+            // return CreatedAtAction("Get", new { id = message.Id }, message);
+            int messageCount = _userMessageRepository.NewMessageCount(currentUser.Id);
+            await _messageHub.Clients.All.UpdateCount(messageCount);
+            //}
+            //catch
+            //{
+            //    return StatusCode(500);
+            //}
         }
 
         [HttpPut("{id}")]

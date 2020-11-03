@@ -50,13 +50,13 @@ export function MessageProvider(props) {
             },
             body: JSON.stringify(message)
         });
-        const data = await res.json();
+        // const data = await res.json();
 
-        if (res.ok) {
-            return data;
-        } else {
-            throw new Error(res.statusText);
-        }
+        // if (res.ok) {
+        //     return data;
+        // } else {
+        //     throw new Error(res.statusText);
+        // }
     }
 
     const getUnread = async () => {
@@ -84,7 +84,7 @@ export function MessageProvider(props) {
     }
 
     return (
-        <MessageContext.Provider value={{ conversations, messages, unread, getConversations, getMessages, sendMessage, getUnread, sendRead }}>
+        <MessageContext.Provider value={{ conversations, messages, unread, setUnread, getConversations, getMessages, sendMessage, getUnread, sendRead }}>
             {props.children}
         </MessageContext.Provider>
     )
