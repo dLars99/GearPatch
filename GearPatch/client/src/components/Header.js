@@ -16,7 +16,7 @@ export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const [modal, setModal] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    
+     
     const toggle = () => setIsOpen(!isOpen);
     const modalToggle = () => setModal(!modal);
     const headerToggle = () => setDropdownOpen(!dropdownOpen);
@@ -33,13 +33,25 @@ export default function Header() {
         }
     }
 
+    const refreshCounters = () => {
+        getUnread();
+        getUnconfirmed();
+    }
+
     useEffect(() => {
+        refreshCounters();
+        let interval = null;
         if (isLoggedIn) {
-            getUnread();
-            getUnconfirmed();
+            interval = setInterval(() => {
+                refreshCounters();
+            }, 5000)
+
+            return () => clearInterval(interval);
+        } else if (!isLoggedIn) {
+            clearInterval(interval);
         }
         // eslint-disable-next-line
-    }, [isLoggedIn, location])
+    }, [isLoggedIn])
 
     return (
         <header>
