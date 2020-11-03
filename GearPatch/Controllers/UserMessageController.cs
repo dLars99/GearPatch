@@ -77,7 +77,7 @@ namespace GearPatch.Controllers
                 _userMessageRepository.Add(message);
             // return CreatedAtAction("Get", new { id = message.Id }, message);
             int messageCount = _userMessageRepository.NewMessageCount(currentUser.Id);
-            await _messageHub.Clients.All.UpdateCount(messageCount);
+             await _messageHub.Clients.All.UpdateCount(messageCount);
             //}
             //catch
             //{

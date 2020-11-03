@@ -37,19 +37,19 @@ export default function Header() {
     useEffect(() => {
         if (isLoggedIn) {
             const connection = new HubConnectionBuilder()
-                .withUrl('https://localhost:3000/hubs/message')
+                .withUrl('https://localhost:3000/api/hubs/message')
                 .withAutomaticReconnect()
                 .build();
 
-                connection.start()
-                .then(result => {
-                    console.log("Message connection established!");
+            connection.start()
+            .then(result => {
+                console.log("Message connection established!");
 
-                    connection.on('UpdateCount', messageCount => {
-                        setUnread(messageCount);
-                    });
-                })
-                .catch(e => console.log("Connection failed: ", e));            
+                connection.on('UpdateCount', messageCount => {
+                    setUnread(messageCount);
+                });
+            })
+            .catch(e => console.log("Connection failed: ", e));            
         }
         // eslint-disable-next-line
     }, [isLoggedIn])
