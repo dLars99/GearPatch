@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useHistory, useLocation, NavLink as RRNavLink } from "react-router-dom";
+import { useHistory, NavLink as RRNavLink } from "react-router-dom";
 import Login from "./Users/Login";
 import { Navbar, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavbarBrand, NavbarToggler,
     Collapse, Nav, NavItem, NavLink, Badge, Button } from "reactstrap";
@@ -22,7 +22,6 @@ export default function Header() {
     const headerToggle = () => setDropdownOpen(!dropdownOpen);
 
     const history = useHistory();
-    const location = useLocation();
 
     const newItemButton = (evt) => {
         evt.preventDefault();
@@ -59,7 +58,7 @@ export default function Header() {
                 {isLoggedIn
                 ? <Dropdown nav isOpen={dropdownOpen} toggle={headerToggle}>
                     <DropdownToggle nav>
-                        <NavbarBrand>GearPatch</NavbarBrand>
+                        <span className="navbar-brand h1">GearPatch</span>
                     </DropdownToggle>
                     <DropdownMenu>
                         <DropdownItem tag={RRNavLink} to="/">Homepage</DropdownItem>
@@ -74,7 +73,7 @@ export default function Header() {
                     <Nav navbar className="ml-auto">
                         {isLoggedIn
                         ? <>
-                            <NavItem>
+                            <NavItem className="mx-lg-3">
                                 <NavLink tag={RRNavLink} to="/messages">
                                     Messages {' '}
                                     {unread !== 0 
@@ -82,7 +81,7 @@ export default function Header() {
                                     : null}
                                     </NavLink>
                             </NavItem>
-                            <NavItem>
+                            <NavItem className="mx-lg-3">
                                 <NavLink tag={RRNavLink} to="/reservations">
                                     Reservations {' '}
                                     {unconfirmed !== 0
@@ -90,19 +89,19 @@ export default function Header() {
                                     : null}
                                 </NavLink>
                             </NavItem>
-                            <NavItem>
+                            <NavItem className="mx-lg-3">
                                 <NavLink tag={RRNavLink} to="/gear/mygear">
                                     My Gear
                                 </NavLink>
                             </NavItem>
-                            <NavItem>
+                            <NavItem className="mx-lg-3">
                                 {/* eslint-disable-next-line */}
                                 <a aria-current="page" className="nav-link"
                                     style={{ cursor: "pointer" }} onClick={logout}>Logout</a>
                             </NavItem>
                         </>
                         : <>
-                            <NavItem>
+                            <NavItem className="mx-lg-3">
                                 <NavLink tag={RRNavLink} to="/register">Sign Up</NavLink>
                             </NavItem>
                             <NavItem className="mx-0 mx-lg-1">
@@ -112,7 +111,7 @@ export default function Header() {
                             </NavItem>
                         </>
                         }
-                        <NavItem>
+                        <NavItem className="mx-lg-3">
                             <Button type="button" color="primary" onClick={newItemButton}>List Your Gear</Button>
                         </NavItem>
 

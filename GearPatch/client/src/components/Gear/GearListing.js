@@ -40,8 +40,8 @@ export default function GearList() {
         <>
         <Row>
             <Col xs={12} sm={8} md={6}>
-                <img width="100%" src={`/api/image/gear/${gear.imageLocation}`} alt={gear.headline} 
-                    style={{maxHeight: "50vh"}} />
+                <img src={`/api/image/gear/${gear.imageLocation}`} alt={gear.headline} 
+                    style={{width: "100%"}, {maxHeight: "50vh"}} />
             </Col>
         </Row>
         <Row>
