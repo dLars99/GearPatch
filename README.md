@@ -14,11 +14,11 @@ GearPatch is a peer-to-peer rental platform that lets musicians make extra money
 ### Screenshots
 This application is responsive to work with desktop and mobile viewports.
 <p>
-    <img src="./readme-img/Homepage.png" width=20% height=20%>
-    <img src="./readme-img/search-results.png" width=20% height=20%>
-    <img src="./readme-img/gear-details.png" width=20% height=20%>
-    <img src="./readme-img/reservations.png" width=20% height=20%>
-    <img src="./readme-img/messages.png" width=20% height=20%>
+    <img src="./.readme-img/Homepage.png" width=20% height=20%>
+    <img src="./.readme-img/search-results.png" width=20% height=20%>
+    <img src="./.readme-img/gear-details.png" width=20% height=20%>
+    <img src="./.readme-img/reservations.png" width=20% height=20%>
+    <img src="./.readme-img/messages.png" width=20% height=20%>
 </p>
 
 ### Installation
