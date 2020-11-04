@@ -21,7 +21,7 @@ export function NewReservationMessage(reservation, gear) {
 
 export function ConfirmReservationMessage(reservation) {
 
-    const messageText = `${reservation.owner.fullName} has confirmed your reservation for ${reservation.gear.manufacturer} ${reservation.gear.model} from ${reservation.startDate} to ${reservation.endDate}.
+    const messageText = `${reservation.owner.fullName} has confirmed your reservation for ${reservation.gear.manufacturer} ${reservation.gear.model} from ${reservation.startDate.substr(0, 10)} to ${reservation.endDate.substr(0, 10)}.
     Please contact ${reservation.owner.firstName} with any questions and to make arrangements for pick up and drop off.`
 
     return {

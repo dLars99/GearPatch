@@ -1,0 +1,9 @@
+.gearImage {
+    max-height: 50vh;
+    max-width: 50vh;
+}
+
+.gearListing--image {
+    max-height: 300px;
+    max-width: 300px;
+}
