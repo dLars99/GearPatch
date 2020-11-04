@@ -13,5 +13,5 @@ export function NumberOfDays(startDate, endDate) {
 
 export function TodayDate() {
     const todayDate = new Date();
-    return `${todayDate.getFullYear()}-${todayDate.getMonth() + 1}-${todayDate.getDate()}`;
+    return `${todayDate.getFullYear()}-${('0' + (todayDate.getMonth() + 1)).slice(-2)}-${('0' +  todayDate.getDate()).slice(-2)}`;
 }
