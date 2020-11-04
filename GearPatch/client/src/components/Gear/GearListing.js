@@ -39,7 +39,7 @@ export default function GearList() {
 
     return (
         <>
-        5<Row className="my-2 pt-4">
+        <Row className="my-2 pt-4">
             <Col xs={12} sm={8} md={6}>
                 <img src={`/api/image/gear/${gear.imageLocation}`} alt={gear.headline} 
                     className="gearImage" />
