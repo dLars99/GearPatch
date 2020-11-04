@@ -17,7 +17,7 @@ export default function GearSearchResults() {
     }, [])
 
     return (
-        <Row>
+        <Row className="my-5 py-4">
             {gear.length === 0
             ? <>
                 <h2>No results found</h2>

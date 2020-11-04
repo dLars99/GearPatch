@@ -39,7 +39,7 @@ export default function() {
 
     return (
         <>
-        <Row className="mt-3 ml-3">
+        <Row className="mt-5 ml-3">
             <Link to="/messages">Back to all conversations</Link>
         </Row>
 
@@ -51,11 +51,11 @@ export default function() {
         {messages.map(message =>
             <Message key={message.id} message={message} currentUserId={currentUserId} />
         )}
-        <Row className="mt-5">
+        <Row className="my-5">
             <Col md={{size: 8, offset: 2}}>
                 { reply
                     ? <Reply toggle={toggleReply} recipient={otherUser} />
-                    : <Button block onClick={toggleReply}>Add Reply</Button>
+                    : <Button block color="primary" onClick={toggleReply}>Add Reply</Button>
                 }
             </Col>
         </Row>
