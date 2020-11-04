@@ -53,7 +53,7 @@ export default function OwnerControls({ toggleEdit, isActive, gearId }) {
                 </CardBody>
             </Card>
             <ActivationModal modal={activeConfirmation} toggle={toggleConfirmation} 
-                confirmDeletion={confirmActivation} />
+                confirmActivation={confirmActivation} />
             <DeletionModal modal={activeDeletion} toggle={toggleDeletion} 
                 confirmDeletion={confirmDeletion} />
         </Col>

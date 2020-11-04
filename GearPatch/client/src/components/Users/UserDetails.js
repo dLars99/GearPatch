@@ -10,14 +10,14 @@ export default function UserDetails({ toggleEdit, currentUser, history }) {
     const toggleActivation = () => setActivation(!activation);
 
     return (
-        <Row className="justify-content-center">
+        <Row className="justify-content-center my-5">
             <Col md={8} xl={5} >
                 <Card>
                     <CardImg top width="100%" 
                 src={`/api/image/user/${currentUser.imageLocation}`} 
                 alt={currentUser.fullName} />
                     <CardBody>
-                        <CardTitle className="text-center">{currentUser.fullName}</CardTitle>
+                        <CardTitle className="text-center">{currentUser.firstName} {currentUser.lastName}</CardTitle>
                         <CardSubtitle className="text-center">{currentUser.isActive ? `(${currentUser.fullName})` : 'INACTIVE'}</CardSubtitle>
                         <CardText>Email: {currentUser.email}</CardText>
                         <CardText>Phone: {currentUser.phone}</CardText>
