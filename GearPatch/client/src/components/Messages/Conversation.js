@@ -55,7 +55,7 @@ export default function() {
             <Col md={{size: 8, offset: 2}}>
                 { reply
                     ? <Reply toggle={toggleReply} recipient={otherUser} />
-                    : <Button block onClick={toggleReply}>Add Reply</Button>
+                    : <Button block color="primary" onClick={toggleReply}>Add Reply</Button>
                 }
             </Col>
         </Row>

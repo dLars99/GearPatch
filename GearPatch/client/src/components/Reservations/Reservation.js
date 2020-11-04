@@ -56,9 +56,9 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
                             {reservation.ownerId === currentUserId
                             ? <>
                                     { !reservation.confirmed
-                                    && <Button block onClick={(evt) => prompt(evt, reservation)}>Confirm</Button>}
+                                    && <Button block color="primary" onClick={(evt) => prompt(evt, reservation)}>Confirm</Button>}
                                     { (reservation.confirmed && !reservation.itemReturned)
-                                    && <Button block onClick={(evt) => returnPrompt(evt, reservation)}>Mark Returned</Button>}
+                                    && <Button block color="primary" onClick={(evt) => returnPrompt(evt, reservation)}>Mark Returned</Button>}
                                 </>
                             : null}
 

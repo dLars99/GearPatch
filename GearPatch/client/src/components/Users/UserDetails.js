@@ -25,7 +25,7 @@ export default function UserDetails({ toggleEdit, currentUser, history }) {
                     </CardBody>
                     <CardFooter>
                         <Row>
-                            <Col md={4} lg={5}>
+                            <Col md={4}>
                                 <Button color="primary" onClick={toggleEdit} disabled={!currentUser.isActive}>Edit</Button> {' '}
                             </Col>
                             <Col md={4} lg={5}>
@@ -34,7 +34,7 @@ export default function UserDetails({ toggleEdit, currentUser, history }) {
                                 : <><Button color="danger" onClick={() => toggleActivation()}>Reactivate</Button> {' '}</>
                                 }
                             </Col>
-                            <Col md={4} lg={2}>
+                            <Col md={4} lg={3}>
                                 <Button onClick={() => history.goBack()}>Go Back</Button>
                             </Col>
                         </Row>
