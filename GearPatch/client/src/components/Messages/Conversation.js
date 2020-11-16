@@ -45,7 +45,7 @@ export default function() {
 
         <Row className="justify-content-center">
             <Col className="text-center mb-4">
-                <h1>Your Conversation with {otherUser.fullName}.</h1>
+                <h1>Your Conversation with {otherUser.fullName}</h1>
             </Col>
         </Row>
         {messages.map(message =>

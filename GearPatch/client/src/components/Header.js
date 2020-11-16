@@ -56,7 +56,7 @@ export default function Header() {
         <header>
             <Navbar color="secondary" light fixed="top" expand="lg">
                 {isLoggedIn
-                ? <Dropdown nav isOpen={dropdownOpen} toggle={headerToggle}>
+                ? <Dropdown isOpen={dropdownOpen} toggle={headerToggle}>
                     <DropdownToggle nav>
                         <span className="navbar-brand h1">GearPatch</span>
                     </DropdownToggle>
