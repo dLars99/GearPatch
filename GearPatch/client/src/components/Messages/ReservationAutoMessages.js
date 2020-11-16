@@ -6,7 +6,7 @@ export function NewReservationMessage(reservation, gear) {
 
     const totalPrice = NumberOfDays(reservation.startDate, reservation.endDate) * reservation.agreedPrice;
 
-    const messageText = `${currentUser.fullName}. has requested a reservation for ${gear.manufacturer} ${gear.model}.
+    const messageText = `${currentUser.fullName} has requested a reservation for ${gear.manufacturer} ${gear.model}.
     Requested checkout date: ${reservation.startDate}
     Requested return date: ${reservation.endDate}
     Estimated total price: $${totalPrice}
