@@ -43,8 +43,8 @@ export default function OwnerControls({ toggleEdit, isActive, gearId }) {
                     </Row>
                     <Row width="100%" className="justify-content-center my-1">
                         {isActive
-                        ? <Button onClick={toggleConfirmation}>Deactivate</Button>
-                        : <Button onClick={toggleConfirmation}>Reactivate</Button>
+                        ? <Button color="primary" onClick={toggleConfirmation}>Deactivate</Button>
+                        : <Button color="primary" onClick={toggleConfirmation}>Reactivate</Button>
                         }
                     </Row>
                     <Row width="100%" className="justify-content-center my-1">
@@ -53,7 +53,7 @@ export default function OwnerControls({ toggleEdit, isActive, gearId }) {
                 </CardBody>
             </Card>
             <ActivationModal modal={activeConfirmation} toggle={toggleConfirmation} 
-                confirmDeletion={confirmActivation} />
+                confirmActivation={confirmActivation} />
             <DeletionModal modal={activeDeletion} toggle={toggleDeletion} 
                 confirmDeletion={confirmDeletion} />
         </Col>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Col, Card, CardImg, CardBody, CardTitle, CardText, CardImgOverlay } from "reactstrap";
+import "./Gear.css"
 
 export default function GearSummary({ gearItem, history }) {
 
@@ -25,7 +26,7 @@ export default function GearSummary({ gearItem, history }) {
             {/* Show owner's image when mouse is positioned over the item */}
             {showOwner
             ? <>
-                <CardImg top src={`/api/image/user/${gearItem.userProfile.imageLocation}`} alt={gearItem.userProfile.fullName}/>
+                <CardImg top src={`/api/image/user/${gearItem.userProfile.imageLocation}`} alt={gearItem.userProfile.fullName} className="gearListing--image" />
                 <CardImgOverlay width="100%" height="100%" className="d-flex align-items-start">
                     <CardBody>
                         <CardTitle className="text-center text-white">
@@ -34,7 +35,7 @@ export default function GearSummary({ gearItem, history }) {
                     </CardBody>
                 </CardImgOverlay>
             </>
-            : <CardImg top width="100%" src={`/api/image/gear/${gearItem.imageLocation}`} alt={gearItem.headline}/>
+            : <CardImg top width="100%" src={`/api/image/gear/${gearItem.imageLocation}`} alt={gearItem.headline} className="gearListing--image"/>
             }
 
             <CardBody>

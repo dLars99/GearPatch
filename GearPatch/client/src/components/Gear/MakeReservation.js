@@ -105,10 +105,10 @@ export default function MakeReservation({ gear }) {
                         : null
                         }
                         <Row className="justify-content-center mb-3">
-                            <Button disabled={isSending} onClick={completeReservation}>Request Reservation</Button>
+                            <Button color="primary" disabled={isSending} onClick={completeReservation}>Request Reservation</Button>
                         </Row>
                         <Row className="justify-content-center">
-                            <Button onClick={sendMessage}>Ask a Question</Button>
+                            <Button color="primary" onClick={sendMessage}>Ask a Question</Button>
                         </Row>
                     </Form>
                 </CardBody>

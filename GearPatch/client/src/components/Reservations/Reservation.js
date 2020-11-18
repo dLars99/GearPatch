@@ -1,6 +1,7 @@
 import React from "react";
 import { NumberOfDays } from "../Helpers/DateHelper";
 import { Row, Col, Button } from "reactstrap";
+import "../Gear/Gear.css"
 
 export default function ({ reservation, currentUserId, prompt, composeMessage, cancelPrompt, returnPrompt }) {
     const totalPrice = NumberOfDays(reservation.startDate, reservation.endDate) * reservation.agreedPrice;
@@ -23,9 +24,9 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
             </Row>
             <Row>
                 <Col md={2} className="overflow-hidden">
-                    <img className="rounded img-thumbnail" 
-                    src={`/api/image/gear/${reservation.gear.imageLocation}`}
-                    alt={reservation.gear.model} />
+                    <img className="rounded img-thumbnail gearListing--image" 
+                        src={`/api/image/gear/${reservation.gear.imageLocation}`}
+                        alt={reservation.gear.model} />
                 </Col>
                 <Col md={8}>
                     <Row>
@@ -55,9 +56,9 @@ export default function ({ reservation, currentUserId, prompt, composeMessage, c
                             {reservation.ownerId === currentUserId
                             ? <>
                                     { !reservation.confirmed
-                                    && <Button block onClick={(evt) => prompt(evt, reservation)}>Confirm</Button>}
+                                    && <Button block color="primary" onClick={(evt) => prompt(evt, reservation)}>Confirm</Button>}
                                     { (reservation.confirmed && !reservation.itemReturned)
-                                    && <Button block onClick={(evt) => returnPrompt(evt, reservation)}>Mark Returned</Button>}
+                                    && <Button block color="primary" onClick={(evt) => returnPrompt(evt, reservation)}>Mark Returned</Button>}
                                 </>
                             : null}
 

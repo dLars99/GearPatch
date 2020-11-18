@@ -7,6 +7,7 @@ import GearDetails from "./GearDetails";
 import MakeReservation from "./MakeReservation";
 import OwnerMore from "./OwnerMore";
 import OwnerDetails from "./OwnerDetails";
+import "./Gear.css";
 
 export default function GearList() {
 
@@ -38,10 +39,10 @@ export default function GearList() {
 
     return (
         <>
-        <Row>
+        <Row className="my-2 pt-4">
             <Col xs={12} sm={8} md={6}>
-                <img width="100%" src={`/api/image/gear/${gear.imageLocation}`} alt={gear.headline} 
-                    style={{maxHeight: "50vh"}} />
+                <img src={`/api/image/gear/${gear.imageLocation}`} alt={gear.headline} 
+                    className="gearImage" />
             </Col>
         </Row>
         <Row>
